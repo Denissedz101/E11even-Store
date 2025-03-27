@@ -3,8 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Compras</title>
-    <link rel="stylesheet" href="css/estilos-index.css">
+    <link rel="stylesheet" href="css/estilos-carrito.css">
+    
+</head>
+<body>
+    <h1>E11EVEN STORE</h1>
+    <h2>Carrito de Compras</h2>
+    <div>
+        <p>Producto 1 - $10</p>
+        <button onclick="Eliminar('Producto 1', 10)">Eliminar</button>
+    </div>
+    <div>
+        <p>Producto 2 - $20</p>
+        <button onclick="Eliminar('Producto 2', 20)">Eliminar</button>
+    </div>
+
+    <ul id="carrito"></ul>
+
     <script>
         function agregarAlCarrito(nombre, precio) {
             let carrito = document.getElementById("carrito");
@@ -13,21 +28,6 @@
             carrito.appendChild(item);
         }
     </script>
-</head>
-<body>
-
-    <h2>Tienda</h2>
-    <div>
-        <p>Producto 1 - $10</p>
-        <button onclick="agregarAlCarrito('Producto 1', 10)">Agregar al carrito</button>
-    </div>
-    <div>
-        <p>Producto 2 - $20</p>
-        <button onclick="agregarAlCarrito('Producto 2', 20)">Agregar al carrito</button>
-    </div>
-
-    <h2>Carrito de Compras</h2>
-    <ul id="carrito"></ul>
 
 </body>
 </html>
