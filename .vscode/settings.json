@@ -1,0 +1,9 @@
+{
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "workbench.colorCustomizations": {
+        
+    
+    },
+    "workbench.preferredLightColorTheme": "Monokai",
+    "window.autoDetectColorScheme": true
+}

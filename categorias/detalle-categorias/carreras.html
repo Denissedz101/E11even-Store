@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carreras - Store E11even</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    
+</head>
+<body>
+
+    <header>
+        <h1 class="titulo">Juegos de Carreras</h1>
+    </header>
+
+    <div class="game-list">
+        <article>
+            <img src="https://www.todojuegos.cl/Productos/_mediaProd/29406/nfsunbucfhico.jpg" alt="Need For Speed Unbound">
+            <h3>Need For Speed Unbound</h3>
+            <p><b>Precio: CLP$20.990</b></p>
+            <button onclick="toggleDescripcion('desc1')">Más detalles</button>
+            <p class="descripcion" id="desc1">Esta última adición a la franquicia Need for Speed de Criterion Games ofrece campañas de un jugador y multijugador, con carreras electrizantes llenas de adrenalina.</p>
+            <button class="add-to-cart">Añadir al carrito</button>
+        </article>
+        
+        <article>
+            <img src="https://cdn.mobygames.com/covers/17647229-the-crew-motorfest-playstation-5-front-cover.jpg" alt="The Crew Motorfest">
+            <h3>The Crew Motorfest</h3>
+            <p><b>Precio: CLP$59.990</b></p>
+            <button onclick="toggleDescripcion('desc2')">Más detalles</button>
+            <p class="descripcion" id="desc2">Compite en carreras emocionantes y eventos temáticos en este paraíso automovilístico con cientos de vehículos legendarios.</p>
+            <button class="add-to-cart">Añadir al carrito</button>
+        </article>
+    </div>
+
+    <!-- Botón flotante para volver al inicio -->
+    <a href="../index.html" class="btn-flotante">⬅ Volver al Inicio</a>
+
+    <script>
+        function toggleDescripcion(id) {
+            var descripcion = document.getElementById(id);
+            if (descripcion.style.display === "none" || descripcion.style.display === "") {
+                descripcion.style.display = "block";
+            } else {
+                descripcion.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
+

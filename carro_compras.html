@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="css/estilos-index.css">
+    <script>
+        function agregarAlCarrito(nombre, precio) {
+            let carrito = document.getElementById("carrito");
+            let item = document.createElement("li");
+            item.textContent = `${nombre} - $${precio}`;
+            carrito.appendChild(item);
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Tienda</h2>
+    <div>
+        <p>Producto 1 - $10</p>
+        <button onclick="agregarAlCarrito('Producto 1', 10)">Agregar al carrito</button>
+    </div>
+    <div>
+        <p>Producto 2 - $20</p>
+        <button onclick="agregarAlCarrito('Producto 2', 20)">Agregar al carrito</button>
+    </div>
+
+    <h2>Carrito de Compras</h2>
+    <ul id="carrito"></ul>
+
+</body>
+</html>

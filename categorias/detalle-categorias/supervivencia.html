@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervivencia - Store E11even</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    
+</head>
+<body>
+
+    <header>
+        <h1 class="titulo">Juegos de Supervivencia</h1>
+    </header>
+
+    <div class="game-list">
+        <article>
+            <img src="https://juegospro.cl/cdn/shop/files/eb380427-9371-4daa-9675-75a6d71c8497.jpg?v=1728033747&width=1445" alt="For Honor">
+            <h3>For Honor</h3>
+            <p><b>Precio: CLP$25.690</b></p>
+            <button onclick="toggleDescripcion('desc1')">Más detalles</button>
+            <p class="descripcion" id="desc1">Ubisoft presenta con For Honor un videojuego medieval con especial énfasis en la cooperación entre varios jugadores por equipos, que destaca por sus violentos combates y poderoso apartado gráfico.</p>
+            <button class="add-to-cart">Añadir al carrito</button>
+        </article>
+        
+        <article>
+            <img src="https://m.media-amazon.com/images/I/5177HgzL1NL._AC_UF1000,1000_QL80_.jpg" alt="Fortnite: Darkfire Bundle Switch">
+            <h3>Fortnite: Darkfire Bundle Switch</h3>
+            <p><b>Precio: CLP$19.990</b></p>
+            <button onclick="toggleDescripcion('desc2')">Más detalles</button>
+            <p class="descripcion" id="desc2">Fortnite es un videojuego de Epic Games que nos transporta a un mundo sandbox donde explorar, construir y sobrevivir a los peligros de la noche.</p>
+            <button class="add-to-cart">Añadir al carrito</button>
+        </article>
+    </div>
+
+    <!-- Botón flotante para volver al inicio -->
+    <a href="../index.html" class="btn-flotante">⬅ Volver al Inicio</a>
+
+    <script>
+        function toggleDescripcion(id) {
+            var descripcion = document.getElementById(id);
+            if (descripcion.style.display === "none" || descripcion.style.display === "") {
+                descripcion.style.display = "block";
+            } else {
+                descripcion.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
+

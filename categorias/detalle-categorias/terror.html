@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terror - Store E11even</title>
+    <link rel="stylesheet" href="../../CSS/estilos.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header-terror">
+        <div class="logo">
+            <img src="https://i.ibb.co/GvXS0cZG/E11EVEN.png" alt="Logo E11even">
+        </div>
+        <h1 class="titulo">Juegos de Terror</h1>
+    </header>
+
+    <!-- Lista de Juegos -->
+    <div class="game-list">
+        <article class="game-item">
+            <img src="https://juegosdigitaleschile.com/files/images/productos/1503962921-resident-evil-revelations-p4.JPG" alt="Resident Evil" class="game-image">
+            <div class="game-info">
+                <h3>Resident Evil Revelations</h3>
+                <p><b>Precio: CLP$19.990</b></p>
+                <button onclick="toggleDescripcion('desc1')" class="details-btn">Más detalles</button>
+                <p class="descripcion" id="desc1">La historia se desarrolla en una época anterior a los incidentes de terrorismo biológico de Kijuju y Lanshiang, cuando la BSAA todavía era una organización joven...</p>
+                <button class="add-to-cart">Añadir al carrito</button>
+            </div>
+        </article>
+        
+        <article class="game-item">
+            <img src="https://i.postimg.cc/wj8pD0h9/preferable-box.jpg" alt="Silent Hill" class="game-image">
+            <div class="game-info">
+                <h3>Silent Hill 2 PS5</h3>
+                <p><strong>Precio: CLP$75.990</strong></p>
+                <button onclick="toggleDescripcion('desc2')" class="details-btn">Más detalles</button>
+                <p class="descripcion" id="desc2">Un remake del SILENT HILL 2 de 2001 con nuevos gráficos de avanzada que incluyen trazado de rayos. Mira el perturbador mundo de Silent Hill como nunca antes...</p>
+                <button class="add-to-cart">Añadir al carrito</button>
+            </div>
+        </article>
+    </div>
+
+    <!-- Botón flotante para volver al inicio -->
+    <a href="../index.html" class="btn-flotante">⬅ Volver al Inicio</a>
+
+    <script>
+        function toggleDescripcion(id) {
+            var descripcion = document.getElementById(id);
+            if (descripcion.style.display === "none" || descripcion.style.display === "") {
+                descripcion.style.display = "block";
+            } else {
+                descripcion.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

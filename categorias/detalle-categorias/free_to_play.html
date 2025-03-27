@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free to Play - Store E11even</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    
+</head>
+<body>
+
+    <header>
+        <h1 class="titulo">Juegos Free to Play ¡Descarga Ahora!</h1>
+    </header>
+
+    <div class="game-list">
+        <article>
+            <img src="https://shared.fastly.steamstatic.com//store_item_assets/steam/apps/1222670/4bcb26e78354f1789d2af48258e9054dd3ca5043/capsule_616x353_alt_assets_7_spanish.jpg?t=1740506448" alt="Sims 4">
+            <h3>Sims 4</h3>
+            <p><b>Precio: CLP$0</b></p>
+            <button onclick="toggleDescripcion('desc1')">Más detalles</button>
+            <p class="descripcion" id="desc1">¡Crea un mundo único de Sims a tu imagen y semejanza! Crea y personaliza Sims, construye casas increíbles y juega a la vida. Amplía tu juego con packs y kits para descubrir más moda, decoración, profesiones y más.</p>
+            <button class="add-to-cart">Descargar</button>
+        </article>
+        
+        <article>
+            <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/730/header.jpg?t=1729703045" alt="Counter Strike 2">
+            <h3>Counter Strike 2</h3>
+            <p><b>Precio: CLP$0</b></p>
+            <button onclick="toggleDescripcion('desc2')">Más detalles</button>
+            <p class="descripcion" id="desc2">Durante las dos últimas décadas, Counter Strike ha proporcionado una experiencia competitiva de primer nivel para los millones de jugadores de todo el mundo que contribuyeron a darle forma.</p>
+            <button class="add-to-cart">Descargar</button>
+        </article>
+    </div>
+
+    <!-- Botón flotante para volver al inicio -->
+    <a href="../index.html" class="btn-flotante">⬅ Volver al Inicio</a>
+
+    <script>
+        function toggleDescripcion(id) {
+            var descripcion = document.getElementById(id);
+            if (descripcion.style.display === "none" || descripcion.style.display === "") {
+                descripcion.style.display = "block";
+            } else {
+                descripcion.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
+

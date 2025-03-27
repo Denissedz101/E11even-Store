@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos-index.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://i.ibb.co/GvXS0cZG/E11EVEN.png" alt="Logo de la tienda">
+            </div>
+            <div class="nav-menu">
+                <ul>
+                    <li><a href="#">🏠 Inicio</a></li>
+                    <li><a href="categorias/menu-categorias.html">≣ Categorías</a></li>
+                    <li><a href="carro_compras.html">🛒 Carrito</a></li>
+                    <li><a href="contacto.html">✉ Contacto</a></li>
+                    <li><a href="formulario_registro.html" class="login-btn">Iniciar sesión / Regístrate</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Carrusel de imágenes -->
+    <div class="carousel-container">
+        <div class="carousel">
+            <img src="https://cdn.mos.cms.futurecdn.net/Mz3heMHRTTD6GRa45ikjLC-970-80.jpg.webp" alt="Imagen 1">
+            <img src="https://assets.vg247.com/current//2015/04/previewing-1152x648.jpg" alt="Imagen 2">
+            <img src="https://cdn2.unrealengine.com/Fortnite%2Fblog%2Fcreative%2FCM07_News_Featured_CreativeMode_Announce-1920x1080-f2b3606efe82d43a4a89ba8efbb00b630641e754.jpg" alt="Imagen 3">
+            <img src="https://d.player.one/en/full/173209/box-art-super-mario-odyssey.jpg?w=1600&h=1200&q=88&f=ec072a028ecbd80760804501c4e0cffe" alt="Imagen 4">
+            <img src="https://www.ghacks.net/wp-content/uploads/2025/03/halo-infinite.png" alt="Imagen 5">
+        </div>
+        <button class="prev" onclick="moveCarousel(-1)">&#10094;</button>
+        <button class="next" onclick="moveCarousel(1)">&#10095;</button>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+
+        function moveCarousel(direction) {
+            const images = document.querySelectorAll('.carousel img');
+            const totalImages = images.length;
+            currentIndex = (currentIndex + direction + totalImages) % totalImages;
+            const carousel = document.querySelector('.carousel');
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        // Iniciar el carrusel automáticamente
+        setInterval(() => {
+            moveCarousel(1);
+        }, 3000); // Cambia de imagen cada 3 segundos
+    </script>
+
+<!-- Footer -->
+<footer>
+    <!-- Texto de derechos reservados -->
+    <p class="footer-text">&copy; 2025 Store E11even - Todos los derechos reservados</p>
+</footer>
+
+
+</body>
+</html>
