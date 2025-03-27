@@ -14,6 +14,72 @@ body {
 	background-repeat: no-repeat; 
 }
 
+/* Estilos del Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 30px;
+    border-bottom: 3px solid #f6450d; /* Cambié el color de la línea de separación a #f6450d */
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo img {
+    height: 70px; /* Cambié el tamaño del logo para que no se vea gigante */
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu ul li {
+    display: inline;
+}
+
+.nav-menu ul li a {
+    color: #ffffff; /* Color de los enlaces en blanco */
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 8px 12px;
+    transition: color 0.3s;
+}
+
+.nav-menu ul li a:hover {
+    color: #f6450d; /* Cambié el color del hover a #f6450d */
+}
+
+/* Estilo específico para el botón de inicio de sesión / registro */
+.nav-menu ul li a.login-btn {
+    background-color: #000000; /* Fondo negro */
+    color: #ffffff; /* Texto blanco */
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-menu ul li a.login-btn:hover {
+    background-color: #f6450d; /* Color del hover a #f6450d */
+    color: #000000; /* Color del texto en hover */
+}
+
 /* Contenedor del formulario */
 .form-container {
     background: rgba(250, 237, 237, 0.5);
@@ -68,4 +134,23 @@ button {
 
 button:hover {
     background-color: #218838;
+}
+
+/*estilos boton volver inicio*/
+.back-btn {
+    background-color: #4e0f67;
+    color: white;
+    display: inline-block; 
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    font-size: 16px; 
+    width: auto; 
+    text-align: center;
+}
+
+.back-btn:hover {
+    background-color: #f0981c;
 }

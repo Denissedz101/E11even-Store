@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
-    background-color: #f5f5f5;
+    background-color: #270b36;
     text-align: left;
     background-image: url('https://img.freepik.com/premium-photo/blue-purple-futuristic-gaming-background_1128796-3333.jpg');
     background-size: cover;
@@ -9,58 +9,162 @@ body {
     background-repeat: no-repeat;
 }
 
-h1 {
-    color: #9d59ae;
-    padding: 15px;
+/* Estilos del Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 30px;
+    border-bottom: 3px solid #f6450d; 
 }
 
-h2 {
-    color: #9d59ae;
-    padding: 15px;
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
-div {
-    background: rgba(250, 237, 237, 0.5);
-    padding: 15px;
-    margin: 10px auto;
+.logo img {
+    height: 70px; 
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu ul li {
+    display: inline;
+}
+
+.nav-menu ul li a {
+    color: #ffffff; /* Color de los enlaces en blanco */
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 8px 12px;
+    transition: color 0.3s;
+}
+
+.nav-menu ul li a:hover {
+    color: #f6450d; /* Cambié el color del hover a #f6450d */
+}
+
+/* Estilo específico para el botón de inicio de sesión / registro */
+.nav-menu ul li a.login-btn {
+    background-color: #000000; /* Fondo negro */
+    color: #ffffff; /* Texto blanco */
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-menu ul li a.login-btn:hover {
+    background-color: #f67b46; 
+    color: #000000; /* Color del texto en hover */
+}
+
+
+/* Contenedor del carrito */
+.carro-container {
     width: 50%;
+    margin: 20px auto;
+    background: rgba(250, 237, 237, 0.5);
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Productos dentro del carrito */
+.producto {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Botón de eliminar */
 button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #cc0000;
+}
+
+/* Contenedor del botón de compra */
+.comprar-container {
+    text-align: center;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+/* Botón comprar */
+.btn-comprar {
     background-color: #28a745;
     color: white;
     border: none;
     padding: 10px 15px;
-    cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
-
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 
-button:hover {
-    background-color: #882151;
+.btn-comprar:hover {
+    background-color: #218838;
 }
 
-#carrito {
+/* Lista del carrito */
+ul#carrito {
     list-style: none;
     padding: 0;
+    margin: 20px auto;
     width: 50%;
-    margin: 0 auto;
     background: white;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+   
 }
 
-#carrito li {
+ul#carrito li {
     padding: 10px;
     border-bottom: 1px solid #ddd;
-    font-size: 18px;
-    color: #555;
 }
 
-#carrito li:last-child {
-    border-bottom: none;
+/*estilos boton volver inicio*/
+.back-btn {
+    background-color: #4e0f67;
+    color: white;
+    display: inline-block; 
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    font-size: 16px; 
+    width: auto; 
+    text-align: center;
+}
+
+.back-btn:hover {
+    background-color: #f0981c;
 }
