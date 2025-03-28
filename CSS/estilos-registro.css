@@ -83,6 +83,19 @@ header {
     color: #000000; /* Color del texto en hover */
 }
 
+.registro-link {
+    color: blue;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.registro-link:hover {
+    color: red;
+    text-decoration: underline;
+}
+
+
 .container-formulario {
     background: rgba(250, 237, 237, 0.5); /* fondo transparente */
     padding: 20px;
