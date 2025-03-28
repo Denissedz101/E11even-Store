@@ -67,7 +67,7 @@ header {
     color: #f6450d; /* Cambié el color del hover a #f6450d */
 }
 
-/* Estilo específico para el botón de inicio de sesión / registro */
+/* Estilo específico para el botón registro */
 .nav-menu ul li a.login-btn {
     background-color: #000000; /* Fondo negro */
     color: #ffffff; /* Texto blanco */
@@ -83,8 +83,9 @@ header {
     color: #000000; /* Color del texto en hover */
 }
 
+/*boton inicio sesion*/
 .registro-link {
-    color: blue;
+    color: rgb(218, 218, 225);
     font-weight: bold;
     text-decoration: none;
     transition: color 0.3s ease;
