@@ -159,3 +159,10 @@ button:hover {
 .back-btn:hover {
     background-color: #f0981c;
 }
+
+/* Texto de derechos reservados */
+.footer-text {
+    font-size: 0.9em; /* Tamaño de fuente pequeño */
+    margin: 0; /* Elimina márgenes */
+    color: #ffffff;
+}
