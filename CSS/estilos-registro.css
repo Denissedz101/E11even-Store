@@ -101,6 +101,7 @@ header {
     display: block;
     margin: 10px 0 5px;
     justify-content: left;
+    width: 80%; 
 }
 
 
