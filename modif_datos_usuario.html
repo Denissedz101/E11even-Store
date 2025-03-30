@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Mi Perfil</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="CSS/estilo-inicioS.css">
+		<link rel="stylesheet" href="CSS/estilos-registro.css">
 	</head>
 	
 	<!-- Header (uso contenedores y filas de Bootstrap) -->
@@ -36,12 +36,30 @@
 			<h2 class="text-center">Mi Perfil</h2>
 			<form id="perfilForm">
 				<div class="row mb-3">
+					
 					<label for="nombre" class="col-sm-3 col-form-label">Nombre:</label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control" id="nombre" value="Dato actual">
 					</div>
+					<label for="apellido" class="col-sm-3 col-form-label">Apellido:</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="apellido" value="Dato actual">
+					</div>
+					<label for="rut" class="col-sm-3 col-form-label">Rut:</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="rut" value="Dato actual">
+					</div>
+					<label for="direccion" class="col-sm-3 col-form-label">Direccion:</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="direccion" value="Dato actual">
+					</div>
+					<label for="email" class="col-sm-3 col-form-label">email:</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="email" value="Dato actual">
+					</div>
+					
 				</div>
-				<!-- Repite para otros campos (email, dirección, etc.) -->
+				
 				<div class="row">
 					<div class="col text-center">
 						<button type="submit" class="btn btn-primary">Guardar cambios</button>
@@ -53,5 +71,21 @@
 			</div>
 		</div>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		
+		<script>
+			// Función para obtener parámetros de la URL
+			function obtenerParametro(nombre) {
+				const params = new URLSearchParams(window.location.search);
+				return params.get(nombre) || "Dato actual"; // Si no hay dato, muestra "Dato actual"
+			}
+			
+			// Asignar los valores a los inputs
+			document.getElementById("nombre").value = obtenerParametro("nombre");
+			document.getElementById("apellido").value = obtenerParametro("apellido");
+			document.getElementById("rut").value = obtenerParametro("rut");
+			document.getElementById("direccion").value = obtenerParametro("direccion");
+			document.getElementById("email").value = obtenerParametro("email");
+		</script>
+		
 	</body>
 </html>

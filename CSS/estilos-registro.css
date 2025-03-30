@@ -24,7 +24,7 @@ header {
     align-items: center;
     background: rgba(0, 0, 0, 0.8);
     padding: 15px 30px;
-    border-bottom: 3px solid #f6450d; /* Cambié el color de la línea de separación a #f6450d */
+    border-bottom: 3px solid #f6450d; 
 }
 
 .header-container {
