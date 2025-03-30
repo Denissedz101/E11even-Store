@@ -4,37 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carreras - Store E11even</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="../CSS/estilos.css">
     
 </head>
 <body>
 
-    <header>
-        <h1 class="titulo">Juegos de Carreras</h1>
-    </header>
+   <!-- Header -->
+   <header class="Carreras">
+    <div class="logo">
+        <img src="https://i.ibb.co/GvXS0cZG/E11EVEN.png" alt="Logo E11even">
+    </div>
+    <h1 class="titulo">Juegos de Carreras</h1>
+</header>
 
+    <!-- Lista de Juegos -->
     <div class="game-list">
-        <article>
-            <img src="https://www.todojuegos.cl/Productos/_mediaProd/29406/nfsunbucfhico.jpg" alt="Need For Speed Unbound">
-            <h3>Need For Speed Unbound</h3>
-            <p><b>Precio: CLP$20.990</b></p>
-            <button onclick="toggleDescripcion('desc1')">Más detalles</button>
-            <p class="descripcion" id="desc1">Esta última adición a la franquicia Need for Speed de Criterion Games ofrece campañas de un jugador y multijugador, con carreras electrizantes llenas de adrenalina.</p>
-            <button class="add-to-cart">Añadir al carrito</button>
+        <article class="game-item">
+            <img src="https://www.todojuegos.cl/Productos/_mediaProd/29406/nfsunbucfhico.jpg">
+            <div class="game-info">
+                <h3>Need For Speed Unbound</h3>
+                <p><b>Precio: CLP$20.990</b></p>
+                <button onclick="toggleDescripcion('desc1')" class="details-btn">Más detalles</button>
+                <p class="descripcion" id="desc1">Esta última adición a la franquicia Need for Speed de Criterion Games ofrece campañas de un jugador y multijugador, con carreras electrizantes llenas de adrenalina.</p>
+                <button class="add-to-cart">Añadir al carrito</button>
+            </div>
         </article>
         
-        <article>
-            <img src="https://cdn.mobygames.com/covers/17647229-the-crew-motorfest-playstation-5-front-cover.jpg" alt="The Crew Motorfest">
-            <h3>The Crew Motorfest</h3>
-            <p><b>Precio: CLP$59.990</b></p>
-            <button onclick="toggleDescripcion('desc2')">Más detalles</button>
-            <p class="descripcion" id="desc2">Compite en carreras emocionantes y eventos temáticos en este paraíso automovilístico con cientos de vehículos legendarios.</p>
-            <button class="add-to-cart">Añadir al carrito</button>
+        <article class="game-item">
+            <img src="https://cdn.mobygames.com/covers/17647229-the-crew-motorfest-playstation-5-front-cover.jpg" alt="The Crew Motorfest" class="game-image">
+            <div class="game-info">
+                <h3>The Crew Motorfest</h3>
+                <p><strong>Precio: CLP$59.990</strong></p>
+                <button onclick="toggleDescripcion('desc2')" class="details-btn">Más detalles</button>
+                <p class="descripcion" id="desc2">Compite en carreras emocionantes y eventos temáticos en este paraíso automovilístico con cientos de vehículos legendarios</p>
+                <button class="add-to-cart">Añadir al carrito</button>
+            </div>
         </article>
     </div>
+ 
+    <!-- Botón para volver al inicio -->
+    <a href="../index.html" class="back-btn">⬅ Volver a Inicio</a>
 
-    <!-- Botón flotante para volver al inicio -->
-    <a href="../index.html" class="btn-flotante">⬅ Volver al Inicio</a>
+    <!-- Botón para volver al menú categorías -->
+    <a href="../menu-categorias.html" class="back-btn">⬅ Volver a Categorías</a>
 
     <script>
         function toggleDescripcion(id) {
@@ -49,4 +61,3 @@
 
 </body>
 </html>
-
