@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/estilos-contacto.css">
+    <script>
+        function confirmarEnvio(event) {
+            event.preventDefault(); 
+            alert("Mensaje enviado"); // mensaje de confirmación
+            window.location.href = "index.html"; // Redirige a la página de inicio
+        }
+    </script>
 </head>
 <body>
 
-         <!-- Header Común -->
+    <!-- Header Común -->
     <header>
         <div class="header-container">
             <div class="logo">
@@ -28,9 +35,9 @@
         </div>
     </header>
     
-   <div class="form-container">
+    <div class="form-container">
         <h2>Contacto</h2> 
-        <form action="enviar.php" method="POST">
+        <form onsubmit="confirmarEnvio(event)">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
 
@@ -44,14 +51,13 @@
         </form>
     </div>
 
-      <!-- Botón para volver al inicio -->
-      <a href="index.html" class="back-btn">⬅ Volver a Inicio</a>
-      
+    <!-- Botón para volver al inicio -->
+    <a href="index.html" class="back-btn"> 🠔 Volver a Inicio</a>
+    
     <!-- Footer -->
-<footer>
-    <!-- Texto de derechos reservados -->
-    <p class="footer-text">&copy; 2025 Store E11even - Todos los derechos reservados</p>
-</footer>
+    <footer>
+        <p class="footer-text">&copy; 2025 Store E11even - Todos los derechos reservados</p>
+    </footer>
 
 </body>
 </html>

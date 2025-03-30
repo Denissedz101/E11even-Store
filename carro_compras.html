@@ -1,81 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/estilos-carrito.css">
-    
-</head>
-<body>
-
-         <!-- Header Común -->
-         <header>
-            <div class="header-container">
-                <div class="logo">
-                    <img src="https://i.ibb.co/GvXS0cZG/E11EVEN.png" alt="Logo">
-                </div>
-                <div class="nav-menu">
-                    <ul>
-                        <li><a href="#">🏠 Inicio</a></li>
-                        <li><a href="menu-categorias.html">≣ Categorías</a></li>
-                        <li><a href="carro_compras.html">🛒 Carrito</a></li>
-                        <li><a href="contacto.html">✉ Contacto</a></li>
-                        <li><a href="inicio_sesion.html">
-                            <span class="registro-link">Ingresa a tu cuenta</span> </a>
-                        </li>
-                        <li><a href="formulario_registro.html" class="login-btn">Registrate</a></li>
-                    </ul>
-                </div>
-            </div>
-        </header>
-     
-    <div class="carro-container">
-        <div class="producto">
-            <p>Producto 1 - $10</p>
-            <button onclick="Eliminar('Producto 1', 10)">Eliminar</button>
-        </div>
-        <div class="producto">
-            <p>Producto 2 - $20</p>
-            <button onclick="Eliminar('Producto 2', 20)">Eliminar</button>
-        </div>
-
-        <!-- Contenedor para el botón de compra -->
-        <div class="comprar-container">
-            <button class="btn-comprar">Comprar</button>
-        </div>
-    </div>
-
-    <ul id="carrito"></ul>
-
-    <!-- Botón para volver al inicio -->
-    <a href="index.html" class="back-btn">⬅ Volver a Inicio</a>
-
-    <script>
-        function agregarAlCarrito(nombre, precio) {
-            let carrito = document.getElementById("carrito");
-            let item = document.createElement("li");
-            item.textContent = `${nombre} - $${precio}`;
-            carrito.appendChild(item);
-        }
-
-        function Eliminar(producto, precio) {
-            alert("Eliminaste " + producto + " del carrito.");
-            // Aquí puedes agregar lógica para actualizar el carrito
-        }
-
-        function comprar() {
-            alert("Gracias por tu compra 🎉");
-            // Aquí puedes redirigir a la página de pago o limpiar el carrito
-        }
-
-    </script>
-  
-    <!-- Footer -->
-<footer>
-    <!-- Texto de derechos reservados -->
-    <p class="footer-text">&copy; 2025 Store E11even - Todos los derechos reservados</p>
-</footer>
-
-
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="css/estilos-carrito.css">
+	</head>
+	<body>
+		<header>
+			<div class="header-container">
+				<div class="logo">
+					<img src="https://i.ibb.co/GvXS0cZG/E11EVEN.png" alt="Logo">
+				</div>
+				<div class="nav-menu">
+					<ul>
+						<li><a href="#">🏠 Inicio</a></li>
+						<li><a href="menu-categorias.html">≣ Categorías</a></li>
+						<li><a href="carro_compras.html">🛒 Carrito</a></li>
+						<li><a href="contacto.html">✉ Contacto</a></li>
+						<li><a href="inicio_sesion.html"><span class="registro-link">Ingresa a tu cuenta</span></a></li>
+						<li><a href="formulario_registro.html" class="login-btn">Registrate</a></li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		
+		<div class="carro-container">
+			<div class="producto">
+				<p>Producto 1 - $10</p>
+				<button onclick="Eliminar('Producto 1', 10)">Eliminar</button>
+			</div>
+			<div class="producto">
+				<p>Producto 2 - $20</p>
+				<button onclick="Eliminar('Producto 2', 20)">Eliminar</button>
+			</div>
+		</div>
+		
+		<ul id="carrito"></ul>
+		
+		<div class="comprar-container text-center mt-4">
+			<button class="btn btn-success" onclick="realizarCompra()">Comprar</button>
+		</div>
+		
+		<!-- Mensaje de compra exitosa oculto -->
+		<div id="mensaje-compra" class="container text-center mt-5" style="display: none;">
+			<h2>¡Pago Realizado con Éxito!</h2>
+			<p>Se ha enviado un correo con los detalles de tu compra.</p>
+		</div>
+		
+		<!-- Botón para volver al inicio oculto inicialmente -->
+		<div class="text-left mt-3" id="boton-volver" style="display: none;">
+			<a href="index.html" class="btn btn-primary">🠔 Volver al Inicio</a>
+		</div>
+		
+		<script>
+			function realizarCompra() {
+				alert("Gracias por tu compra 🎉");
+				document.getElementById("mensaje-compra").style.display = "block";
+				document.getElementById("boton-volver").style.display = "block";
+			}
+		</script>
+		
+		<footer>
+			<p class="footer-text">&copy; 2025 Store E11even - Todos los derechos reservados</p>
+		</footer>
+	</body>
 </html>

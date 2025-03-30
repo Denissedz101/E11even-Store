@@ -176,6 +176,27 @@ ul#carrito li {
 /* Texto de derechos reservados */
 .footer-text {
     font-size: 0.9em; /* Tamaño de fuente pequeño */
-    margin: 0; /* Elimina márgenes */
+    margin: 0; 
     color: #ffffff;
+}
+
+#mensaje-compra {
+    display: none; /* Oculto por defecto */
+    background-color:  rgba(0, 0, 0, 0.8);
+    border: 2px solid #f8732a; 
+    border-radius: 10px; 
+    padding: 20px; /* Espaciado interno */
+    margin-top: 20px; /* Espaciado superior */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    justify-content: center;
+}
+
+#mensaje-compra h2 {
+    color: #fdb122; 
+    font-weight: bold;
+}
+
+#mensaje-compra p {
+    color: #e1dada;
+    font-size: 16px;
 }
