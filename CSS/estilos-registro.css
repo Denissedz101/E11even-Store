@@ -61,7 +61,7 @@ header {
     font-size: 1.1em;
     padding: 8px 12px;
     transition: color 0.3s;
-}
+	}
 
 .nav-menu ul li a:hover {
     color: #f6450d; /* Cambié el color del hover a #f6450d */
