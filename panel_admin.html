@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!-- panel administrador -->
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Panel de Administración</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/estilos.css">
+	</head>
+	<body>
+		<div class="admin-container">
+			<h2 class="text-center">Panel de Administración</h2>
+			<!-- Opciones de navegación -->
+			<ul class="nav nav-tabs justify-content-center mb-4">
+				<li class="nav-item"><a class="nav-link active" href="#carrito" data-bs-toggle="tab">Carrito de Compras</a></li>
+				<li class="nav-item"><a class="nav-link" href="#productos" data-bs-toggle="tab">Productos</a></li>
+				<li class="nav-item"><a class="nav-link" href="#inventario" data-bs-toggle="tab">Inventario</a></li>
+				<li class="nav-item"><a class="nav-link" href="#compras" data-bs-toggle="tab">Compras</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade show active" id="carrito">
+					<h4>Carrito de Compras</h4>
+					<!-- Simulamos una lista de pedidos -->
+					<p> Pedido #1020233210 </p>
+					<p> Pedido #1020253530 </p>
+					<p> Pedido #1020256810 </p>
+					<p> Pedido #1020278955 </p>
+				</div>
+				<div class="tab-pane fade" id="productos">
+					<h4>Registro y Modificación de Productos</h4>
+					<!-- Formulario para agregar/modificar productos -->
+					<form>
+						<div class="mb-3">
+							<input type="text" class="form-control" placeholder="Nombre del producto">
+						</div>
+						<div class="mb-3">
+							<input type="number" class="form-control" placeholder="Precio">
+						</div>
+						<div class="mb-3">
+							<input type="text" class="form-control" placeholder="Categoría">
+						</div>
+						<button type="submit" class="btn btn-primary">Guardar Producto</button>
+					</form>
+				</div>
+				<div class="tab-pane fade" id="inventario">
+					<h4>Manejo del Inventario</h4>
+					<!-- Simula una tabla o listado de inventario -->
+					<p> aca se supone van el stock de productos.</p>
+				</div>
+				<div class="tab-pane fade" id="compras">
+					<h4>Monitoreo de Compras</h4>
+					<!-- Simulamos el monitoreo de compras de usuarios -->
+					<p> Orden de Compra N°15214456 - ver - </p>
+					<p> Orden de Compra N°15366512 - ver - </p>
+					<p> Orden de Compra N°15889112 - ver - </p>
+					<p> Orden de Compra N°15217884 - ver - </p>
+				</div>
+			</div>
+			<div class="text-center mt-4">
+				<a href="index.html" class="btn btn-link">Cerrar Sesión</a>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>
