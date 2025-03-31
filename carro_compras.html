@@ -24,40 +24,54 @@
 			</div>
 		</header>
 		
-		<div class="carro-container">
-			<div class="producto">
-				<p>Producto 1 - $10</p>
-				<button onclick="Eliminar('Producto 1', 10)">Eliminar</button>
+		<div id="carrito-container">
+			<div id="mensaje-vacio">Aún no hay productos agregados al carrito de compras</div>
+			<div id="carrito"></div>
+			<div class="comprar-container text-center mt-4">
+				<button class="btn btn-success" onclick="verificarCompra()">Comprar</button>
 			</div>
-			<div class="producto">
-				<p>Producto 2 - $20</p>
-				<button onclick="Eliminar('Producto 2', 20)">Eliminar</button>
-			</div>
-		</div>
-		
-		<ul id="carrito"></ul>
-		
-		<div class="comprar-container text-center mt-4">
-			<button class="btn btn-success" onclick="realizarCompra()">Comprar</button>
 		</div>
 		
 		<!-- Mensaje de compra exitosa oculto -->
 		<div id="mensaje-compra" class="container text-center mt-5" style="display: none;">
 			<h2>¡Pago Realizado con Éxito!</h2>
 			<p>Se ha enviado un correo con los detalles de tu compra.</p>
-		</div>
-		
-		<!-- Botón para volver al inicio oculto inicialmente -->
-		<div class="text-left mt-3" id="boton-volver" style="display: none;">
 			<a href="index.html" class="btn btn-primary">🠔 Volver al Inicio</a>
 		</div>
 		
+		
 		<script>
-			function realizarCompra() {
-				alert("Gracias por tu compra 🎉");
-				document.getElementById("mensaje-compra").style.display = "block";
-				document.getElementById("boton-volver").style.display = "block";
+
+function mostrarCarrito() {
+				let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+				let carritoDiv = document.getElementById("carrito");
+				let mensajeVacio = document.getElementById("mensaje-vacio");
+				carritoDiv.innerHTML = "";
+				if (carrito.length === 0) {
+					mensajeVacio.style.display = "block";
+				} else {
+					mensajeVacio.style.display = "none";
+					carrito.forEach((producto, index) => {
+						carritoDiv.innerHTML += `<p>${producto.nombre} - CLP$${producto.precio} <button onclick="eliminarProducto(${index})">Eliminar</button></p>`;
+					});
+				}
 			}
+
+			function eliminarProducto(index) {
+				let carrito = JSON.parse(localStorage.getItem("carrito"));
+				carrito.splice(index, 1);
+				localStorage.setItem("carrito", JSON.stringify(carrito));
+				mostrarCarrito();
+			}
+
+			function verificarCompra() {
+				document.getElementById("mensaje-compra").style.display = "block";
+				localStorage.removeItem("carrito");
+				mostrarCarrito();
+			}
+			
+			mostrarCarrito();
+
 		</script>
 		
 		<footer>

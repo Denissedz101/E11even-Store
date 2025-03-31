@@ -10,6 +10,12 @@
 
     <header>
         <h1 class="titulo">Juegos de Acción</h1>
+        <!-- agregamos carrito para simualcion de compra -->
+        <div class="carrito-icono">
+            <a href="/carro_compras.html">
+                🛒 <span id="contador-carrito">0</span>
+            </a>
+        </div>
     </header>
 
     <div class="game-list">
@@ -20,7 +26,7 @@
                 <p><b>Precio: CLP$49.990</b></p>
                 <button class="details-btn" onclick="toggleDescripcion('desc1')">Más detalles</button>
                 <p class="descripcion" id="desc1">En esta ocasión encarnamos a Basim, un joven ladrón callejero al que acompañamos en su periplo para convertirse en un maestro de los Asesinos. Desarrollado por Ubisoft Bordeaux, su historia nos lleva a la ciudad de Bagdad del siglo IX, en pleno califato Abasí, para descubrir nuestro pasado y acabar con la amenaza de los miembros de la Orden que controlan la ciudad.</p>
-                <button class="add-to-cart">Añadir al carrito</button>
+                <button onclick="agregarAlCarrito('Assassins Creed Mirage', 49990)">Añadir al carrito</button>
             </div>
         </div>
 
@@ -31,7 +37,7 @@
                 <p><strong>Precio: CLP$39.990</strong></p>
                 <button class="details-btn" onclick="toggleDescripcion('desc2')">Más detalles</button>
                 <p class="descripcion" id="desc2">or primera vez, SF6 ofrece una experiencia narrativa inmersiva en constante evolución que le da poder al jugador para crear su propio Guerrero Mundial y participar verdaderamente en el Universo Street Fighter. SF6 proporciona la experiencia de lucha estándar para que los profesionales tanto ocasionales como probados en batalla puedan disfrutar en los años venideros.</p>
-                <button class="add-to-cart">Añadir al carrito</button>
+                <button onclick="agregarAlCarrito('Street Fighter 6', 39990)">Añadir al carrito</button>
             </div>
         </div>
     </div>
@@ -51,6 +57,22 @@
                 descripcion.style.display = "none";
             }
         }
+        
+        //agregamos fx actualizar carrito y agregar productos para simulacion compra //
+        function actualizarContadorCarrito() {
+            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+            document.getElementById("contador-carrito").textContent = carrito.length;
+        }
+        
+        function agregarAlCarrito(nombre, precio) {
+            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+            carrito.push({ nombre, precio });
+            localStorage.setItem("carrito", JSON.stringify(carrito));
+            actualizarContadorCarrito();
+        }
+        
+        actualizarContadorCarrito();
+
     </script>
 
 </body>
