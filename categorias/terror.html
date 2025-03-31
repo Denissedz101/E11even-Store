@@ -9,11 +9,14 @@
 <body>
 
     <!-- Header -->
-    <header class="header-terror">
-        <div class="logo">
-            <img src="https://i.ibb.co/GvXS0cZG/E11EVEN.png" alt="Logo E11even">
-        </div>
+    <header>
         <h1 class="titulo">Juegos de Terror</h1>
+        <!-- agregamos carrito para simulacion de compra -->
+        <div class="carrito-icono">
+            <a href="/carro_compras.html">
+                🛒 <span id="contador-carrito">0</span>
+            </a>
+        </div>
     </header>
 
     <!-- Lista de Juegos -->
@@ -25,7 +28,7 @@
                 <p><b>Precio: CLP$19.990</b></p>
                 <button onclick="toggleDescripcion('desc1')" class="details-btn">Más detalles</button>
                 <p class="descripcion" id="desc1">La historia se desarrolla en una época anterior a los incidentes de terrorismo biológico de Kijuju y Lanshiang, cuando la BSAA todavía era una organización joven...</p>
-                <button class="add-to-cart">Añadir al carrito</button>
+                <button onclick="agregarAlCarrito('Resident Evil Revelations', 19990)">Añadir al carrito</button>
             </div>
         </article>
         
@@ -36,7 +39,7 @@
                 <p><strong>Precio: CLP$75.990</strong></p>
                 <button onclick="toggleDescripcion('desc2')" class="details-btn">Más detalles</button>
                 <p class="descripcion" id="desc2">Un remake del SILENT HILL 2 de 2001 con nuevos gráficos de avanzada que incluyen trazado de rayos. Mira el perturbador mundo de Silent Hill como nunca antes...</p>
-                <button class="add-to-cart">Añadir al carrito</button>
+                <button onclick="agregarAlCarrito('Silent Hill 2 PS5', 75990)">Añadir al carrito</button>
             </div>
         </article>
     </div>
@@ -56,6 +59,22 @@
                 descripcion.style.display = "none";
             }
         }
+
+         //agregamos fx actualizar carrito y agregar productos para simulacion compra //
+         function actualizarContadorCarrito() {
+            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+            document.getElementById("contador-carrito").textContent = carrito.length;
+        }
+        
+        function agregarAlCarrito(nombre, precio) {
+            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+            carrito.push({ nombre, precio });
+            localStorage.setItem("carrito", JSON.stringify(carrito));
+            actualizarContadorCarrito();
+        }
+        
+        actualizarContadorCarrito();
+
     </script>
 
 </body>

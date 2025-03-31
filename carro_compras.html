@@ -34,15 +34,13 @@
 		
 		<!-- Mensaje de compra exitosa oculto -->
 		<div id="mensaje-compra" class="container text-center mt-5" style="display: none;">
-			<h2>¡Pago Realizado con Éxito!</h2>
-			<p>Se ha enviado un correo con los detalles de tu compra.</p>
+			<h2 id="titulo-compra"></h2>
+			<p id="detalle-compra"></p>
 			<a href="index.html" class="btn btn-primary">🠔 Volver al Inicio</a>
 		</div>
 		
-		
 		<script>
-
-function mostrarCarrito() {
+			function mostrarCarrito() {
 				let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 				let carritoDiv = document.getElementById("carrito");
 				let mensajeVacio = document.getElementById("mensaje-vacio");
@@ -65,13 +63,37 @@ function mostrarCarrito() {
 			}
 
 			function verificarCompra() {
-				document.getElementById("mensaje-compra").style.display = "block";
+				let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+				let tienePago = carrito.some(p => p.precio > 0);
+				let tieneGratis = carrito.some(p => p.precio === 0);
+				let titulo = document.getElementById("titulo-compra");
+				let detalle = document.getElementById("detalle-compra");
+
+				if (tieneGratis && !tienePago) {
+					titulo.innerText = "Descargando juego, espera por favor...";
+					detalle.innerText = "";
+					document.getElementById("mensaje-compra").style.display = "block";
+					setTimeout(() => {
+						titulo.innerText = "Gracias por la descarga";
+						detalle.innerText = "";
+						setTimeout(() => {
+							window.location.href = "index.html";
+						}, 2000);
+					}, 3000);
+				} else {
+					titulo.innerText = "¡Pago Realizado con Éxito!";
+					detalle.innerText = tieneGratis ? "Se ha enviado un correo con los detalles de tu compra y el link de descarga." : "Se ha enviado un correo con los detalles de tu compra.";
+					document.getElementById("mensaje-compra").style.display = "block";
+					setTimeout(() => {
+						window.location.href = "index.html";
+					}, 4000);
+				}
+
 				localStorage.removeItem("carrito");
 				mostrarCarrito();
 			}
 			
 			mostrarCarrito();
-
 		</script>
 		
 		<footer>

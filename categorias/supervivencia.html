@@ -11,6 +11,12 @@
 
     <header>
         <h1 class="titulo">Juegos de Supervivencia</h1>
+        <!-- agregamos carrito para simulacion de compra -->
+        <div class="carrito-icono">
+            <a href="/carro_compras.html">
+                🛒 <span id="contador-carrito">0</span>
+            </a>
+        </div>
     </header>
 
     <div class="game-list">
@@ -20,7 +26,7 @@
             <p><b>Precio: CLP$25.690</b></p>
             <button onclick="toggleDescripcion('desc1')">Más detalles</button>
             <p class="descripcion" id="desc1">Ubisoft presenta con For Honor un videojuego medieval con especial énfasis en la cooperación entre varios jugadores por equipos, que destaca por sus violentos combates y poderoso apartado gráfico.</p>
-            <button class="add-to-cart">Añadir al carrito</button>
+            <button onclick="agregarAlCarrito('For Honor', 25690)">Añadir al carrito</button>
         </article>
         
         <article>
@@ -29,7 +35,7 @@
             <p><b>Precio: CLP$19.990</b></p>
             <button onclick="toggleDescripcion('desc2')">Más detalles</button>
             <p class="descripcion" id="desc2">Fortnite es un videojuego de Epic Games que nos transporta a un mundo sandbox donde explorar, construir y sobrevivir a los peligros de la noche.</p>
-            <button class="add-to-cart">Añadir al carrito</button>
+            <button onclick="agregarAlCarrito('Darkfire Bundle Switch', 19990)">Añadir al carrito</button>
         </article>
     </div>
 
@@ -48,6 +54,22 @@
                 descripcion.style.display = "none";
             }
         }
+
+         //agregamos fx actualizar carrito y agregar productos para simulacion compra //
+         function actualizarContadorCarrito() {
+            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+            document.getElementById("contador-carrito").textContent = carrito.length;
+        }
+        
+        function agregarAlCarrito(nombre, precio) {
+            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+            carrito.push({ nombre, precio });
+            localStorage.setItem("carrito", JSON.stringify(carrito));
+            actualizarContadorCarrito();
+        }
+        
+        actualizarContadorCarrito();
+
     </script>
 
 </body>

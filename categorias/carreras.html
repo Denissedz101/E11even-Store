@@ -10,11 +10,14 @@
 <body>
 
    <!-- Header -->
-   <header class="Carreras">
-    <div class="logo">
-        <img src="https://i.ibb.co/GvXS0cZG/E11EVEN.png" alt="Logo E11even">
-    </div>
+   <header>
     <h1 class="titulo">Juegos de Carreras</h1>
+    <!-- agregamos carrito para simulacion de compra -->
+    <div class="carrito-icono">
+        <a href="/carro_compras.html">
+            🛒 <span id="contador-carrito">0</span>
+        </a>
+    </div>
 </header>
 
     <!-- Lista de Juegos -->
@@ -26,7 +29,7 @@
                 <p><b>Precio: CLP$20.990</b></p>
                 <button onclick="toggleDescripcion('desc1')" class="details-btn">Más detalles</button>
                 <p class="descripcion" id="desc1">Esta última adición a la franquicia Need for Speed de Criterion Games ofrece campañas de un jugador y multijugador, con carreras electrizantes llenas de adrenalina.</p>
-                <button class="add-to-cart">Añadir al carrito</button>
+                <button onclick="agregarAlCarrito('Need For Speed Unbound', 20990)">Añadir al carrito</button>
             </div>
         </article>
         
@@ -37,7 +40,7 @@
                 <p><strong>Precio: CLP$59.990</strong></p>
                 <button onclick="toggleDescripcion('desc2')" class="details-btn">Más detalles</button>
                 <p class="descripcion" id="desc2">Compite en carreras emocionantes y eventos temáticos en este paraíso automovilístico con cientos de vehículos legendarios</p>
-                <button class="add-to-cart">Añadir al carrito</button>
+                <button onclick="agregarAlCarrito('The Crew Motorfest', 59990)">Añadir al carrito</button>
             </div>
         </article>
     </div>
@@ -57,6 +60,22 @@
                 descripcion.style.display = "none";
             }
         }
+
+         //agregamos fx actualizar carrito y agregar productos para simulacion compra //
+         function actualizarContadorCarrito() {
+            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+            document.getElementById("contador-carrito").textContent = carrito.length;
+        }
+        
+        function agregarAlCarrito(nombre, precio) {
+            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+            carrito.push({ nombre, precio });
+            localStorage.setItem("carrito", JSON.stringify(carrito));
+            actualizarContadorCarrito();
+        }
+        
+        actualizarContadorCarrito();
+
     </script>
 
 </body>
