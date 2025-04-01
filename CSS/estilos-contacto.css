@@ -142,12 +142,22 @@ button:hover {
 }
 
 
-/* Texto de derechos reservados */
-.footer-text {
-    font-size: 0.9em; /* Tamaño de fuente pequeño */
-    margin: 0; /* Elimina márgenes */
+footer {
+    background: #333333;
     color: #ffffff;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos se ubiquen en columna */
+    align-items: center;
+    width: 100%;
+    position: center;
 }
+
+.footer-text {
+    text-align: center;
+    margin-top: 15px;
+}
+
 
 /*estilos boton volver inicio*/
 .back-btn {
