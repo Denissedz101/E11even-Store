@@ -6,16 +6,16 @@ body {
     background-image: url('https://img.freepik.com/premium-photo/blue-purple-futuristic-gaming-background_1128796-3333.jpg');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     color: none;
     padding: 20px;
 	width: 100%; 
 	height: 100px;
-	background-repeat: no-repeat; 
     display: grid;
     place-items: center;
     height: 100vh;
     margin: 0;
+    backdrop-filter: blur(5px);
 }
 
 /* Estilos del Header */
@@ -30,9 +30,27 @@ header {
 
 .header-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Distribuye elementos */
     align-items: center;
-    width: 100%;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.7); /* Negro con 70% de opacidad */
+    color: white;
+}
+
+/* Redes Sociales en el Header */
+.social-header {
+    display: flex;
+    gap: 10px; /* Espacio entre iconos */
+}
+
+.social-header a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.social-header a:hover {
+    text-decoration: underline;
 }
 
 .logo img {
@@ -86,7 +104,7 @@ header {
 
 /* Contenedor del formulario */
 .form-container {
-    background: rgba(250, 237, 237, 0.5);
+    background: rgba(255, 255, 255, 0.25); 
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -125,6 +143,9 @@ input, textarea {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-weight: bold;
+    text-align: left;
+   
 }
 
 /* Botón de envío */
@@ -143,33 +164,21 @@ button:hover {
 
 
 footer {
-    background: #333333;
+    background: rgba(0, 0, 0, 0.7); /* Negro con 70% de opacidad */
     color: #ffffff;
     padding: 10px 20px;
     display: flex;
-    flex-direction: column; /* Asegura que los elementos se ubiquen en columna */
+    justify-content: center; /* Centra el texto horizontalmente */
     align-items: center;
+    position: fixed; /* Fija el footer en la parte inferior */
+    bottom: 0;
     width: 100%;
-    position: center;
+    z-index: 10;
 }
 
+/* Texto de derechos reservados */
 .footer-text {
-    text-align: center;
-    margin-top: 15px;
-}
-
-
-/*estilos boton volver inicio*/
-.back-btn {
-	background-color: #551168;
-	color: white;
-	display: inline-block; 
-	padding: 10px 20px;
-	border-radius: 20px;
-	text-decoration: none;
-	font-weight: bold;
-	transition: background-color 0.3s;
-	font-size: 16px; 
-	width: auto; 
-	text-align: center;
+    font-size: 0.9em; /* Tamaño de fuente pequeño */
+    margin: 0; /* Elimina márgenes */
+    color: #ffffff;
 }
