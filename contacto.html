@@ -54,36 +54,36 @@
                 </div>
             </div>
     
-        <div class="container">
-        <div id="form-container" class="mx-auto mt-4" style="max-width: 700px; background-color: rgba(198, 129, 230, 0.65); padding: 20px; width: 50vw; border-radius: 15px;">
+    <div class="container">
+        <div id="form-container" class="mx-auto mt-4" style="max-width: 700px; background-color: rgba(217, 167, 240, 0.65); padding: 20px; width: 50vw; border-radius: 15px;">
 
-        <h2>Contactanos</h2> 
-        <form onsubmit="confirmarEnvio(event)">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
+            <h2>Contactanos</h2> 
+            <form onsubmit="confirmarEnvio(event)">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
 
-            <label for="email">Correo Electrónico:</label>
-            <input type="email" id="email" name="email" required>
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" required>
 
-            <label for="mensaje">Mensaje:</label>
-            <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+                <label for="mensaje">Mensaje:</label>
+                <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
 
-            <a href="index.html">
-                <button type="button">Enviar</button>
-            </a>
-            
-        </form>
+                <a href="index.html">
+                    <button type="button">Enviar</button>
+                </a>
+            </form>
+        </div>
     </div>
     
-    <script>
+        <script>
         function confirmarEnvio(event) {
             event.preventDefault(); 
             alert("Mensaje enviado"); // mensaje de confirmación
             window.location.href = "index.html"; // Redirige a la página de inicio
-        }
-    </script>
+            }
+        </script>
 
-    <!-- Footer -->
+        <!-- Footer -->
     <footer>
         <p class="footer-text">&copy; 2025 Store E11even - Todos los derechos reservados</p>
     </footer>

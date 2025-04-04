@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/estilos-carrito.css">  
 	</head>
 	
-	<body>
+	<body class="d-flex flex-column min-vh-100">
 		<div class="top-bar">
 			<div class="contact-info">
 				<i class="bi bi-envelope me-2"></i>
@@ -32,7 +32,7 @@
 			</div>
 		</div>
 		
-		<div class="main-content">
+		<div class="main-content flex-grow-1">
 		
 				<div class="header-container">
 					<div class="logo">
@@ -53,12 +53,13 @@
 					</div>
 				</div>
 
-	<div class="container">
-		<div id="carrito-container" class="mx-auto mt-4" style="max-width: 700px; background-color: rgba(198, 129, 230, 0.65); padding: 20px; border-radius: 15px;">
+			<div class="container">
+				
+				<div id="carrito-container" class="mx-auto mt-4" style="max-width: 700px; background-color: rgba(198, 129, 230, 0.65); padding: 20px; border-radius: 15px;">
 
-			<div id="mensaje-vacio">Aún no hay productos agregados al carrito de compras</div>
-			<div id="carrito"></div>
-			<div class="comprar-container text-center mt-4">
+				<div id="mensaje-vacio">Aún no hay productos agregados al carrito de compras</div>
+				<div id="carrito"></div>
+				<div class="comprar-container text-center mt-4">
 				<button class="btn btn-success" onclick="verificarCompra()">Comprar</button>
 			</div>
 		</div>
