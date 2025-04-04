@@ -3,42 +3,59 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="css/estilos-carrito.css">
+    	<title>Carro de compras</title>
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/estilos-carrito.css">  
 	</head>
+	
 	<body>
-		<header>
-			<div class="header-container">
-				<div class="logo">
-					<img src="https://i.ibb.co/GvXS0cZG/E11EVEN.png" alt="Logo">
-				</div>
-
-				<!-- Redes Sociales -->
-				<div class="social-header">
-					<a href="https://www.facebook.com/e11even_store" target="_blank">
-							 <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="30">
-						 </a>
-						 <a href="https://www.twitter.com/e11even_store" target="_blank">
-							 <img src="https://cdn-icons-png.flaticon.com/512/124/124021.png" alt="Twitter" width="30">
-							 </a>
-						 <a href="https://www.instagram.com/e11even_store" target="_blank">
-							 <img src="https://cdn-icons-png.flaticon.com/512/1409/1409946.png" alt="Instagram" width="30">
-						 </a>
-				 </div>		 
-
-				<div class="nav-menu">
-					<ul>
-						<li><a href="index.html">🏠 Inicio</a></li>
-						<li><a href="menu-categorias.html">≣ Categorías</a></li>
-						<li><a href="carro_compras.html">🛒 Carrito</a></li>
-						<li><a href="contacto.html">✉ Contacto</a></li>
-						<li><a href="inicio_sesion.html"><span class="registro-link">Ingresa a tu cuenta</span></a></li>
-						<li><a href="formulario_registro.html" class="login-btn">Registrate</a></li>
-					</ul>
-				</div>
+		<div class="top-bar">
+			<div class="contact-info">
+				<i class="bi bi-envelope me-2"></i>
+				<span>Contacto_E11ven@gmail.com</span>
+				<i class="bi bi-geo-alt ms-4 me-2"></i>
+				<span> Los Leones 143, Providencia, Region Metropolitana | Chile</span>
 			</div>
-		</header>
+	
+			<div class="social-icons">
+			  <a href="https://www.facebook.com/e11even_store" target="_blank">
+						 <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="30">
+					 </a>
+				<a href="https://www.twitter.com/e11even_store" target="_blank">
+						 <img src="https://cdn-icons-png.flaticon.com/512/124/124021.png" alt="Twitter" width="30">
+					</a>
+				<a href="https://www.instagram.com/e11even_store" target="_blank">
+						 <img src="https://cdn-icons-png.flaticon.com/512/1409/1409946.png" alt="Instagram" width="30">
+					</a>
+			</div>
+		</div>
 		
-		<div id="carrito-container">
+		<div class="main-content">
+		
+				<div class="header-container">
+					<div class="logo">
+						<img src="img/logo11Store.png" alt="Logo de la tienda">
+					</div>
+	
+					<div class="nav-menu">
+						<ul>
+							<li><a href="index.html">🏠 Inicio</a></li>
+							<li><a href="menu-categorias.html">≣ Categorías</a></li>
+							<li><a href="carro_compras.html">🛒 Carrito</a></li>
+							<li><a href="contacto.html">✉ Contacto</a></li>
+							<li><a href="inicio_sesion.html">
+								<span class="registro-link">Ingresa a tu cuenta</span> </a>
+							</li>
+							<li><a href="formulario_registro.html" class="login-btn">Registrate</a></li>
+						</ul>
+					</div>
+				</div>
+
+	<div class="container">
+		<div id="carrito-container" class="mx-auto mt-4" style="max-width: 700px; background-color: rgba(198, 129, 230, 0.65); padding: 20px; border-radius: 15px;">
+
 			<div id="mensaje-vacio">Aún no hay productos agregados al carrito de compras</div>
 			<div id="carrito"></div>
 			<div class="comprar-container text-center mt-4">
@@ -50,12 +67,14 @@
 		<div id="mensaje-compra" class="container text-center mt-5" style="display: none;">
 			<h2 id="titulo-compra"></h2>
 			<p id="detalle-compra"></p>
-			<a href="index.html" class="btn btn-primary">🠔 Volver al Inicio</a>
 		</div>
 
-		  <!-- Botón para volver al inicio -->
-		  <a href="index.html" class="back-btn"> 🠔 Volver a Inicio</a>
-		
+		<div id="back-btn" class="container text-center mt-2">
+			<a href="index.html" class="back-btn">🠔 Volver a Inicio</a>
+		  </div>
+		  
+
+
 		<script>
 			function mostrarCarrito() {
 				let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
@@ -116,5 +135,7 @@
 		<footer>
 			<p class="footer-text">&copy; 2025 Store E11even - Todos los derechos reservados</p>
 		</footer>
+		
+	</div>
 	</body>
 </html>

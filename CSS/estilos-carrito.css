@@ -1,124 +1,150 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: #431b7c;
-    background-image: url('https://img.freepik.com/premium-photo/blue-purple-futuristic-gaming-background_1128796-3333.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: repeat;
-    color: none;
-    padding: 20px;
-	width: 100%; 
-	height: 100px;
-    display: grid;
-    place-items: center;
-    height: 100vh;
-    margin: 0;
-    backdrop-filter: blur(5px);
+/* ===== ESTILOS GENERALES ===== */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
-/* Estilos del Header */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.7); /* Negro con 70% de opacidad */
-    padding: 15px 30px;
-    border-bottom: 3px solid #f6450d; /* Cambié el color de la línea de separación a #f6450d */
+html, body {
+	width: 100%;
+	height: 100%;
+	font-family: Arial, sans-serif;
+	background-color: #431b7c;
+	background-image: url('https://img.freepik.com/premium-photo/blue-purple-futuristic-gaming-background_1128796-3333.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: repeat;
+	backdrop-filter: blur(5px);
+	display: flex;
+	flex-direction: column;
 }
+
+/* ===== TOP BAR ===== */
+
+.top-bar {
+	background: linear-gradient(to right, rgba(38, 8, 29, 0.85), rgba(70, 14, 78, 0.85), rgba(30, 4, 31, 0.85));
+	color: white;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px 50px;
+	flex-wrap: wrap;
+}
+
+.top-bar .contact-info {
+	display: flex;
+	align-items: center;
+}
+
+.top-bar .social-icons a {
+	color: black;
+	font-size: 18px;
+	margin-left: 15px;
+	text-decoration: none;
+}
+
+.top-bar .social-icons a:hover {
+	color: #555;
+}
+
+/* ===== HEADER ===== */
 
 .header-container {
-    display: flex;
-    justify-content: space-between; /* Distribuye elementos */
-    align-items: center;
-    padding: 10px 20px;
-    background: rgba(0, 0, 0, 0.7); /* Negro con 70% de opacidad */
-    color: white;
-}
-
-/* Redes Sociales en el Header */
-.social-header {
-    display: flex;
-    gap: 10px; /* Espacio entre iconos */
-}
-
-.social-header a {
-    color: white;
-    text-decoration: none;
-    font-size: 0.9em;
-}
-
-.social-header a:hover {
-    text-decoration: underline;
-}
+	width: 100%;
+	background: linear-gradient(to right, rgba(30, 4, 31, 0.70), rgba(38, 6, 42, 0.70), rgba(47, 7, 35, 0.70));
+	color: white;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px 50px;
+	flex-wrap: wrap;
+	}
 
 .logo img {
-    height: 70px; 
+	height: 100px;
 }
 
+/* ===== NAVIGATION MENU ===== */
+
 .nav-menu {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 20px;
 }
 
 .nav-menu ul {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    padding: 0;
-    margin: 0;
-}
-
-.nav-menu ul li {
-    display: inline;
+	list-style: none;
+	display: flex;
+	gap: 20px;
+	margin: 0;
+	padding: 0;
 }
 
 .nav-menu ul li a {
-    color: #ffffff; /* Color de los enlaces en blanco */
-    text-decoration: none;
-    font-size: 1.1em;
-    padding: 8px 12px;
-    transition: color 0.3s;
+	color: #ffffff;
+	text-decoration: none;
+	font-size: 1.1em;
+	padding: 8px 12px;
+	transition: color 0.3s;
 }
 
 .nav-menu ul li a:hover {
-    color: #f6450d; /* Cambié el color del hover a #f6450d */
+	color: #7f1172;
 }
 
-/* Estilo específico para el botón de inicio de sesión / registro */
 .nav-menu ul li a.login-btn {
-    background-color: #000000; /* Fondo negro */
-    color: #ffffff; /* Texto blanco */
-    border-radius: 20px;
-    padding: 10px 20px;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: background-color 0.3s, color 0.3s;
+	background-color: #d2470f;
+	color: #ffffff;
+	border-radius: 20px;
+	padding: 10px 20px;
+	font-weight: bold;
+	text-transform: uppercase;
+	transition: background-color 0.3s, color 0.3s;
 }
 
 .nav-menu ul li a.login-btn:hover {
-    background-color: #f67b46; 
-    color: #000000; /* Color del texto en hover */
+	background-color: #151a78;
+	color: #f9f7f7;
 }
 
 
-#carrito-container {
-    background: rgba(255, 255, 255, 0.3); 
-    padding: 20px;
+/* ===== LISTA CARRITO ===== */
+
+ul#carrito {
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
+    width: 100%; /* Ocupa todo el contenedor */
+    background: rgba(255, 255, 255, 0.1); /* Suave transparencia */
     border-radius: 10px;
-    margin: 20px;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+    color: white;
 }
 
-/* Productos dentro del carrito */
+
+ul#carrito li {
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+/* ===== PRODUCTO CARRITO ===== */
+
 .producto {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+    width: 100%;
+    color: white;
 }
 
-/* Botón de eliminar */
+
+/* ===== BTN ELIMINAR ===== */
 button {
     background-color: #ff4d4d;
     color: white;
@@ -133,14 +159,14 @@ button:hover {
     background-color: #cc0000;
 }
 
-/* Contenedor del botón de compra */
+/* ===== CONTENEDOR COMPRA ===== */
 .comprar-container {
     text-align: center;
     padding: 15px;
     margin-top: 10px;
 }
 
-/* Botón comprar */
+/* ===== BTN COMPRAR  ===== */
 .btn-comprar {
     background-color: #28a745;
     color: white;
@@ -153,75 +179,66 @@ button:hover {
 }
 
 .btn-comprar:hover {
-    background-color: #218838;
+    background-color: #bd4d11;
 }
 
-/* Lista del carrito */
-ul#carrito {
-    list-style: none;
-    padding: 0;
-    margin: 20px auto;
-    width: 50%;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-   
-}
 
-ul#carrito li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
 
-/*estilos boton volver inicio*/
+/* ===== BTN VOLVER INICIO ===== */
+
 .back-btn {
-    background-color: #4e0f67;
-    color: white;
-    display: inline-block; 
-    padding: 10px 20px;
-    border-radius: 20px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s;
-    font-size: 16px; 
-    width: auto; 
+    display: block;
     text-align: center;
-}
+    margin: 30px auto;
+    font-size: 18px;
+    color: #fdfdfd;
+    background-color: #3f0f4a;
+    padding: 10px 20px;
+    border-radius: 10px;
+    width: fit-content;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
 
-.back-btn:hover {
-    background-color: #f0981c;
-}
+  .back-btn:hover {
+    background-color: #f0842b;
+  }
 
-/* Estilos generales del footer */
+/* ===== FOOTER ===== */
+
 footer {
-    background: rgba(0, 0, 0, 0.7); /* Negro con 70% de opacidad */
-    color: #ffffff;
-    padding: 20px 20px;
-    display: flex;
-    justify-content: center; /* Centra el texto horizontalmente */
-    align-items: center;
-    position: fixed; /* Fija el footer en la parte inferior */
-    bottom: 0;
-    width: 100%;
-    z-index: 10;
+	background: rgba(0, 0, 0, 0.7);
+	color: #ffffff;
+	padding: 10px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100vw; /* ancho de la ventana */
+	z-index: 10;
 }
 
-/* Texto de derechos reservados */
 .footer-text {
-    font-size: 0.9em; /* Tamaño de fuente pequeño */
-    margin: 0; /* Elimina márgenes */
-    color: #ffffff;
+	font-size: 0.9em;
+	margin: 0;
+	color: #ffffff;
 }
+
+/* ===== MENSAJE COMPRA ===== */
 
 #mensaje-compra {
-    display: none; /* Oculto por defecto */
-    background-color:  rgba(0, 0, 0, 0.8);
-    border: 2px solid #f8732a; 
-    border-radius: 10px; 
-    padding: 20px; /* Espaciado interno */
-    margin-top: 20px; /* Espaciado superior */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-    justify-content: center;
+        display: none;
+        background-color: rgba(0, 0, 0, 0.85);
+        border: 2px solid #f8732a;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+        text-align: center;
+        width: 100%;
+        color: white;  
 }
 
 #mensaje-compra h2 {
@@ -237,21 +254,8 @@ footer {
 #mensaje-vacio {
     text-align: center;
     font-size: 18px;
-    color: rgb(36, 35, 35);
+    color: white;
     margin-top: 20px;
 }
 
-/*estilos boton volver inicio*/
-.back-btn {
-	background-color: #551168;
-	color: white;
-	display: inline-block; 
-	padding: 10px 20px;
-	border-radius: 20px;
-	text-decoration: none;
-	font-weight: bold;
-	transition: background-color 0.3s;
-	font-size: 16px; 
-	width: auto; 
-	text-align: center;
-}
+

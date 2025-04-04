@@ -195,16 +195,17 @@ h2 {
 }
 
 footer {
-    background: rgba(0, 0, 0, 0.7); /* Negro con 70% de opacidad */
-    color: #ffffff;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: center; /* Centra el texto horizontalmente */
-    align-items: center;
-    position: fixed; /* Fija el footer en la parte inferior */
-    bottom: 0;
-    width: 100%;
-    z-index: 10;
+    background: rgba(0, 0, 0, 0.7);
+	color: #ffffff;
+	padding: 10px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100vw; /* ancho de la ventana */
+	z-index: 10;
 }
 
 /* Texto de derechos reservados */
