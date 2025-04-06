@@ -109,17 +109,6 @@ html, body {
 	color: #000000;
 }
 
-/* ===== MAIN CONTENT CONTENEDOR ===== */
-
-.main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    padding: 20px;
-	margin-bottom: 60px;
-}
-
 /* ===== CATEGORÍAS ===== */
 
 .categories-container {
@@ -372,21 +361,3 @@ footer {
 	color: #ffffff;
 }
 
-@media (max-width: 768px) {
-    .header-container,
-    .top-bar {
-        flex-direction: column;
-        align-items: center;
-        padding: 10px 20px;
-        text-align: center;
-    }
-
-    .nav-menu ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .carousel-container {
-        width: 100%;
-    }
-}
