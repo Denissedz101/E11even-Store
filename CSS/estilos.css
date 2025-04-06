@@ -28,7 +28,7 @@ html, body {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 15px 50px;
+	padding: 20px 50px;
 	flex-wrap: wrap;
 }
 
@@ -109,6 +109,17 @@ html, body {
 	color: #000000;
 }
 
+/* ===== MAIN CONTENT CONTENEDOR ===== */
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    padding: 20px;
+	margin-bottom: 60px;
+}
+
 /* ===== CATEGORÍAS ===== */
 
 .categories-container {
@@ -153,7 +164,7 @@ html, body {
 /* ===== CARRUSEL ===== */
 
 .carousel-container {
-	width: 70vw; /* 70% del ancho de la ventana */
+	width: 100vw; 
 	margin: 60px auto;
 	overflow: hidden;
 	position: relative;
@@ -162,6 +173,8 @@ html, body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	max-width: 900px; /* límite máximo */
+    padding: 0 20px;
 }
 
 .carousel {
@@ -172,7 +185,7 @@ html, body {
 
 .carousel img {
 	width: 100%;
-	height: auto;
+	height: 300px;
 	object-fit: cover;
 	border-radius: 10px;
 	flex-shrink: 0;
@@ -357,4 +370,23 @@ footer {
 	font-size: 0.9em;
 	margin: 0;
 	color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .header-container,
+    .top-bar {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 20px;
+        text-align: center;
+    }
+
+    .nav-menu ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .carousel-container {
+        width: 100%;
+    }
 }
