@@ -183,14 +183,9 @@ footer {
 	background: rgba(0, 0, 0, 0.7);
 	color: #ffffff;
 	padding: 10px 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100vw; /* ancho de la ventana */
-	z-index: 10;
+	text-align: center;
+	width: 100%;
+	margin-top: auto;
 }
 
 .footer-text {
@@ -200,6 +195,7 @@ footer {
 }
 
 /* ===== DERECHOS RESERVADOS ===== */
+
 .footer-text {
     font-size: 0.9em; 
     margin: 0;
