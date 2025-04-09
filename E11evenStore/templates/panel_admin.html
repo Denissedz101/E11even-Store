@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Panel de Administración</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+		
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+		<link rel="stylesheet" href="{% static 'css/estilos.css' %}"> 
+	</head>
+	
+	<body>
+		
+		<div class="top-bar">
+			<div class="contact-info">
+				<i class="bi bi-envelope me-2"></i>
+				<span>Contacto_E11ven@gmail.com</span>
+				<i class="bi bi-geo-alt ms-4 me-2"></i>
+				<span> Los Leones 143, Providencia, Region Metropolitana | Chile</span>
+			</div>
+			
+			<div class="social-icons">
+				<a href="https://www.facebook.com/e11even_store" target="_blank">
+					<img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="30">
+				</a>
+				<a href="https://www.twitter.com/e11even_store" target="_blank">
+					<img src="https://cdn-icons-png.flaticon.com/512/124/124021.png" alt="Twitter" width="30">
+				</a>
+				<a href="https://www.instagram.com/e11even_store" target="_blank">
+					<img src="https://cdn-icons-png.flaticon.com/512/1409/1409946.png" alt="Instagram" width="30">
+				</a>
+			</div>
+		</div>
+		
+		<div class="main-content">
+			
+            <div class="header-container">
+                <div class="logo">
+                    <img src="{% static 'img/logo11Store.png' %}" alt="Logo de la tienda">
+				</div>
+				
+                <div class="nav-menu">
+				<ul>
+					<li><a href="{% url 'inicio' %}">🏠 Inicio</a></li>
+					<li><a href="{% url 'menu_categorias' %}">≣ Categorías</a></li>
+					<li><a href="{% url 'carro_compras' %}">🛒 Carrito</a></li>
+					<li><a href="{% url 'contacto' %}">✉ Contacto</a></li>
+					<li><a href="{% url 'inicio_sesion' %}">🔐 Iniciar sesión</a></li>
+				<li><a href="{% url 'formulario_registro' %}" class="login-btn">Registrate</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="admin-container">
+        <h2 class="administrador">Panel de Administración</h2>
+		
+        <!-- Opciones de navegación -->
+        <ul class="nav nav-tabs justify-content-center mb-4">
+			<li class="nav-item">
+				<a class="nav-link active" href="#carrito" data-bs-toggle="tab">Carrito de Compras</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#productos" data-bs-toggle="tab">Productos</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#inventario" data-bs-toggle="tab">Inventario</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#compras" data-bs-toggle="tab">Compras</a>
+			</li>
+			</ul>
+			
+			<!-- Contenido de pestañas -->
+			<div class="tab-content">
+				<div class="tab-pane fade show active" id="carrito">
+					<h4>Carrito de Compras</h4>
+					<p>Pedido #1020233210</p>
+					<p>Pedido #1020253530</p>
+					<p>Pedido #1020256810</p>
+					<p>Pedido #1020278955</p>
+				</div>
+				
+				<div class="tab-pane fade" id="productos">
+					<h4>Registro y Modificación de Productos</h4>
+					<form>
+						<div class="mb-3">
+							<input
+							type="text"
+							class="form-control"
+							placeholder="Nombre del producto"
+							/>
+						</div>
+						<div class="mb-3">
+							<input
+							type="number"
+							class="form-control"
+							placeholder="Precio"
+							/>
+						</div>
+						<div class="mb-3">
+							<input
+							type="text"
+							class="form-control"
+							placeholder="Categoría"
+							/>
+						</div>
+						<button type="submit" class="btn btn-primary w-100">
+							Guardar Producto
+						</button>
+					</form>
+				</div>
+				
+				<div class="tab-pane fade" id="inventario">
+					<h4>Manejo del Inventario</h4>
+					<p>Aquí se muestra el stock de productos.</p>
+				</div>
+				
+				<div class="tab-pane fade" id="compras">
+					<h4>Monitoreo de Compras</h4>
+					<p>
+						Orden de Compra N°15214456 -
+						<a href="#">ver</a>
+					</p>
+					<p>
+						Orden de Compra N°15366512 -
+						<a href="#">ver</a>
+					</p>
+					<p>
+						Orden de Compra N°15889112 -
+						<a href="#">ver</a>
+					</p>
+					<p>
+						Orden de Compra N°15217884 -
+						<a href="#">ver</a>
+					</p>
+				</div>
+			</div>
+			
+			<!-- Botón para Cerrar Sesión -->
+			<div class="text-center mt-4">
+				<a href="{% url 'inicio' %}" class="btn btn-link">Cerrar Sesión</a>
+			</div>
+			</div>
+		</div>
+		
+		<!-- **** Script **** -->
+		
+		<!-- Bootstrap -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+		
+	</body>
+</html>

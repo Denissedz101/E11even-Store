@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- modificacion datos perfil usuario -->
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Mi Perfil</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+		<link rel="stylesheet" href="{% static 'css/estilos-registro.css' %}">
+	</head>
+	
+	<body>
+		
+		<!-- Header Común -->
+		<header>
+			<div class="header-container">
+				<div class="logo">
+					<img src="{% static 'img/logo11Store.png' %}" alt="Logo de la tienda">
+				</div>
+				
+				<!-- Redes Sociales -->
+				<div class="social-header">
+					<a href="https://www.facebook.com/e11even_store" target="_blank">
+						<img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="30">
+					</a>
+					<a href="https://www.twitter.com/e11even_store" target="_blank">
+						<img src="https://cdn-icons-png.flaticon.com/512/124/124021.png" alt="Twitter" width="30">
+					</a>
+					<a href="https://www.instagram.com/e11even_store" target="_blank">
+						<img src="https://cdn-icons-png.flaticon.com/512/1409/1409946.png" alt="Instagram" width="30">
+					</a>
+				</div>
+				
+				<div class="nav-menu">
+					<ul>
+						<li><a href="{% url 'inicio' %}">🏠 Inicio</a></li>
+						<li><a href="{% url 'menu_categorias' %}">≣ Categorías</a></li>
+						<li><a href="{% url 'carro_compras' %}">🛒 Carrito</a></li>
+						<li><a href="{% url 'contacto' %}">✉ Contacto</a></li>
+						<li><a href="{% url 'inicio_sesion' %}">🔐 Iniciar sesión</a></li>
+					<li><a href="{% url 'formulario_registro' %}" class="login-btn">Registrate</a></li>
+				</ul>
+			</div>
+		</div>
+	</header>
+	
+	<div class="usuario-container">
+		<h2 class="text-center">Modificar datos en tu cuenta</h2>
+		<form id="perfilForm">
+			<div class="row mb-3">
+				
+				<label for="nombre" class="col-sm-3 col-form-label">Nombre:</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="nombre" value="Dato actual">
+				</div>
+				<label for="apellido" class="col-sm-3 col-form-label">Apellido:</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="apellido" value="Dato actual">
+				</div>
+				<label for="rut" class="col-sm-3 col-form-label">Rut:</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="rut" value="Dato actual">
+				</div>
+				<label for="direccion" class="col-sm-3 col-form-label">Direccion:</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="direccion" value="Dato actual">
+				</div>
+				<label for="email" class="col-sm-3 col-form-label">email:</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="email" value="Dato actual">
+				</div>
+				
+			</div>
+			
+			<div class="row">
+				<div class="col text-center">
+					<button type="submit" class="btn btn-primary">Guardar cambios</button>
+				</div>
+			</div>
+			</form>
+			<div class="text-center mt-3">
+				<a href="{% url 'inicio' %}" class="btn btn-link">🠔 Volver al Inicio</a>
+			</div>
+			
+			<div class="text-center mt-3">
+				<a href="#" class="btn btn-link">
+					<i class="bi bi-bag"></i> Ver tus compras
+				</a>
+			</div>
+			
+		</div>
+		<!-- **** Script **** -->
+		
+		<!-- Bootstrap -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+		
+		<script>
+			// Función para obtener parámetros de la URL
+			function obtenerParametro(nombre) {
+				const params = new URLSearchParams(window.location.search);
+				return params.get(nombre) || "Dato actual"; // Si no hay dato, muestra "Dato actual"
+			}
+			
+			// Asignar los valores a los inputs
+			document.getElementById("nombre").value = obtenerParametro("nombre");
+			document.getElementById("apellido").value = obtenerParametro("apellido");
+			document.getElementById("rut").value = obtenerParametro("rut");
+			document.getElementById("direccion").value = obtenerParametro("direccion");
+			document.getElementById("email").value = obtenerParametro("email");
+		</script>
+		
+	</body>
+</html>
