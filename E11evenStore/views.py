@@ -50,3 +50,4 @@ def terror(request):
 def contador_carrito(request):
     total = Carrito.objects.filter(usuario=request.user).count()
     return JsonResponse({'total': total})
+
