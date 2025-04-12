@@ -1,3 +1,18 @@
 from django.contrib import admin
+from .models import Cliente
+from .models import Administrativo
 
-# Register your models here.
+
+class clienteAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'apellidos', 'rut', 'correo',)
+    search_fields = ('nombre','apellidos', 'rut',)
+ 
+    
+class AdministrativoAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'apellidos', 'rut', 'correo',)
+    search_fields = ('nombre','apellidos', 'rut',)
+    
+    
+admin.site.register(Cliente, clienteAdmin)
+admin.site.register(Administrativo, AdministrativoAdmin)
+
