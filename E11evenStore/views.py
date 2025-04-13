@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import Carrito 
 from .forms import LoginForm
@@ -23,11 +23,11 @@ def inicio_sesion(request):
 def menu_categorias(request):
     return render(request, 'menu_categorias.html')
 
-def modif_datos_usuario(request):
-    return render(request, 'modif_datos_usuario.html')
+def login_cliente(request):
+    return render(request, 'login_cliente.html')
 
-def panel_admin(request):
-    return render(request, 'panel_admin.html')
+def login_admin(request):
+    return render(request, 'login_admin.html')
     
     # categorias menu #
 def accion(request):
@@ -54,7 +54,7 @@ def contador_carrito(request):
     total = Carrito.objects.filter(usuario=request.user).count()
     return JsonResponse({'total': total})
 
-# clientes y admin
+# login_cliente
 def inicio_sesion(request):
     form = LoginForm()
     if request.method == "POST":
@@ -63,28 +63,38 @@ def inicio_sesion(request):
             correo = form.cleaned_data['correo']
             contraseña = form.cleaned_data['contraseña']
             
-            # Buscamos si el correo y contraseña estan en la bd
             try:
-                usuario_cliente = cliente.objects.get(correo=correo, contraseña=contraseña)
-                return redirect('modif_datos_usuario')
-            except cliente.DoesNotExist:
-                form.add_error(None, "Correo o contraseña incorrectos.")
+                usuario_cliente = Cliente.objects.get(correo=correo, contraseña=contraseña)
+                return redirect('login_cliente') 
+            except Cliente.DoesNotExist:
+                form.add_error(None, "Usuario no encontrado o datos incorrectos.")
     
     return render(request, 'inicio_sesion.html', {'form': form})
 
+# inicio sesion
 
-def login_admin(request):
+def inicio_sesion(request):
     form = LoginForm()
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
             correo = form.cleaned_data['correo']
             contraseña = form.cleaned_data['contraseña']
-            
-            try:
-                usuario_admin = administrativo.objects.get(correo=correo, contraseña=contraseña)
-                return redirect('panel_admin')
-            except administrativo.DoesNotExist:
-                form.add_error(None, "Acceso denegado.")
-    
-    return render(request, 'login_admin.html', {'form': form})
+            es_admin = request.POST.get("es_admin")  # ← valor "1" si es admin
+
+            if es_admin == "1":
+                # Login como administrador
+                try:
+                    usuario_admin = Administrativo.objects.get(correo=correo, contraseña=contraseña)
+                    return redirect('login_admin')
+                except Administrativo.DoesNotExist:
+                    form.add_error(None, "Acceso denegado. Administrador no registrado o contraseña incorrecta.")
+            else:
+                # Login como cliente
+                try:
+                    usuario_cliente = Cliente.objects.get(correo=correo, contraseña=contraseña)
+                    return redirect('login_cliente')
+                except Cliente.DoesNotExist:
+                    form.add_error(None, "Correo o contraseña incorrectos.")
+
+    return render(request, 'inicio_sesion.html', {'form': form})
