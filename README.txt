@@ -33,7 +33,8 @@ Tienda de venta de videojuegos.
 			'PASSWORD': 'Oracle123'
 
 	➡️ La base de datos se conecto a traves de Oracle sql developer.
-		
+	➡️ Recuerda modificar este acceso desde settings.py --> DATABASES
+	
 
 🔎 Ejecutamos el servidor local:
 
