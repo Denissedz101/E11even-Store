@@ -4,12 +4,12 @@ from .models import Administrativo
 
 
 class clienteAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'apellidos', 'rut', 'correo',)
+    list_display = ('nombre', 'apellidos', 'rut', 'email',)
     search_fields = ('nombre','apellidos', 'rut',)
  
     
 class AdministrativoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'apellidos', 'rut', 'correo',)
+    list_display = ('nombre', 'apellidos', 'rut', 'email',)
     search_fields = ('nombre','apellidos', 'rut',)
     
     

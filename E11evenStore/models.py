@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+# Registro compras
 class Carrito(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     producto = models.CharField(max_length=255)
@@ -10,31 +11,36 @@ class Carrito(models.Model):
     def __str__(self):
         return f"{self.producto} x{self.cantidad} - {self.usuario.username}"
     
-# Registro usuarios y administrativos
-
+# Registro usuarios 
 class Cliente(models.Model):
     rut = models.CharField(unique=True, max_length=12)
     nombre = models.CharField(max_length=200)
     apellidos = models.CharField(max_length=200)
     usuario = models.CharField(max_length=150)
-    correo = models.EmailField(unique=True)
-    contraseña = models.CharField(max_length=128)
-    fecha_nacimiento = models.DateField()
+    email = models.EmailField(unique=True)
+    clave = models.CharField(max_length=128)
+    fechaNacimiento = models.DateField()
     direccion = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        db_table = 'E11EVENSTORE_CLIENTES'
 
     def __str__(self):
         return f"Cliente: {self.nombre} {self.apellidos}"
 
+# Registro administrativos
 class Administrativo(models.Model):
     rut = models.CharField(unique=True, max_length=12)
     nombre = models.CharField(max_length=200)
     apellidos = models.CharField(max_length=200)
     usuario = models.CharField(max_length=150)
-    correo = models.EmailField(unique=True)
-    contraseña = models.CharField(max_length=128)
-    fecha_nacimiento = models.DateField()
+    email = models.EmailField(unique=True)
+    clave = models.CharField(max_length=128)
+    fechaNacimiento = models.DateField()
     direccion = models.CharField(max_length=255, blank=True, null=True)
     
+    class Meta:
+        db_table = 'E11EVENSTORE_ADMINISTRATIVOS'
 
     def __str__(self):
         return f"Administrativo: {self.nombre} {self.apellidos}"

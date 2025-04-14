@@ -4,6 +4,9 @@ from .models import Carrito
 from .forms import LoginForm
 from .models import Administrativo
 from .models import Cliente
+from .forms import RegistroForm
+from django.contrib import messages
+
 
 def inicio(request):
     return render(request, 'index.html')
@@ -49,21 +52,19 @@ def terror(request):
     return render(request, 'terror.html')
 
 #contador carrito
-
 def contador_carrito(request):
     total = Carrito.objects.filter(usuario=request.user).count()
     return JsonResponse({'total': total})
 
 # login_cliente
-
 def login_cliente(request):
-    correo = request.session.get("correo_cliente")
+    correo = request.session.get("email_cliente")
 
     if not correo:
         return redirect('inicio_sesion')  # Por si intenta entrar sin loguearse
 
     try:
-        cliente = Cliente.objects.get(correo=correo)
+        cliente = Cliente.objects.get(email=correo)
     except Cliente.DoesNotExist:
         return redirect('inicio_sesion')
 
@@ -76,31 +77,43 @@ def login_cliente(request):
     return render(request, 'login_cliente.html', {'cliente': cliente})
 
 
-# inicio sesion
+# login admin
 
 def inicio_sesion(request):
     form = LoginForm()
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-            correo = form.cleaned_data['correo']
-            contraseña = form.cleaned_data['contraseña']
+            correo = form.cleaned_data['email']
+            contraseña = form.cleaned_data['clave']
             es_admin = request.POST.get("es_admin")
 
             if es_admin == "1":
                 try:
                     admin = Administrativo.objects.get(correo=correo, contraseña=contraseña)
-                    request.session['correo_admin'] = admin.correo
+                    request.session['email_admin'] = admin.correo
                     return redirect('login_admin')
                 except Administrativo.DoesNotExist:
                     form.add_error(None, "Acceso denegado. Administrador no registrado.")
             else:
                 try:
-                    cliente = Cliente.objects.get(correo=correo, contraseña=contraseña)
-                    request.session['correo_cliente'] = cliente.correo  # 🔐 Aquí lo guardas
+                    cliente = Cliente.objects.get(email=correo, contraseña=contraseña)
+                    request.session['email_cliente'] = cliente.correo  # 🔐 Aquí lo guardas
                     return redirect('login_cliente')
                 except Cliente.DoesNotExist:
                     form.add_error(None, "Correo o contraseña incorrectos.")
     return render(request, 'inicio_sesion.html', {'form': form})
 
+# Registro formulario clientes
+def formulario_registro(request):
+    if request.method == 'POST':
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+            cliente = form.save(commit=False)
+            cliente.save()
+            messages.success(request, '¡Registro exitoso! Por favor inicia sesión.')
+            return redirect('inicio_sesion')
+    else:
+        form = RegistroForm()
 
+    return render(request, 'formulario_registro.html', {'form': form})

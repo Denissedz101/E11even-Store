@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-gkxdzo_z_f%=!^fx$&rwq2xh8xm4cea5r8&2cs6#hk@lbmgq*(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS =  ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'E11evenStore',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -77,9 +78,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': '127.0.0.1:1522/freepdb1',
+        'NAME': '127.0.0.1:1521/freepdb1',
         'USER': 'system',
-        'PASSWORD': 'Oracle123',
+        'PASSWORD': 'Ora1234',
     }
 }
 
