@@ -11,7 +11,7 @@ class Carrito(models.Model):
     def __str__(self):
         return f"{self.producto} x{self.cantidad} - {self.usuario.username}"
     
-# Registro usuarios 
+# Registro cliente
 class Cliente(models.Model):
     rut = models.CharField(unique=True, max_length=12)
     nombre = models.CharField(max_length=200)

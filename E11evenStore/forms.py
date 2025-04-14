@@ -26,11 +26,11 @@ class LoginForm(forms.Form):
 
 # Formulario registro clientes
 class RegistroForm(forms.ModelForm):
-    repetir_clave = forms.CharField(widget=forms.PasswordInput())
+    repetirClave = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model = Cliente
-        fields = ['usuario', 'nombre', 'apellidos', 'rut', 'email', 'clave', 'fechaNacimiento', 'direccion']
+        fields = ['usuario', 'nombre', 'apellidos', 'rut', 'email', 'clave', 'repetirClave','fechaNacimiento', 'direccion']
         widgets = {
             'clave': forms.PasswordInput(),
             'fechaNacimiento': forms.DateInput(attrs={'type': 'date'}),

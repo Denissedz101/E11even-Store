@@ -15,6 +15,7 @@ def contacto(request):
     return render(request, 'contacto.html')
 
 def formulario_registro(request):
+    form = RegistroForm()
     return render(request, 'formulario_registro.html')
 
 def carro_compras(request):
@@ -56,52 +57,36 @@ def contador_carrito(request):
     total = Carrito.objects.filter(usuario=request.user).count()
     return JsonResponse({'total': total})
 
-# login_cliente
-def login_cliente(request):
-    correo = request.session.get("email_cliente")
 
-    if not correo:
-        return redirect('inicio_sesion')  # Por si intenta entrar sin loguearse
-
-    try:
-        cliente = Cliente.objects.get(email=correo)
-    except Cliente.DoesNotExist:
-        return redirect('inicio_sesion')
-
-    if request.method == "POST":
-        cliente.usuario = request.POST.get("usuario")
-        cliente.direccion = request.POST.get("direccion")
-        # puedes guardar método de pago aquí si lo tienes en el modelo
-        cliente.save()
-
-    return render(request, 'login_cliente.html', {'cliente': cliente})
-
-
-# login admin
+# inicio sesion-general
 
 def inicio_sesion(request):
     form = LoginForm()
+    
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-            correo = form.cleaned_data['email']
-            contraseña = form.cleaned_data['clave']
-            es_admin = request.POST.get("es_admin")
-
+            email = form.cleaned_data['email']
+            clave = form.cleaned_data['clave']
+            es_admin = request.POST.get("es_admin")  # Esto nos indica si es admin o cliente
+            
             if es_admin == "1":
                 try:
-                    admin = Administrativo.objects.get(correo=correo, contraseña=contraseña)
-                    request.session['email_admin'] = admin.correo
+                    admin = Administrativo.objects.get(email=email, clave=clave)
+                    request.session['email_admin'] = admin.email
+                    messages.success(request, "¡Bienvenido Administrador!")
                     return redirect('login_admin')
                 except Administrativo.DoesNotExist:
                     form.add_error(None, "Acceso denegado. Administrador no registrado.")
             else:
                 try:
-                    cliente = Cliente.objects.get(email=correo, contraseña=contraseña)
-                    request.session['email_cliente'] = cliente.correo  # 🔐 Aquí lo guardas
+                    cliente = Cliente.objects.get(email=email, clave=clave)
+                    request.session['email_cliente'] = cliente.email
+                    messages.success(request, "¡Bienvenido Cliente!")
                     return redirect('login_cliente')
                 except Cliente.DoesNotExist:
                     form.add_error(None, "Correo o contraseña incorrectos.")
+    
     return render(request, 'inicio_sesion.html', {'form': form})
 
 # Registro formulario clientes

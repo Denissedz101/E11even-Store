@@ -145,16 +145,20 @@ html, body {
 	background-color: #f0981c;
 }
 
+.contenido {
+    margin-bottom: 60px; /* espacio para no tapar el contenido con el footer */
+}
+
 /* ===== FOOTER ===== */
 
 footer {
+	position: fixed;
 	background: rgba(0, 0, 0, 0.7);
 	color: #ffffff;
 	padding: 10px 20px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: fixed;
 	bottom: 0;
 	width: 100%;
 	z-index: 10;
