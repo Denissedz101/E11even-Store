@@ -26,4 +26,5 @@ urlpatterns = [
     path('supervivencia/', views.supervivencia, name='supervivencia'),
     path('terror/', views.terror, name='terror'),
 
+
 ]

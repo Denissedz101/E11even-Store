@@ -22,6 +22,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .decorators import cliente_login_required
 from .decorators import admin_login_required
+from django.shortcuts import render, redirect
+from .models import Producto
+from django.contrib import messages
 
 
 
@@ -175,36 +178,49 @@ def carrito_compras(request):
     })
 
 
-
 # PANEL ADMINISTRACION
 @admin_login_required
-def historial_compras_cliente(request):
-    if request.method == 'POST':
+def login_admin(request):
+    # Variables para cada pestaña
+    productos = Producto.objects.all().order_by('nombre', 'categoria')
+    compras_recientes = Compra.objects.all().order_by('-fecha')[:10]  # Últimas 10 compras
+    historial = []
+    cliente = None
+
+    if request.method == 'POST' and 'nombre' in request.POST:
+        nombre = request.POST.get('nombre')
+        precio = int(request.POST.get('precio'))
+        categoria = request.POST.get('categoria')
+        stock = int(request.POST.get('stock'))
+        imagen = request.FILES.get('imagen')
+
+        producto_existente = Producto.objects.filter(nombre=nombre, categoria=categoria).first()
+        if producto_existente:
+            producto_existente.stock += stock
+            producto_existente.precio = precio
+            if imagen:
+                producto_existente.imagen = imagen
+            producto_existente.save()
+            messages.success(request, 'Stock actualizado para producto existente.')
+        else:
+            Producto.objects.create(nombre=nombre, precio=precio, categoria=categoria, stock=stock, imagen=imagen)
+            messages.success(request, 'Producto agregado correctamente.')
+
+    elif request.method == 'POST' and 'rut' in request.POST:
         rut = request.POST.get('rut')
         try:
             cliente = Cliente.objects.get(rut=rut)
-            compras = Compra.objects.filter(cliente=cliente).order_by('-fecha')
-            return render(request, 'admin_historial.html', {'compras': compras, 'cliente': cliente})
+            historial = Compra.objects.filter(cliente=cliente).order_by('-fecha')
         except Cliente.DoesNotExist:
             messages.error(request, 'Cliente no encontrado')
-    return render(request, 'admin_historial.html')
 
-@admin_login_required
-def inventario_view(request):
-    productos = Producto.objects.all().order_by('nombre', 'categoria')
-    return render(request, 'admin_inventario.html', {'productos': productos})
+    return render(request, 'login_admin.html', {
+        'productos': productos,
+        'compras_recientes': compras_recientes,
+        'compras': historial,
+        'cliente': cliente,
+    })
 
-@admin_login_required
-def gestionar_productos(request):
-    if request.method == 'POST':
-        nombre = request.POST.get('nombre')
-        precio = request.POST.get('precio')
-        categoria = request.POST.get('categoria')
-        stock = request.POST.get('stock')
-        imagen = request.FILES.get('imagen')
-        Producto.objects.create(nombre=nombre, precio=precio, categoria=categoria, stock=stock, imagen=imagen)
-        messages.success(request, 'Producto agregado correctamente')
-    return render(request, 'admin_productos.html')
 
 # API REST
 @api_view(['GET'])
@@ -223,7 +239,7 @@ def api_mis_compras(request):
     serializer = CompraSerializer(compras, many=True)
     return Response(serializer.data)
     
-# ACTUALIZACION DATOS CLIENTES
+
 # ACTUALIZACION DATOS CLIENTES
 @cliente_login_required
 def login_cliente(request):

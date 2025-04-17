@@ -41,31 +41,50 @@ class Administrativo(models.Model):
 class Producto(models.Model):
     nombre = models.CharField(max_length=100)
     precio = models.PositiveIntegerField()
-    categoria = models.CharField(max_length=100)
+    CATEGORIAS = [
+    ('CAT_1', 'Carreras'),
+    ('CAT_2', 'Terror'),
+    ('CAT_3', 'Mundo abierto'),
+    ('CAT_4', 'Free to play'),
+    ('CAT_5', 'Acción'),
+    ('CAT_6', 'Supervivencia'),
+    ]
+    categoria = models.CharField(max_length=20, choices=CATEGORIAS)
     imagen = models.ImageField(upload_to='productos/', blank=True, null=True)
     stock = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return self.nombre
+        return f"{self.nombre} (ID: {self.id})"
+
 
 class Compra(models.Model):
-    cliente = models.ForeignKey(Cliente, to_field='rut',on_delete=models.CASCADE)
-    numero_compra = models.CharField(max_length=20, unique=True,verbose_name='Número de compra')
-    direccion_envio = models.CharField(max_length=255,verbose_name='Dirección de envío')
+    cliente = models.ForeignKey(Cliente, to_field='rut', on_delete=models.CASCADE, related_name='compras')
+    numero_compra = models.CharField(max_length=20, unique=True, verbose_name='Número de compra')
+    direccion_envio = models.CharField(max_length=255, verbose_name='Dirección de envío')
     metodo_pago = models.CharField(max_length=50, verbose_name='Método de pago')
     fecha = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de compra')
-    estado = models.CharField(max_length=20, choices=[('pendiente', 'Pendiente'), ('enviado', 'Enviado')], default='pendiente', verbose_name='Estado de compra')
+    estado = models.CharField(
+        max_length=20,
+        choices=[('pendiente', 'Pendiente'), ('enviado', 'Enviado')],
+        default='pendiente',
+        verbose_name='Estado de compra'
+    )
 
     def __str__(self):
-        return self.numero_compra
+        return f"Compra #{self.numero_compra} - {self.cliente}"
+
 
 class DetalleCompra(models.Model):
-    compra = models.ForeignKey(Compra, on_delete=models.CASCADE, related_name='detalles')
+    compra = models.ForeignKey(Compra, on_delete=models.CASCADE, related_name='detalles', default=1)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField()
 
     def subtotal(self):
         return self.cantidad * self.producto.precio
+
+    def __str__(self):
+        return f"{self.cantidad} x {self.producto.nombre} (Compra {self.compra.numero_compra})"
+
 
 
     
