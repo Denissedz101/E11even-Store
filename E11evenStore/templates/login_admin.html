@@ -1,3 +1,4 @@
+<!-- LOGIN_ADMINISTRATIVOS -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
@@ -8,7 +9,7 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 		
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-		<link rel="stylesheet" href="{% static 'css/estilos.css' %}"> 
+		<link rel="stylesheet" href="{% static 'css/estilo-login-admin.css' %}"> 
 	</head>
 	
 	<body>
@@ -42,106 +43,109 @@
 				</div>
 				
                 <div class="nav-menu">
-				<ul>
-					<li><a href="{% url 'inicio' %}">🏠 Inicio</a></li>
-					<li><a href="{% url 'menu_categorias' %}">≣ Categorías</a></li>
-					<li><a href="{% url 'carro_compras' %}">🛒 Carrito</a></li>
-					<li><a href="{% url 'contacto' %}">✉ Contacto</a></li>
-					<li><a href="{% url 'inicio_sesion' %}">🔐 Iniciar sesión</a></li>
-				<li><a href="{% url 'formulario_registro' %}" class="login-btn">Registrate</a></li>
-			</ul>
-		</div>
-	</div>
-	
-	<div class="admin-container">
-        <h2 class="administrador">Panel de Administración</h2>
-		
-        <!-- Opciones de navegación -->
-        <ul class="nav nav-tabs justify-content-center mb-4">
-			<li class="nav-item">
-				<a class="nav-link active" href="#carrito" data-bs-toggle="tab">Carrito de Compras</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#productos" data-bs-toggle="tab">Productos</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#inventario" data-bs-toggle="tab">Inventario</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#compras" data-bs-toggle="tab">Compras</a>
-			</li>
-			</ul>
-			
-			<!-- Contenido de pestañas -->
-			<div class="tab-content">
-				<div class="tab-pane fade show active" id="carrito">
-					<h4>Carrito de Compras</h4>
-					<p>Pedido #1020233210</p>
-					<p>Pedido #1020253530</p>
-					<p>Pedido #1020256810</p>
-					<p>Pedido #1020278955</p>
-				</div>
-				
-				<div class="tab-pane fade" id="productos">
-					<h4>Registro y Modificación de Productos</h4>
-					<form>
-						<div class="mb-3">
-							<input
-							type="text"
-							class="form-control"
-							placeholder="Nombre del producto"
-							/>
-						</div>
-						<div class="mb-3">
-							<input
-							type="number"
-							class="form-control"
-							placeholder="Precio"
-							/>
-						</div>
-						<div class="mb-3">
-							<input
-							type="text"
-							class="form-control"
-							placeholder="Categoría"
-							/>
-						</div>
-						<button type="submit" class="btn btn-primary w-100">
-							Guardar Producto
-						</button>
-					</form>
-				</div>
-				
-				<div class="tab-pane fade" id="inventario">
-					<h4>Manejo del Inventario</h4>
-					<p>Aquí se muestra el stock de productos.</p>
-				</div>
-				
-				<div class="tab-pane fade" id="compras">
-					<h4>Monitoreo de Compras</h4>
-					<p>
-						Orden de Compra N°15214456 -
-						<a href="#">ver</a>
-					</p>
-					<p>
-						Orden de Compra N°15366512 -
-						<a href="#">ver</a>
-					</p>
-					<p>
-						Orden de Compra N°15889112 -
-						<a href="#">ver</a>
-					</p>
-					<p>
-						Orden de Compra N°15217884 -
-						<a href="#">ver</a>
-					</p>
+					<ul>
+						<li><a href="{% url 'inicio' %}">🏠 Inicio</a></li>
+						<li><a href="{% url 'menu_categorias' %}">≣ Categorías</a></li>
+						<li><a href="{% url 'carro_compras' %}">🛒 Carrito</a></li>
+						<li><a href="{% url 'contacto' %}">✉ Contacto</a></li>
+						<li><a href="{% url 'inicio_sesion' %}">🔐 Iniciar sesión</a></li>
+						<li><a href="{% url 'formulario_registro' %}" class="login-btn">Registrate</a></li>
+					</ul>
 				</div>
 			</div>
 			
-			<!-- Botón para Cerrar Sesión -->
-			<div class="text-center mt-4">
-				<a href="{% url 'inicio' %}" class="btn btn-link">Cerrar Sesión</a>
-			</div>
+			<div class="admin-container">
+				<h2 class="administrador">Panel de Administración</h2>
+				
+				<!-- Opciones de navegación -->
+				<ul class="nav nav-tabs justify-content-center mb-4">
+					<li class="nav-item">
+						<a class="nav-link active" href="#carrito" data-bs-toggle="tab">Carrito de Compras</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#productos" data-bs-toggle="tab">Productos</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#inventario" data-bs-toggle="tab">Inventario</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#compras" data-bs-toggle="tab">Compras</a>
+					</li>
+				</ul>
+				
+				<!-- Contenido de pestañas -->
+				<div class="tab-content">
+										
+					<div class="tab-pane fade" id="productos">
+						<h4>Registro y Modificación de Productos</h4>
+						<form>
+							<h2>Agregar Producto</h2>
+							<form method="post" enctype="multipart/form-data">
+								{% csrf_token %}
+								<label>Nombre:</label><input type="text" name="nombre"><br>
+								<label>Precio:</label><input type="number" name="precio"><br>
+								<label>Categoría:</label><input type="text" name="categoria"><br>
+								<label>Stock:</label><input type="number" name="stock"><br>
+								<label>Imagen:</label><input type="file" name="imagen"><br>
+								<button type="submit">Guardar Producto</button>
+							</form>
+						</form>
+					</div>
+					
+					<div class="tab-pane fade" id="inventario">
+						<h2>Inventario de Productos</h2>
+						<table>
+							<thead>
+								<tr>
+									<th>Nombre</th>
+									<th>Categoría</th>
+									<th>Precio</th>
+									<th>Stock</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for producto in productos %}
+								<tr>
+									<td>{{ producto.nombre }}</td>
+									<td>{{ producto.categoria }}</td>
+									<td>${{ producto.precio }}</td>
+									<td>{{ producto.stock }}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					
+					<div class="tab-pane fade" id="compras">
+						<h2>Historial de Compras por RUT</h2>
+						<form method="post">
+							{% csrf_token %}
+							<label>RUT Cliente:</label>
+							<input type="text" name="rut">
+							<button type="submit">Buscar</button>
+						</form>
+						
+						{% if compras %}
+						<h3>Compras de {{ cliente.usuario.username }}</h3>
+						<ul>
+							{% for compra in compras %}
+							<li>{{ compra.numero_compra }} - {{ compra.estado }} - {{ compra.fecha }}
+								<ul>
+									{% for detalle in compra.detalles.all %}
+									<li>{{ detalle.producto.nombre }} (x{{ detalle.cantidad }})</li>
+									{% endfor %}
+								</ul>
+							</li>
+							{% endfor %}
+						</ul>
+						{% endif %}
+					</div>
+				</div>
+				
+				<!-- Botón para Cerrar Sesión -->
+				<div class="text-center mt-4">
+					<a href="{% url 'inicio' %}" class="btn btn-link">Cerrar Sesión</a>
+				</div>
 			</div>
 		</div>
 		

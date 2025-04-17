@@ -13,6 +13,10 @@ urlpatterns = [
     path('categorias/', views.menu_categorias, name='menu_categorias'),
     path('login_cliente/', views.login_cliente, name='login_cliente'),
     path('login_admin/', views.login_admin, name='login_admin'),
+    
+     # API
+    path('api/productos/', views.api_productos, name='api_productos'),
+    path('api/mis-compras/', views.api_mis_compras, name='api_mis_compras'),
 
     # Categorías
     path('accion/', views.accion, name='accion'),
@@ -22,6 +26,4 @@ urlpatterns = [
     path('supervivencia/', views.supervivencia, name='supervivencia'),
     path('terror/', views.terror, name='terror'),
 
-    #carrito
-    path('contador-carrito/', views.contador_carrito, name='contador_carrito'),
 ]

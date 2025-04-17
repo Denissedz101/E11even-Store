@@ -1,11 +1,28 @@
+# ------------- VIEWS.PY ---------------------
+
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from .models import Carrito 
 from .forms import LoginForm
 from .models import Administrativo
 from .models import Cliente
 from .forms import RegistroForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from .models import Producto, Compra, DetalleCompra
+from .forms import DireccionEnvioForm, MetodoPagoForm
+import random
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from .forms import EditarClienteForm
+from django.contrib.admin.views.decorators import staff_member_required
+from .serializers import ProductoSerializer, CompraSerializer
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from .decorators import cliente_login_required
+from .decorators import admin_login_required
+
 
 
 def inicio(request):
@@ -16,13 +33,9 @@ def contacto(request):
 
 def formulario_registro(request):
     form = RegistroForm()
-    return render(request, 'formulario_registro.html')
 
 def carro_compras(request):
     return render(request, 'carro_compras.html')
-
-def inicio_sesion(request):
-    return render(request, 'inicio_sesion.html')
 
 def menu_categorias(request):
     return render(request, 'menu_categorias.html')
@@ -52,14 +65,7 @@ def supervivencia(request):
 def terror(request):
     return render(request, 'terror.html')
 
-#contador carrito
-def contador_carrito(request):
-    total = Carrito.objects.filter(usuario=request.user).count()
-    return JsonResponse({'total': total})
-
-
-# inicio sesion-general
-
+# INICIO SESION COMUN
 def inicio_sesion(request):
     form = LoginForm()
     
@@ -89,7 +95,7 @@ def inicio_sesion(request):
     
     return render(request, 'inicio_sesion.html', {'form': form})
 
-# Registro formulario clientes
+# REGISTRO FORMULARIO CLIENTES
 def formulario_registro(request):
     if request.method == 'POST':
         form = RegistroForm(request.POST)
@@ -102,3 +108,175 @@ def formulario_registro(request):
         form = RegistroForm()
 
     return render(request, 'formulario_registro.html', {'form': form})
+
+#CARRITOS COMPRAS
+@cliente_login_required
+def carrito_compras(request):
+    if request.method == 'POST':
+        form_direccion = DireccionEnvioForm(request.POST)
+        form_pago = MetodoPagoForm(request.POST)
+        if form_direccion.is_valid() and form_pago.is_valid():
+            carrito = request.session.get('carrito', [])
+            if not carrito:
+                messages.error(request, "Tu carrito está vacío.")
+                return redirect('carro_compras')
+
+            numero_compra = f"E11-{random.randint(100000, 999999)}"
+            email_cliente = request.session.get('email_cliente')
+
+            try:
+                cliente = Cliente.objects.get(email=email_cliente)
+            except Cliente.DoesNotExist:
+                messages.error(request, "Cliente no válido.")
+                return redirect('inicio')
+
+            compra = Compra.objects.create(
+                cliente=cliente,
+                numero_compra=numero_compra,
+                direccion_envio=form_direccion.cleaned_data['direccion'],
+                metodo_pago=form_pago.cleaned_data['metodo_pago'],
+                estado='pendiente'
+            )
+
+            total = 0
+            for item in carrito:
+                producto = Producto.objects.get(id=item['producto_id'])
+                cantidad = item['cantidad']
+                DetalleCompra.objects.create(
+                    compra=compra,
+                    producto=producto,
+                    cantidad=cantidad
+                )
+                total += producto.precio * cantidad
+
+            total += 3990  # Envío fijo
+
+            send_mail(
+                'Confirmación de compra - E11ven Store',
+                f'Tu número de compra es {numero_compra}. Total: ${total}. Dirección: {compra.direccion_envio}',
+                'E11venStore@gmail.com',
+                [cliente.email],
+                fail_silently=True
+            )
+
+            request.session['carrito'] = []  # Limpiar carrito
+            messages.success(request, f'Compra {numero_compra} confirmada ✅')
+            return render(request, 'compra_exitosa.html', {
+                'compra': compra,
+                'total': total,
+            })
+    else:
+        form_direccion = DireccionEnvioForm()
+        form_pago = MetodoPagoForm()
+
+    return render(request, 'carrito_compras.html', {
+        'form_direccion': form_direccion,
+        'form_pago': form_pago
+    })
+
+
+
+# PANEL ADMINISTRACION
+@admin_login_required
+def historial_compras_cliente(request):
+    if request.method == 'POST':
+        rut = request.POST.get('rut')
+        try:
+            cliente = Cliente.objects.get(rut=rut)
+            compras = Compra.objects.filter(cliente=cliente).order_by('-fecha')
+            return render(request, 'admin_historial.html', {'compras': compras, 'cliente': cliente})
+        except Cliente.DoesNotExist:
+            messages.error(request, 'Cliente no encontrado')
+    return render(request, 'admin_historial.html')
+
+@admin_login_required
+def inventario_view(request):
+    productos = Producto.objects.all().order_by('nombre', 'categoria')
+    return render(request, 'admin_inventario.html', {'productos': productos})
+
+@admin_login_required
+def gestionar_productos(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        precio = request.POST.get('precio')
+        categoria = request.POST.get('categoria')
+        stock = request.POST.get('stock')
+        imagen = request.FILES.get('imagen')
+        Producto.objects.create(nombre=nombre, precio=precio, categoria=categoria, stock=stock, imagen=imagen)
+        messages.success(request, 'Producto agregado correctamente')
+    return render(request, 'admin_productos.html')
+
+# API REST
+@api_view(['GET'])
+def api_productos(request):
+    productos = Producto.objects.all()
+    serializer = ProductoSerializer(productos, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def api_mis_compras(request):
+    cliente_id = request.session.get('cliente_id')
+    if not cliente_id:
+        return Response({'error': 'No autenticado'}, status=401)
+
+    compras = Compra.objects.filter(cliente_id=cliente_id)
+    serializer = CompraSerializer(compras, many=True)
+    return Response(serializer.data)
+    
+# ACTUALIZACION DATOS CLIENTES
+# ACTUALIZACION DATOS CLIENTES
+@cliente_login_required
+def login_cliente(request):
+    email = request.session.get('email_cliente')
+
+    if not email:
+        messages.error(request, "Debes iniciar sesión para acceder.")
+        return redirect('inicio_sesion')
+
+    try:
+        cliente = Cliente.objects.get(email=email)
+    except Cliente.DoesNotExist:
+        messages.error(request, "Cliente no encontrado.")
+        return redirect('inicio_sesion')
+
+    compras = Compra.objects.filter(cliente=cliente).order_by('-fecha')
+
+    # Calcular totales para cada compra
+    compras_con_totales = []
+    for compra in compras:
+        total = sum(detalle.subtotal for detalle in compra.detalles.all())
+        compras_con_totales.append({
+            'compra': compra,
+            'total': total,
+        })
+
+    if request.method == 'POST':
+        form = EditarClienteForm(request.POST, instance=cliente)
+        pass_form = PasswordChangeForm(user=request.user, data=request.POST)
+
+        if 'guardar_datos' in request.POST and form.is_valid():
+            form.save()
+            messages.success(request, "Datos actualizados correctamente")
+        elif 'cambiar_contraseña' in request.POST and pass_form.is_valid():
+            pass_form.save()
+            update_session_auth_hash(request, pass_form.user)
+            messages.success(request, "Contraseña actualizada")
+        else:
+            messages.error(request, "Error al guardar los cambios")
+    else:
+        form = EditarClienteForm(instance=cliente)
+        pass_form = PasswordChangeForm(user=request.user)
+
+    return render(request, 'login_cliente.html', {
+        'cliente': cliente,
+        'compras_con_totales': compras_con_totales,
+        'form': form,
+        'pass_form': pass_form,
+    })
+
+
+# VISTA DE PAGO POR WEBPAY SIMULADA 
+@login_required
+def redirigir_webpay(request):
+    # Simulación: redirigir a una URL de prueba de WebPay
+    return redirect('https://webpay3g.transbank.cl/webpay-server/initTransaction')
