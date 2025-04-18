@@ -129,19 +129,18 @@ def carro_compras(request):
     carro = request.session.get('carro', [])
     email_cliente = request.session.get('email_cliente')
     cliente = Cliente.objects.filter(email=email_cliente).first()
-    
+
     if request.method == 'POST':
         if 'eliminar_producto' in request.POST:
             producto_id = int(request.POST['eliminar_producto'])
             carro = [item for item in carro if item['producto_id'] != producto_id]
             request.session['carro'] = carro
             return redirect('carro_compras')
-        
+
         elif 'vaciar_carro' in request.POST:
             request.session['carro'] = []
             return redirect('carro_compras')
 
-        # Confirmar compra ↓↓↓
         form_direccion = DireccionEnvioForm(request.POST)
         form_pago = MetodoPagoForm(request.POST)
 
@@ -193,32 +192,37 @@ def carro_compras(request):
         form_direccion = DireccionEnvioForm()
         form_pago = MetodoPagoForm()
 
-    total = 3990 + sum(
-        Producto.objects.get(id=item['producto_id']).precio * item['cantidad']
-        for item in carro
-    )
+    productos_carro = []
+    total = 3990  # Envío
 
-    productos_carro = [
-        {
-            'producto': Producto.objects.get(id=item['producto_id']),
-            'cantidad': item['cantidad']
-        } for item in carro
-    ]
+    for item in carro:
+        producto = Producto.objects.get(id=item['producto_id'])
+        cantidad = item['cantidad']
+        subtotal = producto.precio * cantidad
+        total += subtotal
+        productos_carro.append({
+            'producto': producto,
+            'cantidad': cantidad,
+            'precio': producto.precio,
+            'subtotal': subtotal,
+        })
 
     return render(request, 'carro_compras.html', {
         'form_direccion': form_direccion,
         'form_pago': form_pago,
         'productos_carro': productos_carro,
         'total': total,
-        'cliente': cliente
+        'cliente': cliente,
+        'cliente_logeado': cliente is not None
     })
+
 
 
 #AGREGAR AL CARRO
 
 @require_POST
 def agregar_al_carro(request, producto_id):
-    producto = Producto.objects.get(id=producto_id)
+    producto = get_object_or_404(Producto, id=producto_id)
     cantidad = int(request.POST.get('cantidad', 1))
 
     carro = request.session.get('carro', [])
@@ -228,12 +232,15 @@ def agregar_al_carro(request, producto_id):
             item['cantidad'] += cantidad
             break
     else:
-        carro.append({'producto_id': producto.id, 'cantidad': cantidad})
+        carro.append({
+            'producto_id': producto.id,
+            'cantidad': cantidad,
+            'precio': producto.precio  # Guarda el precio actual
+        })
 
     request.session['carro'] = carro
     messages.success(request, f'{producto.nombre} agregado al carrito.')
     return redirect(request.META.get('HTTP_REFERER', 'menu_categorias'))
-
 
 # PANEL ADMINISTRACION
 @admin_login_required

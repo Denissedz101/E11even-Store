@@ -56,11 +56,12 @@
 			
 			<header>
 				<h1 class="titulo">Juegos Free to Play</h1>
-				<!-- agregamos carrito para simulacion de compra -->
 				<div class="carrito-icono">
-					<a href="{% url 'carro_compras' %}">
-						🛒 <span id="contador-carrito">0</span>
-					</a>
+					<li>
+						<a href="{% url 'carro_compras' %}">
+							🛒 Carrito{% if contador_carro > 0 %} ({{ contador_carro }}){% endif %}
+						</a>
+					</li>
 				</div>
 			</header>
 			

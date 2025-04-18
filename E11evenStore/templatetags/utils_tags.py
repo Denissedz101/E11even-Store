@@ -13,3 +13,8 @@ def add_attr(field, attr_string):
         key, value = attr.split(":")
         attrs[key.strip()] = value.strip()
     return field.as_widget(attrs=attrs)
+
+
+@register.filter
+def multiply(value, arg):
+    return value * arg
