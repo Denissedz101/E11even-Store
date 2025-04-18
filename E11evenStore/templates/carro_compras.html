@@ -13,6 +13,7 @@
 	</head>
 	
 	<body class="d-flex flex-column min-vh-100">
+		
 		<div class="top-bar">
 			<div class="contact-info">
 				<i class="bi bi-envelope me-2"></i>
@@ -53,103 +54,88 @@
 				</div>
 			</div>
 			
-			<div class="container">
-				
+			<main class="container-fluid d-flex flex-column align-items-center" style="flex: 1;">
 				<div id="carrito-container" class="mx-auto mt-4" style="max-width: 700px; background-color: rgba(198, 129, 230, 0.65); padding: 20px; border-radius: 15px;">
+					{% if cliente %}
+					<h4>¡Hola, {{ cliente.nombre }}! 🛍️ Aquí está tu carrito:</h4>
+					{% endif %}
 					
-					<<form method="post">
-						{% csrf_token %}
+					<h3 class="mb-4">🛒 Carrito de Compras</h3>
+					
+					{% if productos_carro %}
+					<ul class="list-group mb-4">
+						{% for item in productos_carro %}
+						<li class="list-group-item d-flex justify-content-between align-items-center">
+							{{ item.producto.nombre }} (x{{ item.cantidad }})
+							<span>
+								${{ item.subtotal }}
+								<form method="post" class="d-inline ms-3">
+									{% csrf_token %}
+									<input type="hidden" name="eliminar_producto" value="{{ item.producto.id }}">
+									<button type="submit" class="btn btn-sm btn-danger">🗑️</button>
+								</form>
+						</span>
+					</li>
+					{% endfor %}
+					<li class="list-group-item d-flex justify-content-between align-items-center fw-bold">
+						Envío
+						<span>$3990</span>
+					</li>
+					<li class="list-group-item d-flex justify-content-between align-items-center fw-bold">
+						Total a pagar
+						<span>${{ total }}</span>
+					</li>
+				</ul>
+				
+				{% if cliente_logeado %}
+				<form method="post">
+					{% csrf_token %}
+					<div class="mb-3">
 						{{ form_direccion.as_p }}
+					</div>
+					<div class="mb-3">
 						{{ form_pago.as_p }}
-						<button type="submit">Confirmar compra</button>
-					</form>
-					
+					</div>
+					<button type="submit" class="btn btn-success w-100">✅ Confirmar compra</button>
+				</form>
+				
+				<!-- Botón para vaciar carrito con confirmación -->
+				<form method="post" class="mt-3" onsubmit="return confirm('¿Estás segura/o de que quieres vaciar el carrito?')">
+					{% csrf_token %}
+					<input type="hidden" name="vaciar_carro" value="1">
+					<button type="submit" class="btn btn-warning w-100">🧹 Vaciar carrito</button>
+				</form>
+				{% else %}
+				<div class="alert alert-warning text-center mt-3">
+					Para completar tu compra, debes <a href="{% url 'inicio_sesion' %}">iniciar sesión</a> o <a href="{% url 'formulario_registro' %}">registrarte</a>.
 				</div>
+				{% endif %}
 				
-				<!-- Mensaje de compra exitosa oculto -->
-				<div id="mensaje-compra" class="container text-center mt-5" style="display: none;">
-					<h2>¡Gracias por tu compra!</h2>
-					<p><strong>Número de compra:</strong> {{ compra.numero_compra }}</p>
-					<p><strong>Dirección de envío:</strong> {{ compra.direccion_envio }}</p>
-					<p><strong>Método de pago:</strong> {{ compra.metodo_pago }}</p>
-					<p><strong>Productos:</strong></p>
-					<ul>
-						{% for detalle in compra.detalles.all %}
-						<li>{{ detalle.producto.nombre }} (x{{ detalle.cantidad }})</li>
-						{% endfor %}
-					</ul>
-					<p><strong>Total pagado:</strong> ${{ total }}</p>
-					<a href="{% url 'inicio' %}">Volver al inicio</a>
+				{% else %}
+				<div class="alert alert-info text-center">
+					Tu carrito está vacío 🛒
 				</div>
-				
-				<!-- === Script ===== -->
-				
-				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-				
-				
-				<script>
-					function mostrarCarrito() {
-						let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-						let carritoDiv = document.getElementById("carrito");
-						let mensajeVacio = document.getElementById("mensaje-vacio");
-						carritoDiv.innerHTML = "";
-						if (carrito.length === 0) {
-							mensajeVacio.style.display = "block";
-							} else {
-							mensajeVacio.style.display = "none";
-							carrito.forEach((producto, index) => {
-								carritoDiv.innerHTML += `<p>${producto.nombre} - CLP$${producto.precio} <button onclick="eliminarProducto(${index})">Eliminar</button></p>`;
-							});
-						}
-					}
-					
-					function eliminarProducto(index) {
-						let carrito = JSON.parse(localStorage.getItem("carrito"));
-						carrito.splice(index, 1);
-						localStorage.setItem("carrito", JSON.stringify(carrito));
-						mostrarCarrito();
-					}
-					
-					function verificarCompra() {
-						let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-						let tienePago = carrito.some(p => p.precio > 0);
-						let tieneGratis = carrito.some(p => p.precio === 0);
-						let titulo = document.getElementById("titulo-compra");
-						let detalle = document.getElementById("detalle-compra");
-						
-						if (tieneGratis && !tienePago) {
-							titulo.innerText = "Descargando juego, espera por favor...";
-							detalle.innerText = "";
-							document.getElementById("mensaje-compra").style.display = "block";
-							setTimeout(() => {
-								titulo.innerText = "Gracias por la descarga";
-								detalle.innerText = "";
-								setTimeout(() => {
-									window.location.href = "index.html";
-								}, 2000);
-							}, 3000);
-							} else {
-							titulo.innerText = "¡Pago Realizado con Éxito!";
-							detalle.innerText = tieneGratis ? "Se ha enviado un correo con los detalles de tu compra y el link de descarga." : "Se ha enviado un correo con los detalles de tu compra.";
-							document.getElementById("mensaje-compra").style.display = "block";
-							setTimeout(() => {
-								window.location.href ="{% url 'inicio' %}";
-							}, 4000);
-						}
-						
-						localStorage.removeItem("carrito");
-						mostrarCarrito();
-					}
-					
-					mostrarCarrito();
-				</script>
-				
-				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-				
-				<footer>
-					<p class="footer-text">&copy; 2025 Store E11even - Todos los derechos reservados</p>
-				</footer>
-				
+				{% endif %}
 			</div>
-		</body>
-	</html>				
+			
+			<!-- mensaje de compra -->
+			<div class="container text-center mt-5" id="mensaje-compra">
+				<h2>¡Gracias por tu compra!</h2>
+				<p><strong>Número de compra:</strong> {{ compra.numero_compra }}</p>
+				<p><strong>Dirección de envío:</strong> {{ compra.direccion_envio }}</p>
+				<p><strong>Método de pago:</strong> {{ compra.metodo_pago }}</p>
+				<p><strong>Productos:</strong></p>
+				<ul>
+					{% for detalle in compra.detalles.all %}
+					<li>{{ detalle.producto.nombre }} (x{{ detalle.cantidad }})</li>
+					{% endfor %}
+				</ul>
+				<p><strong>Total pagado:</strong> ${{ total }}</p>
+				<a href="{% url 'inicio' %}" class="btn btn-primary mt-3">Volver al inicio</a>
+			</div>
+		</div>
+	</body>
+	<footer class="mt-auto text-center py-3">
+		<p class="footer-text">&copy; 2025 Store E11even - Todos los derechos reservados</p>
+	</footer>
+</html>					

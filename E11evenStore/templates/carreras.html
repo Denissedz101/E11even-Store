@@ -53,103 +53,109 @@
 					</ul>
 				</div>
 			</div>
-		
-		<!-- Header -->
-		<header>
-			<h1 class="titulo">Juegos de Carreras</h1>
-			<!-- agregamos carrito para simulacion de compra -->
-			<div class="carrito-icono">
-				<a href="{% url 'carro_compras' %}">
-					🛒 <span id="contador-carrito">0</span>
-				</a>
-			</div>
-		</header>
-		
-		<div class="main-content flex-grow-1">	
-			<!-- Lista de Juegos -->
-			<div class="game-list">
-				{% for producto in productos %}
-				<div class="game-item">
-					<img src="{{ producto.imagen }}" alt="{{ producto.nombre }}">
-					<div class="game-info">
-						<h3>{{ producto.nombre }}</h3>
-						<p><b>Precio: CLP${{ producto.precio|intcomma  }}</b></p>
-						<p><b>Stock: {{ producto.stock }}</b></p>
-						
-						<button class="details-btn" onclick="toggleDescripcion('desc{{ forloop.counter }}')">Más detalles</button>
-						<p class="descripcion" id="desc{{ forloop.counter }}">{{ producto.descripcion }}</p>
-						
-						<<button class="btn-carrito" onclick="agregarAlCarrito('{{ producto.nombre }}', {{ producto.precio }})"> Añadir al carrito </button>
-					</div>
+			
+			<!-- Header -->
+			<header>
+				<h1 class="titulo">Juegos de Carreras</h1>
+				<!-- agregamos carrito para simulacion de compra -->
+				<div class="carrito-icono">
+					<a href="{% url 'carro_compras' %}">
+						🛒 <span id="contador-carrito">0</span>
+					</a>
 				</div>
-				{% empty %}
-				<p>No hay productos disponibles en esta categoría.</p>
-				{% endfor %}
-			</div>
+			</header>
 			
-			
-			<!-- Btn para volver al menu categorias -->
-			<a href="{% url 'menu_categorias' %}" class="back-btn"> Volver a Categorias</a>
-			
-			<!-- **** Script **** -->
-			
-			<!-- Bootstrap -->
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-			
-			<script>
-				function toggleDescripcion(id) {
-					var descripcion = document.getElementById(id);
-					if (descripcion.style.display === "none" || descripcion.style.display === "") {
-						descripcion.style.display = "block";
-						} else {
-						descripcion.style.display = "none";
-					}
-				}
+			<div class="main-content flex-grow-1">	
+				<!-- Lista de Juegos -->
+				<div class="game-list">
+					{% for producto in productos %}
+					<div class="game-item">
+						<img src="{{ producto.imagen }}" alt="{{ producto.nombre }}">
+						<div class="game-info">
+							<h3>{{ producto.nombre }}</h3>
+							<p><b>Precio: CLP${{ producto.precio|intcomma  }}</b></p>
+							<p><b>Stock: {{ producto.stock }}</b></p>
+							
+							<button class="details-btn" onclick="toggleDescripcion('desc{{ forloop.counter }}')">Más detalles</button>
+							<p class="descripcion" id="desc{{ forloop.counter }}">{{ producto.descripcion }}</p>
+							
+							<form method="post" action="{% url 'agregar_al_carro' producto.id %}">
+								{% csrf_token %}
+								<input type="hidden" name="cantidad" value="1">
+								<button type="submit" class="btn btn-carrito">Agregar al carrito</button>
+							</form>
+							
+							
+						</div>
+					</div>
+					{% empty %}
+					<p>No hay productos disponibles en esta categoría.</p>
+					{% endfor %}
+				</div>
 				
-				//agregamos fx actualizar carrito 
-				function actualizarContadorCarrito() {
-					fetch("{% url 'carro_compras' %}")
-					.then(response => response.json())
-					.then(data => {
-						document.getElementById("contador-carrito").textContent = data.total;
-					})
-					.catch(error => {
-						console.error("Error al obtener el contador:", error);
-					});
-				}
 				
-				function agregarAlCarrito(nombre, precio) {
-					fetch("{% url 'carro_compras' %}", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-							"X-CSRFToken": "{{ csrf_token }}"
-						},
-						body: JSON.stringify({
-							nombre: nombre,
-							precio: precio,
-							cantidad: 1
-						})
-					})
-					.then(response => {
-						if (response.ok) {
-							alert("Producto agregado al carrito ✅");
-							actualizarContadorCarrito(); 
+				<!-- Btn para volver al menu categorias -->
+				<a href="{% url 'menu_categorias' %}" class="back-btn"> Volver a Categorias</a>
+				
+				<!-- **** Script **** -->
+				
+				<!-- Bootstrap -->
+				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+				
+				<script>
+					function toggleDescripcion(id) {
+						var descripcion = document.getElementById(id);
+						if (descripcion.style.display === "none" || descripcion.style.display === "") {
+							descripcion.style.display = "block";
 							} else {
-							alert("Error al agregar producto.");
+							descripcion.style.display = "none";
 						}
-					});
-				}
-				
-				actualizarContadorCarrito();
-				
-			</script>
-		</div>
-	</body>
-	<!-- Footer -->
-	<footer>
-		<!-- Texto de derechos reservados -->
-		<p class="footer-text">&copy; 2025 Store E11even - Todos los derechos reservados</p>
-	</footer>	
-	
-</html>
+					}
+					
+					//agregamos fx actualizar carrito 
+					function actualizarContadorCarrito() {
+						fetch("{% url 'carro_compras' %}")
+						.then(response => response.json())
+						.then(data => {
+							document.getElementById("contador-carrito").textContent = data.total;
+						})
+						.catch(error => {
+							console.error("Error al obtener el contador:", error);
+						});
+					}
+					
+					function agregarAlCarrito(nombre, precio) {
+						fetch("{% url 'carro_compras' %}", {
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+								"X-CSRFToken": "{{ csrf_token }}"
+							},
+							body: JSON.stringify({
+								nombre: nombre,
+								precio: precio,
+								cantidad: 1
+							})
+						})
+						.then(response => {
+							if (response.ok) {
+								alert("Producto agregado al carrito ✅");
+								actualizarContadorCarrito(); 
+								} else {
+								alert("Error al agregar producto.");
+							}
+						});
+					}
+					
+					actualizarContadorCarrito();
+					
+				</script>
+			</div>
+		</body>
+		<!-- Footer -->
+		<footer>
+			<!-- Texto de derechos reservados -->
+			<p class="footer-text">&copy; 2025 Store E11even - Todos los derechos reservados</p>
+		</footer>	
+		
+	</html>

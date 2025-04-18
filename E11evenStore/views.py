@@ -26,6 +26,9 @@ from django.shortcuts import render, redirect
 from .models import Producto
 from django.contrib import messages
 from django.shortcuts import render
+from django.views.decorators.http import require_POST
+from django.shortcuts import get_object_or_404
+
 
 
 
@@ -123,21 +126,33 @@ def formulario_registro(request):
 #CARRO COMPRAS
 @cliente_login_required
 def carro_compras(request):
+    carro = request.session.get('carro', [])
+    email_cliente = request.session.get('email_cliente')
+    cliente = Cliente.objects.filter(email=email_cliente).first()
+    
     if request.method == 'POST':
+        if 'eliminar_producto' in request.POST:
+            producto_id = int(request.POST['eliminar_producto'])
+            carro = [item for item in carro if item['producto_id'] != producto_id]
+            request.session['carro'] = carro
+            return redirect('carro_compras')
+        
+        elif 'vaciar_carro' in request.POST:
+            request.session['carro'] = []
+            return redirect('carro_compras')
+
+        # Confirmar compra ↓↓↓
         form_direccion = DireccionEnvioForm(request.POST)
         form_pago = MetodoPagoForm(request.POST)
+
         if form_direccion.is_valid() and form_pago.is_valid():
-            carro = request.session.get('carro', [])
             if not carro:
                 messages.error(request, "Tu carro está vacío.")
                 return redirect('carro_compras')
 
             numero_compra = f"E11-{random.randint(100000, 999999)}"
-            email_cliente = request.session.get('email_cliente')
 
-            try:
-                cliente = Cliente.objects.get(email=email_cliente)
-            except Cliente.DoesNotExist:
+            if not cliente:
                 messages.error(request, "Cliente no válido.")
                 return redirect('inicio')
 
@@ -151,7 +166,7 @@ def carro_compras(request):
 
             total = 0
             for item in carro:
-                producto = Producto.objects.get(id=item['producto_id'])
+                producto = get_object_or_404(Producto, id=item['producto_id'])
                 cantidad = item['cantidad']
                 DetalleCompra.objects.create(
                     compra=compra,
@@ -160,7 +175,7 @@ def carro_compras(request):
                 )
                 total += producto.precio * cantidad
 
-            total += 3990  # Envío fijo
+            total += 3990  # Envío
 
             send_mail(
                 'Confirmación de compra - E11ven Store',
@@ -170,20 +185,54 @@ def carro_compras(request):
                 fail_silently=True
             )
 
-            request.session['carro'] = []  # Limpiar carro
+            request.session['carro'] = []
             messages.success(request, f'Compra {numero_compra} confirmada ✅')
-            return render(request, 'login_cliente.html', {
-                'compra': compra,
-                'total': total,
-            })
+            return render(request, 'login_cliente.html', {'compra': compra, 'total': total})
+
     else:
         form_direccion = DireccionEnvioForm()
         form_pago = MetodoPagoForm()
 
+    total = 3990 + sum(
+        Producto.objects.get(id=item['producto_id']).precio * item['cantidad']
+        for item in carro
+    )
+
+    productos_carro = [
+        {
+            'producto': Producto.objects.get(id=item['producto_id']),
+            'cantidad': item['cantidad']
+        } for item in carro
+    ]
+
     return render(request, 'carro_compras.html', {
         'form_direccion': form_direccion,
-        'form_pago': form_pago
+        'form_pago': form_pago,
+        'productos_carro': productos_carro,
+        'total': total,
+        'cliente': cliente
     })
+
+
+#AGREGAR AL CARRO
+
+@require_POST
+def agregar_al_carro(request, producto_id):
+    producto = Producto.objects.get(id=producto_id)
+    cantidad = int(request.POST.get('cantidad', 1))
+
+    carro = request.session.get('carro', [])
+
+    for item in carro:
+        if item['producto_id'] == producto.id:
+            item['cantidad'] += cantidad
+            break
+    else:
+        carro.append({'producto_id': producto.id, 'cantidad': cantidad})
+
+    request.session['carro'] = carro
+    messages.success(request, f'{producto.nombre} agregado al carrito.')
+    return redirect(request.META.get('HTTP_REFERER', 'menu_categorias'))
 
 
 # PANEL ADMINISTRACION

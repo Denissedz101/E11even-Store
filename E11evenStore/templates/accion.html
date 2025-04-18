@@ -56,7 +56,6 @@
 			
 			<header>
 				<h1 class="titulo">Juegos de Acción</h1>
-				<!-- agregamos carrito para simulacion de compra -->
 				<div class="carrito-icono">
 					<a href="{% url 'carro_compras' %}">
 						🛒 <span id="contador-carrito">0</span>
@@ -76,7 +75,12 @@
 						<button class="details-btn" onclick="toggleDescripcion('desc{{ forloop.counter }}')">Más detalles</button>
 						<p class="descripcion" id="desc{{ forloop.counter }}">{{ producto.descripcion }}</p>
 						
-						<button class="btn-carrito" onclick="agregarAlCarrito('{{ producto.nombre }}', {{ producto.precio }})"> Añadir al carrito </button>
+						<form method="post" action="{% url 'agregar_al_carro' producto.id %}">
+							{% csrf_token %}
+							<input type="hidden" name="cantidad" value="1">
+							<button type="submit" class="btn btn-carrito">Agregar al carrito</button>
+						</form>
+						
 						
 					</div>
 				</div>

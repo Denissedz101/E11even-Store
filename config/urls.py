@@ -27,6 +27,8 @@ urlpatterns = [
     path('categoria_mundo_abierto/', views.categoria_mundo_abierto, name='mundo_abierto'),
     path('categoria_supervivencia/', views.categoria_supervivencia, name='supervivencia'),
     path('categoria_terror/', views.categoria_terror, name='terror'),
+    path('agregar-carro/<int:producto_id>/', views.agregar_al_carro, name='agregar_al_carro'),
+
 
 
 ]
