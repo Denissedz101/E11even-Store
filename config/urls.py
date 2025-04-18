@@ -2,6 +2,8 @@
 from django.contrib import admin
 from django.urls import path
 from E11evenStore import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -19,12 +21,15 @@ urlpatterns = [
     path('api/mis-compras/', views.api_mis_compras, name='api_mis_compras'),
 
     # Categorías
-    path('accion/', views.accion, name='accion'),
-    path('carreras/', views.carreras, name='carreras'),
-    path('free/', views.free_to_play, name='free_to_play'),
-    path('mundo-abierto/', views.mundo_abierto, name='mundo_abierto'),
-    path('supervivencia/', views.supervivencia, name='supervivencia'),
-    path('terror/', views.terror, name='terror'),
+    path('categoria_accion/', views.categoria_accion, name='accion'),
+    path('categoria_carreras/', views.categoria_carreras, name='carreras'),
+    path('categoria_free_to_play/', views.categoria_free_to_play, name='free_to_play'),
+    path('categoria_mundo_abierto/', views.categoria_mundo_abierto, name='mundo_abierto'),
+    path('categoria_supervivencia/', views.categoria_supervivencia, name='supervivencia'),
+    path('categoria_terror/', views.categoria_terror, name='terror'),
 
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

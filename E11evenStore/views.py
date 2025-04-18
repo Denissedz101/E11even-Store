@@ -25,6 +25,7 @@ from .decorators import admin_login_required
 from django.shortcuts import render, redirect
 from .models import Producto
 from django.contrib import messages
+from django.shortcuts import render
 
 
 
@@ -50,23 +51,30 @@ def login_admin(request):
     return render(request, 'login_admin.html')
     
     # categorias menu #
-def accion(request):
-    return render(request, 'accion.html')
+def categoria_accion(request):
+    productos = Producto.objects.filter(categoria='CAT_5-Accion')  
+    return render(request, 'accion.html', {'productos': productos})
+    
+def categoria_terror(request):
+    productos = Producto.objects.filter(categoria='CAT_2-Terror')  
+    return render(request, 'terror.html', {'productos': productos})
 
-def carreras(request):
-    return render(request, 'carreras.html')
+def categoria_mundo_abierto(request):
+    productos = Producto.objects.filter(categoria='CAT_3-Mundo abierto')  
+    return render(request, 'mundo_abierto.html', {'productos': productos})
 
-def free_to_play(request):
-    return render(request, 'free_to_play.html')
+def categoria_free_to_play(request):
+    productos = Producto.objects.filter(categoria='CAT_4-Free to play')  
+    return render(request, 'free_to_play.html', {'productos': productos})
+    
+def categoria_supervivencia(request):
+    productos = Producto.objects.filter(categoria='CAT_6-Supervivencia')  
+    return render(request, 'supervivencia.html', {'productos': productos})
 
-def mundo_abierto(request):
-    return render(request, 'mundo_abierto.html')
+def categoria_carreras(request):
+    productos = Producto.objects.filter(categoria='CAT_1-Carreras')  
+    return render(request, 'carreras.html', {'productos': productos})
 
-def supervivencia(request):
-    return render(request, 'supervivencia.html')
-
-def terror(request):
-    return render(request, 'terror.html')
 
 # INICIO SESION COMUN
 def inicio_sesion(request):
@@ -112,16 +120,16 @@ def formulario_registro(request):
 
     return render(request, 'formulario_registro.html', {'form': form})
 
-#CARRITOS COMPRAS
+#CARRO COMPRAS
 @cliente_login_required
-def carrito_compras(request):
+def carro_compras(request):
     if request.method == 'POST':
         form_direccion = DireccionEnvioForm(request.POST)
         form_pago = MetodoPagoForm(request.POST)
         if form_direccion.is_valid() and form_pago.is_valid():
-            carrito = request.session.get('carrito', [])
-            if not carrito:
-                messages.error(request, "Tu carrito está vacío.")
+            carro = request.session.get('carro', [])
+            if not carro:
+                messages.error(request, "Tu carro está vacío.")
                 return redirect('carro_compras')
 
             numero_compra = f"E11-{random.randint(100000, 999999)}"
@@ -142,7 +150,7 @@ def carrito_compras(request):
             )
 
             total = 0
-            for item in carrito:
+            for item in carro:
                 producto = Producto.objects.get(id=item['producto_id'])
                 cantidad = item['cantidad']
                 DetalleCompra.objects.create(
@@ -162,9 +170,9 @@ def carrito_compras(request):
                 fail_silently=True
             )
 
-            request.session['carrito'] = []  # Limpiar carrito
+            request.session['carro'] = []  # Limpiar carro
             messages.success(request, f'Compra {numero_compra} confirmada ✅')
-            return render(request, 'compra_exitosa.html', {
+            return render(request, 'login_cliente.html', {
                 'compra': compra,
                 'total': total,
             })
@@ -172,7 +180,7 @@ def carrito_compras(request):
         form_direccion = DireccionEnvioForm()
         form_pago = MetodoPagoForm()
 
-    return render(request, 'carrito_compras.html', {
+    return render(request, 'carro_compras.html', {
         'form_direccion': form_direccion,
         'form_pago': form_pago
     })
@@ -183,16 +191,17 @@ def carrito_compras(request):
 def login_admin(request):
     # Variables para cada pestaña
     productos = Producto.objects.all().order_by('nombre', 'categoria')
-    compras_recientes = Compra.objects.all().order_by('-fecha')[:10]  # Últimas 10 compras
+    compras_recientes = Compra.objects.all().order_by('-fecha')[:10]  
     historial = []
     cliente = None
 
     if request.method == 'POST' and 'nombre' in request.POST:
         nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
         precio = int(request.POST.get('precio'))
         categoria = request.POST.get('categoria')
         stock = int(request.POST.get('stock'))
-        imagen = request.FILES.get('imagen')
+        imagen = request.POST.get('imagen') 
 
         producto_existente = Producto.objects.filter(nombre=nombre, categoria=categoria).first()
         if producto_existente:
@@ -203,7 +212,7 @@ def login_admin(request):
             producto_existente.save()
             messages.success(request, 'Stock actualizado para producto existente.')
         else:
-            Producto.objects.create(nombre=nombre, precio=precio, categoria=categoria, stock=stock, imagen=imagen)
+            Producto.objects.create(nombre=nombre, descripcion=descripcion,precio=precio, categoria=categoria, stock=stock, imagen=imagen)
             messages.success(request, 'Producto agregado correctamente.')
 
     elif request.method == 'POST' and 'rut' in request.POST:

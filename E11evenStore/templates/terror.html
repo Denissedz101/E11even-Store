@@ -1,4 +1,6 @@
 {% load static %}
+{% load humanize %}
+
 <!DOCTYPE html>
 <html lang="es">
 	<head>
@@ -7,15 +9,55 @@
 		<title>Terror - Store E11even</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-		<link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+		<link rel="stylesheet" href="{% static 'css/estilos-categorias.css' %}">
 	</head>
 	
-	<body>
+	<body class="d-flex flex-column min-vh-100">
+		
+		<div class="top-bar">
+			<div class="contact-info">
+				<i class="bi bi-envelope me-2"></i>
+				<span>Contacto_E11ven@gmail.com</span>
+				<i class="bi bi-geo-alt ms-4 me-2"></i>
+				<span> Los Leones 143, Providencia, Region Metropolitana | Chile</span>
+			</div>
+			
+			<div class="social-icons">
+				<a href="https://www.facebook.com/e11even_store" target="_blank">
+					<img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="30">
+				</a>
+				<a href="https://www.twitter.com/e11even_store" target="_blank">
+					<img src="https://cdn-icons-png.flaticon.com/512/124/124021.png" alt="Twitter" width="30">
+				</a>
+				<a href="https://www.instagram.com/e11even_store" target="_blank">
+					<img src="https://cdn-icons-png.flaticon.com/512/1409/1409946.png" alt="Instagram" width="30">
+				</a>
+			</div>
+		</div>
+		
+		<div class="main-content flex-grow-1">
+			
+			<div class="header-container">
+				<div class="logo">
+					<img src="{% static 'img/logo11Store.png' %}" alt="Logo de la tienda">
+				</div>
+				
+				<div class="nav-menu">
+					<ul>
+						<li><a href="{% url 'inicio' %}">🏠 Inicio</a></li>
+						<li><a href="{% url 'menu_categorias' %}">≣ Categorías</a></li>
+						<li><a href="{% url 'carro_compras' %}">🛒 Carrito</a></li>
+						<li><a href="{% url 'contacto' %}">✉ Contacto</a></li>
+						<li><a href="{% url 'inicio_sesion' %}">🔐 Iniciar sesión</a></li>
+						<li><a href="{% url 'formulario_registro' %}" class="login-btn">Registrate</a></li>
+					</ul>
+				</div>
+			</div>
+			
 		
 		<!-- Header -->
 		<header>
 			<h1 class="titulo">Juegos de Terror</h1>
-			<!-- agregamos carrito para simulacion de compra -->
 			<div class="carrito-icono">
 				<a href="{% url 'carro_compras' %}">
 					🛒 <span id="contador-carrito">0</span>
@@ -25,32 +67,26 @@
 		
 		<!-- Lista de Juegos -->
 		<div class="game-list">
-			<article class="game-item">
-				<img src="https://juegosdigitaleschile.com/files/images/productos/1503962921-resident-evil-revelations-p4.JPG" alt="Resident Evil" class="game-image">
+			{% for producto in productos %}
+			<div class="game-item">
+				<img src="{{ producto.imagen }}" alt="{{ producto.nombre }}">
 				<div class="game-info">
-					<h3>Resident Evil Revelations</h3>
-					<p><b>Precio: CLP$19.990</b></p>
-					<button onclick="toggleDescripcion('desc1')" class="details-btn">Más detalles</button>
-					<p class="descripcion" id="desc1">La historia se desarrolla en una época anterior a los incidentes de terrorismo biológico de Kijuju y Lanshiang, cuando la BSAA todavía era una organización joven...</p>
-					<button onclick="agregarAlCarrito('Resident Evil Revelations', 19990)">Añadir al carrito</button>
+					<h3>{{ producto.nombre }}</h3>
+					<p><b>Precio: CLP${{ producto.precio|intcomma  }}</b></p>
+					<p><b>Stock: {{ producto.stock }}</b></p>
+					
+					<button class="details-btn" onclick="toggleDescripcion('desc{{ forloop.counter }}')">Más detalles</button>
+					<p class="descripcion" id="desc{{ forloop.counter }}">{{ producto.descripcion }}</p>
+					
+					<button class="btn-carrito" onclick="agregarAlCarrito('{{ producto.nombre }}', {{ producto.precio }})"> Añadir al carrito </button>
+					
 				</div>
-			</article>
-			
-			<article class="game-item">
-				<img src="https://i.postimg.cc/wj8pD0h9/preferable-box.jpg" alt="Silent Hill" class="game-image">
-				<div class="game-info">
-					<h3>Silent Hill 2 PS5</h3>
-					<p><strong>Precio: CLP$75.990</strong></p>
-					<button onclick="toggleDescripcion('desc2')" class="details-btn">Más detalles</button>
-					<p class="descripcion" id="desc2">Un remake del SILENT HILL 2 de 2001 con nuevos gráficos de avanzada que incluyen trazado de rayos. Mira el perturbador mundo de Silent Hill como nunca antes...</p>
-					<button onclick="agregarAlCarrito('Silent Hill 2 PS5', 75990)">Añadir al carrito</button>
-				</div>
-			</article>
+			</div>
+			{% empty %}
+			<p>No hay productos disponibles en esta categoría.</p>
+			{% endfor %}
 		</div>
-		
-		<!-- Btn para volver al inicio -->
-		<a href="{% url 'inicio' %}" class="back-btn"> Volver a Inicio</a>
-		
+				
 		<!-- Btn para volver al menu categorias -->
 		<a href="{% url 'menu_categorias' %}" class="back-btn"> Volver a Categorias</a>
 		
@@ -71,7 +107,7 @@
 			
 			//agregamos fx actualizar carrito y agregar productos para simulacion compra //
 			function actualizarContadorCarrito() {
-				fetch("{% url 'contador_carrito' %}")
+				fetch("{% url 'carro_compras' %}")
 				.then(response => response.json())
 				.then(data => {
 					document.getElementById("contador-carrito").textContent = data.total;
@@ -82,7 +118,7 @@
 			}
 			
 			function agregarAlCarrito(nombre, precio) {
-				fetch("{% url 'agregar_al_carrito' %}", {
+				fetch("{% url 'carro_compras' %}", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
@@ -106,7 +142,13 @@
 			
 			actualizarContadorCarrito();
 			
-		</script>
-		
+			</script>
+		</div>
 	</body>
+		<!-- Footer -->
+	<footer>
+		<!-- Texto de derechos reservados -->
+		<p class="footer-text">&copy; 2025 Store E11even - Todos los derechos reservados</p>
+	</footer>	
+	
 </html>

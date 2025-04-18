@@ -105,6 +105,11 @@
 							</div>
 							
 							<div class="mb-3">
+								<label for="id_descripcion" class="form-label">Descripción del Producto</label>
+								<input type="text" class="form-control" name="descripcion" id="id_descripcion" required>
+							</div>
+							
+							<div class="mb-3">
 								<label for="id_precio" class="form-label">Precio</label>
 								<input type="number" class="form-control" name="precio" id="id_precio" required>
 							</div>
@@ -127,9 +132,10 @@
 							</div>
 							
 							<div class="mb-3">
-								<label for="id_imagen" class="form-label">Imagen del producto</label>
-								<input type="file" class="form-control" name="imagen" id="id_imagen">
+								<label for="id_imagen" class="form-label">URL de la imagen del producto</label>
+								<input type="text" class="form-control" name="imagen" id="id_imagen" placeholder="https://...">
 							</div>
+							
 							
 							<button type="submit" class="btn btn-success">Guardar Producto</button>
 						</form>

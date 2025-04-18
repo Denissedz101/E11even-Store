@@ -40,17 +40,18 @@ class Administrativo(models.Model):
 # PRODUCTOS, COMPRAS Y DETALLE
 class Producto(models.Model):
     nombre = models.CharField(max_length=100)
+    descripcion = models.CharField(max_length=500, null=True, blank=True)
     precio = models.PositiveIntegerField()
     CATEGORIAS = [
-    ('CAT_1', 'Carreras'),
-    ('CAT_2', 'Terror'),
-    ('CAT_3', 'Mundo abierto'),
-    ('CAT_4', 'Free to play'),
-    ('CAT_5', 'Acción'),
-    ('CAT_6', 'Supervivencia'),
+    ('CAT_1-Carreras', 'Carreras'),
+    ('CAT_2-Terror', 'Terror'),
+    ('CAT_3-Mundo abierto', 'Mundo abierto'),
+    ('CAT_4-Free to play', 'Free to play'),
+    ('CAT_5-Accion', 'Acción'),
+    ('CAT_6-Supervivencia', 'Supervivencia'),
     ]
-    categoria = models.CharField(max_length=20, choices=CATEGORIAS)
-    imagen = models.ImageField(upload_to='productos/', blank=True, null=True)
+    categoria = models.CharField(max_length=50, choices=CATEGORIAS)
+    imagen = models.URLField()
     stock = models.PositiveIntegerField(default=0)
 
     def __str__(self):
