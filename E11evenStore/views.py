@@ -153,12 +153,14 @@ def carro_compras(request):
                 messages.error(request, "Cliente no válido.")
                 return redirect('inicio')
 
+        
             compra = Compra.objects.create(
                 cliente=cliente,
                 numero_compra=numero_compra,
                 direccion_envio=form_direccion.cleaned_data['direccion'],
                 metodo_pago=form_pago.cleaned_data['metodo_pago'],
-                estado='pendiente'
+                estado='Pendiente'
+                # El estado de envio por default es "pendiente"
             )
 
             total = 0

@@ -1,6 +1,7 @@
 {% load static %}
 {% load humanize %}
 
+
 <!DOCTYPE html>
 <html lang="es">
 	<head>
@@ -18,19 +19,25 @@
 			<div class="contact-info">
 				<i class="bi bi-envelope me-2"></i>
 				<span>Contacto_E11ven@gmail.com</span>
-				<i class="bi bi-geo-alt ms-4 me-2"></i>
-				<span> Los Leones 143, Providencia, Region Metropolitana | Chile</span>
+				
+				<a href="https://www.google.com/maps/place/Galer%C3%ADa+Drugstore/@-33.4229125,-70.6107562,17z/data=!4m15!1m8!3m7!1s0x9662cf100a0fc417:0xf78d982a000a52a6!2sAv.+Los+Leones+1432,+7510608+Providencia,+Santiago,+Regi%C3%B3n+Metropolitana!3b1!8m2!3d-33.432377!4d-70.601921!16s%2Fg%2F11hdz6tf4z!3m5!1s0x9662cf661383b143:0xa54e2a603f76fcc6!8m2!3d-33.4222946!4d-70.6113129!16s%2Fg%2F1tc_xtdt?entry=ttu&g_ep=EgoyMDI1MDQxNi4xIKXMDSoASAFQAw%3D%3D"
+				target="_blank"
+				class="direccion-link ms-4 d-inline-flex align-items-center">
+					<i class="bi bi-geo-alt me-2"></i>
+					<span>Galería Drugstore, Los Leones 2124 local 9B, Providencia</span>
+				</a>
+				
 			</div>
 			
 			<div class="social-icons">
 				<a href="https://www.facebook.com/e11even_store" target="_blank">
-					<img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="30">
+					<img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="40">
 				</a>
 				<a href="https://www.twitter.com/e11even_store" target="_blank">
-					<img src="https://cdn-icons-png.flaticon.com/512/124/124021.png" alt="Twitter" width="30">
+					<img src="https://cdn-icons-png.flaticon.com/512/124/124021.png" alt="Twitter" width="40">
 				</a>
 				<a href="https://www.instagram.com/e11even_store" target="_blank">
-					<img src="https://cdn-icons-png.flaticon.com/512/1409/1409946.png" alt="Instagram" width="30">
+					<img src="https://cdn-icons-png.flaticon.com/512/1409/1409946.png" alt="Instagram" width="40">
 				</a>
 			</div>
 		</div>
@@ -49,61 +56,62 @@
 						<li><a href="{% url 'carro_compras' %}">🛒 Carrito</a></li>
 						<li><a href="{% url 'contacto' %}">✉ Contacto</a></li>
 						<li><a href="{% url 'inicio_sesion' %}">🔐 Iniciar sesión</a></li>
-					<li><a href="{% url 'formulario_registro' %}" class="login-btn">Registrate</a></li>
-				</ul>
-			</div>
-		</div>
-		
-		<!-- Contenedor de Categorías -->
-		<div class="categories-container">
-			<!-- Categoría Terror -->
-			<div class="category">
-				<a href="{% url 'terror' %}">
-					<img src="https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2022/10/outlast-2850677.jpg?tf=3840x" alt="Categoría 2">
-					<p>Terror</p>
-				</a>
+						<li><a href="{% url 'formulario_registro' %}" class="login-btn">Registrate</a></li>
+					</ul>
+				</div>
+				
 			</div>
 			
-			<!-- Categoría Acción -->
-			<div class="category">
-				<a href="{% url 'accion' %}">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzqy0IDeYkM-Egt0SctsRY6tZtI-SAQS-mKA&s" alt="Categoría 5">
-					<p>Acción</p>
-				</a>
-			</div>
-			
-			<!-- Categoría Mundo Abierto -->
-			<div class="category">
-				<a href="{% url 'mundo_abierto' %}">
-					<img src="https://areajugones.sport.es/wp-content/uploads/2017/02/C5Jy-HjUoAAyWZd.jpg" alt="Categoría 3">
-					<p>Mundo Abierto</p>
-				</a>
-			</div>
-			
-			<!-- Categoría Free To Play -->
-			<div class="category">
-				<a href="{% url 'free_to_play' %}">
-					<img src="https://eu-images.contentstack.com/v3/assets/blt740a130ae3c5d529/blt21694b9374d3cb0e/6557820d38ae8e040a02feed/fortniteog.jpg" alt="Categoría 4">
-					<p>Free To Play</p>
-				</a>
-			</div>
-			
-			<!-- Categoría Supervivencia -->
-			<div class="category">
-				<a href="{% url 'supervivencia' %}">
-					<img src="https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2018/07/days-gone.jpg?tf=3840x" alt="Categoría 6">
-					<p>Supervivencia</p>
-				</a>
-			</div>
-			
-			<!-- Categoría Carreras -->
-			<div class="category">
-				<a href="{% url 'carreras' %}">
-					<img src="https://www.gaming.net/wp-content/uploads/2023/08/Racing-Game-on-Steam-Feb-2025.jpg" alt="Categoría 1">
-					<p>Carreras</p>
-				</a>
-			</div>
-			<!-- Añadir más categorías según sea necesario -->
+			<!-- Contenedor de Categorías -->
+			<div class="categories-container">
+				<!-- Categoría Terror -->
+				<div class="category">
+					<a href="{% url 'terror' %}">
+						<img src="https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2022/10/outlast-2850677.jpg?tf=3840x" alt="Categoría 2">
+						<p>Terror</p>
+					</a>
+				</div>
+				
+				<!-- Categoría Acción -->
+				<div class="category">
+					<a href="{% url 'accion' %}">
+						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzqy0IDeYkM-Egt0SctsRY6tZtI-SAQS-mKA&s" alt="Categoría 5">
+						<p>Acción</p>
+					</a>
+				</div>
+				
+				<!-- Categoría Mundo Abierto -->
+				<div class="category">
+					<a href="{% url 'mundo_abierto' %}">
+						<img src="https://areajugones.sport.es/wp-content/uploads/2017/02/C5Jy-HjUoAAyWZd.jpg" alt="Categoría 3">
+						<p>Mundo Abierto</p>
+					</a>
+				</div>
+				
+				<!-- Categoría Free To Play -->
+				<div class="category">
+					<a href="{% url 'free_to_play' %}">
+						<img src="https://eu-images.contentstack.com/v3/assets/blt740a130ae3c5d529/blt21694b9374d3cb0e/6557820d38ae8e040a02feed/fortniteog.jpg" alt="Categoría 4">
+						<p>Free To Play</p>
+					</a>
+				</div>
+				
+				<!-- Categoría Supervivencia -->
+				<div class="category">
+					<a href="{% url 'supervivencia' %}">
+						<img src="https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2018/07/days-gone.jpg?tf=3840x" alt="Categoría 6">
+						<p>Supervivencia</p>
+					</a>
+				</div>
+				
+				<!-- Categoría Carreras -->
+				<div class="category">
+					<a href="{% url 'carreras' %}">
+						<img src="https://www.gaming.net/wp-content/uploads/2023/08/Racing-Game-on-Steam-Feb-2025.jpg" alt="Categoría 1">
+						<p>Carreras</p>
+					</a>
+				</div>
+				<!-- Añadir más categorías según sea necesario -->
 			</div>
 			
 			<!-- Footer Común -->

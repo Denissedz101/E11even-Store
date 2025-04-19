@@ -21,18 +21,24 @@
 			<div class="contact-info">
 				<i class="bi bi-envelope me-2"></i>
 				<span>Contacto_E11ven@gmail.com</span>
-				<i class="bi bi-geo-alt ms-4 me-2"></i>
-				<span>Los Leones 143, Providencia, Región Metropolitana | Chile</span>
+				
+				<a href="https://www.google.com/maps/place/Galer%C3%ADa+Drugstore/@-33.4229125,-70.6107562,17z/data=!4m15!1m8!3m7!1s0x9662cf100a0fc417:0xf78d982a000a52a6!2sAv.+Los+Leones+1432,+7510608+Providencia,+Santiago,+Regi%C3%B3n+Metropolitana!3b1!8m2!3d-33.432377!4d-70.601921!16s%2Fg%2F11hdz6tf4z!3m5!1s0x9662cf661383b143:0xa54e2a603f76fcc6!8m2!3d-33.4222946!4d-70.6113129!16s%2Fg%2F1tc_xtdt?entry=ttu&g_ep=EgoyMDI1MDQxNi4xIKXMDSoASAFQAw%3D%3D"
+				target="_blank"
+				class="direccion-link ms-4 d-inline-flex align-items-center">
+					<i class="bi bi-geo-alt me-2"></i>
+					<span>Galería Drugstore, Los Leones 2124 local 9B, Providencia</span>
+				</a>
+				
 			</div>
 			<div class="social-icons">
 				<a href="https://www.facebook.com/e11even_store" target="_blank">
-					<img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" width="30">
+					<img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" width="40">
 				</a>
 				<a href="https://www.twitter.com/e11even_store" target="_blank">
-					<img src="https://cdn-icons-png.flaticon.com/512/124/124021.png" width="30">
+					<img src="https://cdn-icons-png.flaticon.com/512/124/124021.png" width="40">
 				</a>
 				<a href="https://www.instagram.com/e11even_store" target="_blank">
-					<img src="https://cdn-icons-png.flaticon.com/512/1409/1409946.png" width="30">
+					<img src="https://cdn-icons-png.flaticon.com/512/1409/1409946.png" width="40">
 				</a>
 			</div>
 		</div>
@@ -63,7 +69,7 @@
 					
 					<form method="POST" id="registroForm" novalidate>
 						{% csrf_token %}
-		
+						
 						<div class="mb-3">
 							{{ form.usuario.label_tag }}
 							{{ form.usuario|add_attr:"id:usuario,placeholder:Ingrese su usuario,class:form-control" }}
@@ -127,7 +133,7 @@
 							{{ form.direccion.label_tag }}
 							{{ form.direccion|add_attr:"id:direccion,placeholder:Ingresa tu dirección (Opcional),class:form-control" }}
 						</div>
-					
+						
 						<!-- Botones -->
 						<div class="mb-3">
 							<button type="submit" class="btn btn-primary"id="btnRegistrar">Registrarse</button>
@@ -247,7 +253,7 @@
 					e.preventDefault();
 					let formularioValido = true;
 					
-campos.forEach(campo => {
+					campos.forEach(campo => {
 						const input = document.getElementById(campo.id);
 						const valor = input.value.trim();
 						if (!campo.validar(valor)) {
@@ -255,15 +261,15 @@ campos.forEach(campo => {
 							formularioValido = false;
 						}
 					});
-
+					
 					if (formularioValido) {
 						this.submit(); // Enviar el formulario si todo es válido
-					} else {
+						} else {
 						alert("Por favor, revise los campos marcados antes de continuar.");
 					}
 				});
 			});
-
+			
 			// Función para alternar visibilidad de contraseñas
 			function togglePassword(idCampo, idIcono) {
 				const campo = document.getElementById(idCampo);
@@ -272,7 +278,7 @@ campos.forEach(campo => {
 					campo.type = "text";
 					icono.classList.remove("bi-eye");
 					icono.classList.add("bi-eye-slash");
-				} else {
+					} else {
 					campo.type = "password";
 					icono.classList.remove("bi-eye-slash");
 					icono.classList.add("bi-eye");
