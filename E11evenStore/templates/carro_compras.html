@@ -51,7 +51,7 @@
 			<main class="container-fluid d-flex flex-column align-items-center" style="flex: 1;">
 				<div id="carrito-container" class="mx-auto mt-4" style="max-width: 700px; background-color: rgba(198, 129, 230, 0.65); padding: 20px; border-radius: 15px;">
 					
-				{% if productos_carro %}
+					{% if productos_carro %}
 					{% if cliente %}
 					<h4>¡Hola, {{ cliente.nombre }}! 🛍️ Aquí está tu carrito:</h4>
 					{% endif %}
@@ -89,12 +89,20 @@
 					{% if cliente_logeado %}
 					<form method="post">
 						{% csrf_token %}
+						
 						<div class="mb-3">
 							{{ form_direccion.as_p }}
 						</div>
+						
 						<div class="mb-3">
 							{{ form_pago.as_p }}
 						</div>
+						
+						<div id="giftcard_input" style="display:none;" class="mt-2">
+							<label for="codigo_giftcard">Código de GiftCard:</label>
+							<input type="text" name="codigo_giftcard" class="form-control" placeholder="Ej: GIFT2025">
+						</div>
+						
 						<button type="submit" class="btn btn-success w-100">✅ Confirmar compra</button>
 					</form>
 					
@@ -113,8 +121,8 @@
 					<div class="alert alert-info text-center">
 						Tu carrito está vacío 🛒
 					</div>
-				{% endif %}
-			</div>
+					{% endif %}
+				</div>
 				
 				{% if compra %}
 				<div class="container text-center mt-5" id="mensaje-compra">
@@ -133,6 +141,34 @@
 				</div>
 				{% endif %}
 			</main>
+			
+			<!-- ==== Script ===== -->
+			
+			<!-- Bootstrap -->
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+			
+			
+			<script>
+				document.addEventListener('DOMContentLoaded', function () {
+					const metodo = document.querySelector('[name="metodo_pago"]');
+					const giftInput = document.getElementById('giftcard_input');
+					
+					metodo.addEventListener('change', function () {
+						if (this.value === 'GiftCard') {
+							giftInput.style.display = 'block';
+							} else {
+							giftInput.style.display = 'none';
+						}
+						
+						if (this.value === 'Debito/Credito') {
+							alert("Estamos redirigiéndote a Webpay... 🕒");
+							} else if (this.value === 'Transferencia') {
+							alert('Te hemos enviado a tu correo registrado los datos de transferencia.\nTienes 15 minutos para realizarla, de lo contrario los productos se liberarán.');
+						}
+					});
+				});
+			</script>
+			
 		</div>
 		
 		<footer class="mt-auto text-center py-3">

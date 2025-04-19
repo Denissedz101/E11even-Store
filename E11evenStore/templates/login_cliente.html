@@ -1,4 +1,4 @@
-<!-- LOGIN_CLIENTES -->
+<!-- PANEL CLIENTES -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
@@ -119,9 +119,11 @@
 					
 					<!-- Mensajes -->
 					{% if messages %}
-					<div class="panel">
+					<div id="messages" class="position-fixed top-0 end-0 p-3" style="z-index: 1055;">
 						{% for message in messages %}
-						<div class="alert">{{ message }}</div>
+						<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+							{{ message }}
+						</div>
 						{% endfor %}
 					</div>
 					{% endif %}
@@ -146,9 +148,18 @@
 						activa.classList.add("visible");
 					}
 				}
+				
+				// Ocultar mensajes automáticamente después de 2 segundos
+				setTimeout(function() {
+					const alerts = document.querySelectorAll('.alert');
+					alerts.forEach(alert => {
+						alert.classList.remove('show');
+						alert.classList.add('fade');
+					});
+				}, 2000);
+			
 			</script>
-			
-			
+		
 		</div>	
 		
 		<!-- Footer -->

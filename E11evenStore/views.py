@@ -30,8 +30,6 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
 
 
-
-
 def inicio(request):
     return render(request, 'index.html')
 
@@ -175,7 +173,20 @@ def carro_compras(request):
                 total += producto.precio * cantidad
 
             total += 3990  # Envío
-
+            
+            # Simulación de pago según método
+            
+            if form_pago == 'Transferencia':
+                messages.success(request, 'Te hemos enviado a tu correo registrado los datos de transferencia. Tienes 15 minutos para realizarla, de lo contrario los productos se liberarán.')
+            elif form_pago == 'GiftCard':
+                codigo_giftcard = request.POST.get('codigo_giftcard', '').strip()
+                if not codigo_giftcard:
+                    messages.error(request, "Debes ingresar un código de GiftCard válido.")
+            elif form_pago == 'Debito/Credito':
+                messages.info(request, 'Estamos redirigiéndote a Webpay...')
+                
+                messages.success(request, '¡Felicidades! Tu compra se ha realizado con éxito. En unos minutos recibirás en tu correo los datos de la compra.')
+                
             send_mail(
                 'Confirmación de compra - E11ven Store',
                 f'Tu número de compra es {numero_compra}. Total: ${total}. Dirección: {compra.direccion_envio}',
@@ -325,8 +336,8 @@ def login_cliente(request):
     # Calcular totales para cada compra
     compras_con_totales = []
     for compra in compras:
-        total = sum(detalle.subtotal for detalle in compra.detalles.all())
-        compras_con_totales.append({
+       total = sum(detalle.subtotal() for detalle in compra.detalles.all())
+    compras_con_totales.append({
             'compra': compra,
             'total': total,
         })
