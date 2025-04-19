@@ -15,14 +15,6 @@ Tienda de venta de videojuegos.
 
 		📌 # En Windows activalo -->  env\Scripts\activate
 
-⚙️ instala db y haz la migración > Desde la terminal vscode:
-
-	📌 pip install oracledb 
-	
-	📌 python manage.py makemigrations
-	
-	📌 python manage.py migrate
-
 👥 Datos conexion a la Base de datos
 
 	➡️ Se uso un contenedor en Docker puerto 1521:1521
@@ -34,7 +26,14 @@ Tienda de venta de videojuegos.
 
 	➡️ La base de datos se conecto a traves de Oracle sql developer.
 	➡️ Recuerda modificar este acceso desde settings.py --> DATABASES
+
+⚙️ instala db y haz la migración > Desde la terminal vscode:
+
+	📌 pip install oracledb 
 	
+	📌 python manage.py makemigrations
+	
+	📌 python manage.py migrate
 
 🔎 Ejecutamos el servidor local:
 
