@@ -49,3 +49,22 @@ class RegistroForm(forms.ModelForm):
         if clave != repetir_clave:
             raise forms.ValidationError("Las contraseñas no coinciden.")
         return cleaned_data
+
+  #EDICION DATOS CLIENTE  
+class EditarClienteForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = ['usuario', 'direccion', 'email','clave']
+
+class DireccionEnvioForm(forms.Form):
+    direccion = forms.CharField(label='Dirección de envío', max_length=255)
+
+# METODOS DE PAGO
+class MetodoPagoForm(forms.Form):
+    METODOS = [
+        ('transferencia', 'Transferencia Bancaria'),
+        ('gift_card', 'Gift Card'),
+        ('tarjeta_credito', 'Tarjeta de Crédito'),
+        ('tarjeta_debito', 'Tarjeta de Débito')
+    ]
+    metodo_pago = forms.ChoiceField(choices=METODOS, label='Método de pago')

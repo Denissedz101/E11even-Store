@@ -17,6 +17,7 @@ html, body {
 	backdrop-filter: blur(5px);
 	display: flex;
 	flex-direction: column;
+	min-height: 100vh;
 }
 
 /* ===== TOP BAR ===== */
@@ -166,48 +167,37 @@ button:hover {
     margin-top: 10px;
 }
 
-/* ===== BTN COMPRAR  ===== */
-.btn-comprar {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease;
+/* Botón "Vaciar carrito" */
+.btn-warning {
+	background-color: #86210d;
+	color: #fff;
+	font-weight: bold;
+	transition: background-color 0.3s ease;
 }
 
-.btn-comprar:hover {
-    background-color: #bd4d11;
+.btn-warning:hover {
+	background-color: #de2108;
+
 }
+
+/* Botón "Confirmar compra" */
+.btn-success {
+	background-color: #135313; 
+	color: #fff;
+	font-weight: bold;
+	transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+	background-color: #5c1c6b;
+	}
 
 
 
 /* ===== BTN VOLVER INICIO ===== */
 
-.back-btn {
-    display: block;
-    text-align: center;
-    margin: 30px auto;
-    font-size: 18px;
-    color: #fdfdfd;
-    background-color: #3f0f4a;
-    padding: 10px 20px;
-    border-radius: 10px;
-    width: fit-content;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
-
-  .back-btn:hover {
-    background-color: #f0842b;
-  }
-
-/* ===== FOOTER ===== */
-
-footer {
-	background: rgba(0, 0, 0, 0.7);
+.btn-primary {
+    background: rgba(0, 0, 0, 0.7);
 	color: #ffffff;
 	padding: 10px 0;
 	display: flex;
@@ -218,6 +208,22 @@ footer {
 	left: 0;
 	width: 100vw; /* ancho de la ventana */
 	z-index: 10;
+  	}
+
+  .btn-primary:hover {
+    background-color: #f0842b;
+  }
+
+/* ===== FOOTER ===== */
+
+footer {
+	background: rgba(0, 0, 0, 0.7);
+	color: #ffffff;
+	padding: 10px 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
 }
 
 .footer-text {
@@ -258,4 +264,22 @@ footer {
     margin-top: 20px;
 }
 
+/* Google maps */
+.contact-info a.direccion-link {
+	text-decoration: none;
+	color: inherit;
+	transition: color 0.3s ease, text-decoration 0.3s ease;
+}
 
+.contact-info a.direccion-link:hover {
+	color: #0d6efd; 
+	text-decoration: underline;
+	}
+
+.contact-info i.bi-geo-alt {
+	transition: color 0.3s ease;
+}
+
+.contact-info a.direccion-link:hover i.bi-geo-alt {
+	color: #0d6efd;
+}

@@ -17,6 +17,7 @@ html, body {
 	backdrop-filter: blur(5px);
 	display: flex;
 	flex-direction: column;
+	margin: 0;
 }
 
 /* ===== TOP BAR ===== */
@@ -361,3 +362,22 @@ footer {
 	color: #ffffff;
 }
 
+/* Google maps */
+.contact-info a.direccion-link {
+	text-decoration: none;
+	color: inherit;
+	transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.contact-info a.direccion-link:hover {
+	color: #0d6efd; 
+	text-decoration: underline;
+}
+
+.contact-info i.bi-geo-alt {
+	transition: color 0.3s ease;
+}
+
+.contact-info a.direccion-link:hover i.bi-geo-alt {
+	color: #0d6efd;
+}
