@@ -28,6 +28,7 @@ from django.contrib import messages
 from django.shortcuts import render
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
+from django.contrib.messages import constants as messages
 
 
 def inicio(request):
@@ -148,6 +149,7 @@ def carro_compras(request):
     cliente = Cliente.objects.filter(email=email_cliente).first()
 
     if request.method == "POST":
+
         if "eliminar_producto" in request.POST:
             producto_id = int(request.POST["eliminar_producto"])
             carro = [item for item in carro if item["producto_id"] != producto_id]
@@ -262,9 +264,16 @@ def carro_compras(request):
     )
 
 
+MESSAGE_TAGS = {
+    messages.DEBUG: "secondary",
+    messages.INFO: "info",
+    messages.SUCCESS: "success",
+    messages.WARNING: "warning",
+    messages.ERROR: "danger",
+}
+
+
 # AGREGAR AL CARRO
-
-
 @require_POST
 def agregar_al_carro(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)

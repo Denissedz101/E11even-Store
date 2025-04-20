@@ -118,7 +118,7 @@ ul#carrito {
     padding: 0;
     margin: 20px auto;
     width: 100%; /* Ocupa todo el contenedor */
-    background: rgba(255, 255, 255, 0.1); /* Suave transparencia */
+    background: rgba(255, 255, 255, 0.1); 
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
     color: white;
@@ -161,6 +161,7 @@ button:hover {
 }
 
 /* ===== CONTENEDOR COMPRA ===== */
+
 .comprar-container {
     text-align: center;
     padding: 15px;
