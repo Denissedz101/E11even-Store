@@ -15,6 +15,7 @@ Tienda de venta de videojuegos.
 
 		📌 # En Windows activalo -->  env\Scripts\activate
 
+
 👥 Datos conexion a la Base de datos
 
 	➡️ Se uso un contenedor en Docker puerto 1521:1521
@@ -37,9 +38,9 @@ Tienda de venta de videojuegos.
 
 🔎 Ejecutamos el servidor local:
 
-	📌 python manage.py runserver
+	📌 python manage.py runserver 8001
 
-	📌 Abre tu navegador en http://127.0.0.1:8000/
+	📌 Abre tu navegador en http://127.0.0.1:8001/ (esto porque FastAPI ocupa el p 8000)
 
 
 
