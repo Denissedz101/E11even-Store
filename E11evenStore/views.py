@@ -28,7 +28,6 @@ from django.contrib import messages
 from django.shortcuts import render
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
-from django.contrib.messages import constants as messages
 
 
 def inicio(request):
@@ -115,8 +114,14 @@ def inicio_sesion(request):
                         None, "Acceso denegado. Administrador no registrado."
                     )
             else:
+                # inicio sesion como cliente
                 try:
                     cliente = Cliente.objects.get(email=email, clave=clave)
+                    # Guardar datos del cliente en la sesión como diccionario
+                    request.session["cliente"] = {
+                        "nombre": cliente.nombre,
+                        "email": cliente.email,
+                    }
                     request.session["email_cliente"] = cliente.email
                     messages.success(request, "¡Bienvenido Cliente!")
                     return redirect("login_cliente")
@@ -133,8 +138,10 @@ def formulario_registro(request):
         if form.is_valid():
             cliente = form.save(commit=False)
             cliente.save()
-            messages.success(request, "¡Registro exitoso! Por favor inicia sesión.")
+            messages.success(request, "Registro exitoso. Ya puedes iniciar sesión.")
             return redirect("inicio_sesion")
+        else:
+            messages.error(request, "Corrige los errores en el formulario.")
     else:
         form = RegistroForm()
 
@@ -150,12 +157,14 @@ def carro_compras(request):
 
     if request.method == "POST":
 
+        # Eliminar producto individual
         if "eliminar_producto" in request.POST:
             producto_id = int(request.POST["eliminar_producto"])
             carro = [item for item in carro if item["producto_id"] != producto_id]
             request.session["carro"] = carro
             return redirect("carro_compras")
 
+        # Vaciar carro completo
         elif "vaciar_carro" in request.POST:
             request.session["carro"] = []
             return redirect("carro_compras")
@@ -174,13 +183,25 @@ def carro_compras(request):
                 messages.error(request, "Cliente no válido.")
                 return redirect("inicio")
 
+            metodo_pago = form_pago.cleaned_data["metodo_pago"]
+            direccion_envio = form_direccion.cleaned_data["direccion"]
+
+            # Verificación específica de GiftCard
+            if metodo_pago == "GiftCard":
+                codigo_giftcard = request.POST.get("codigo_giftcard", "").strip()
+                if not codigo_giftcard:
+                    messages.error(
+                        request, "Debes ingresar un código de GiftCard válido."
+                    )
+                    return redirect("carro_compras")
+
+            # Crear la compra
             compra = Compra.objects.create(
                 cliente=cliente,
                 numero_compra=numero_compra,
-                direccion_envio=form_direccion.cleaned_data["direccion"],
-                metodo_pago=form_pago.cleaned_data["metodo_pago"],
+                direccion_envio=direccion_envio,
+                metodo_pago=metodo_pago,
                 estado="Pendiente",
-                # El estado de envio por default es "pendiente"
             )
 
             total = 0
@@ -192,32 +213,33 @@ def carro_compras(request):
                 )
                 total += producto.precio * cantidad
 
-            total += 3990  # Envío
+            total += 3990  # Costo de envío
 
-            # Simulación de pago según método
-
-            if form_pago == "Transferencia":
+            # Simulación de método de pago
+            if metodo_pago == "Transferencia":
                 messages.success(
                     request,
-                    "Te hemos enviado a tu correo registrado los datos de transferencia. Tienes 15 minutos para realizarla, de lo contrario los productos se liberarán.",
+                    "Te hemos enviado a tu correo registrado los datos de transferencia. "
+                    "Tienes 15 minutos para realizarla, de lo contrario los productos se liberarán.",
                 )
-            elif form_pago == "GiftCard":
-                codigo_giftcard = request.POST.get("codigo_giftcard", "").strip()
-                if not codigo_giftcard:
-                    messages.error(
-                        request, "Debes ingresar un código de GiftCard válido."
-                    )
-            elif form_pago == "Debito/Credito":
+            elif metodo_pago == "GiftCard":
+                messages.success(
+                    request,
+                    "Se ha validado tu GiftCard. Tu compra se ha registrado correctamente.",
+                )
+            elif metodo_pago == "Debito/Credito":
                 messages.info(request, "Estamos redirigiéndote a Webpay...")
-
                 messages.success(
                     request,
-                    "¡Felicidades! Tu compra se ha realizado con éxito. En unos minutos recibirás en tu correo los datos de la compra.",
+                    "¡Felicidades! Tu compra se ha realizado con éxito. "
+                    "En unos minutos recibirás en tu correo los datos de la compra.",
                 )
 
+            # Enviar correo de confirmación
             send_mail(
                 "Confirmación de compra - E11ven Store",
-                f"Tu número de compra es {numero_compra}. Total: ${total}. Dirección: {compra.direccion_envio}",
+                f"Tu número de compra es {numero_compra}. Total: ${total}. "
+                f"Dirección de envío: {direccion_envio}",
                 "E11venStore@gmail.com",
                 [cliente.email],
                 fail_silently=True,
@@ -225,16 +247,15 @@ def carro_compras(request):
 
             request.session["carro"] = []
             messages.success(request, f"Compra {numero_compra} confirmada ✅")
-            return render(
-                request, "login_cliente.html", {"compra": compra, "total": total}
-            )
+            return redirect("login_cliente")
 
     else:
         form_direccion = DireccionEnvioForm()
         form_pago = MetodoPagoForm()
 
+    # Mostrar productos del carro
     productos_carro = []
-    total = 3990  # Envío
+    total = 3990  # Costo fijo de envío
 
     for item in carro:
         producto = Producto.objects.get(id=item["producto_id"])
@@ -262,15 +283,6 @@ def carro_compras(request):
             "cliente_logeado": cliente is not None,
         },
     )
-
-
-MESSAGE_TAGS = {
-    messages.DEBUG: "secondary",
-    messages.INFO: "info",
-    messages.SUCCESS: "success",
-    messages.WARNING: "warning",
-    messages.ERROR: "danger",
-}
 
 
 # AGREGAR AL CARRO
@@ -376,14 +388,23 @@ def login_cliente(request):
 
     # Calcular totales para cada compra
     compras_con_totales = []
-    for compra in compras:
-        total = sum(detalle.subtotal() for detalle in compra.detalles.all())
-    compras_con_totales.append(
-        {
-            "compra": compra,
-            "total": total,
-        }
-    )
+
+    if compras.exists():
+        for compra in compras:
+            total = sum(detalle.subtotal() for detalle in compra.detalles.all())
+            compras_con_totales.append(
+                {
+                    "compra": compra,
+                    "total": total,
+                }
+            )
+    else:
+        compras_con_totales.append(
+            {
+                "compra": None,
+                "total": 0,
+            }
+        )
 
     if request.method == "POST":
         form = EditarClienteForm(request.POST, instance=cliente)
@@ -412,6 +433,13 @@ def login_cliente(request):
             "pass_form": pass_form,
         },
     )
+
+
+# cierre de sesion
+def cerrar_sesion(request):
+    request.session.flush()
+    messages.success(request, "Sesión cerrada exitosamente.")
+    return redirect("inicio")
 
 
 # VISTA DE PAGO POR WEBPAY SIMULADA

@@ -31,6 +31,7 @@ urlpatterns = [
         views.agregar_al_carro,
         name="agregar_al_carro",
     ),
+    path("cerrar-sesion/", views.cerrar_sesion, name="cerrar_sesion"),
 ]
 
 if settings.DEBUG:

@@ -11,7 +11,8 @@
 		
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 		<link rel="stylesheet" href="{% static 'css/estilos-contacto.css' %}">
-	</head>
+		
+		</head>
 	
 	<body class="d-flex flex-column min-vh-100">
 		
@@ -60,6 +61,8 @@
 					</ul>
 				</div>
 			</div>
+			<!-- Botón flotante de inicio de sesion -->
+			{% include 'componentes/boton_flotante.html' %}
 			
 			<div class="container">
 				<div id="form-container" class="mx-auto mt-4"
@@ -86,7 +89,7 @@
 			<!-- ======================================== Script ====================================== -->
 			
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-			
+			<script src="{% static 'js/main.js' %}"></script>
 			<script>
 				function confirmarEnvio(event) {
 					event.preventDefault();

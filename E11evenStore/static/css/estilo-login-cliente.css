@@ -13,6 +13,40 @@ body {
 	backdrop-filter: blur(5px);
 }
 
+/* btn flotante-inicio sesion*/
+.floating-btn {
+	position: fixed;
+	bottom: 25px;
+	right: 25px;
+	z-index: 999;
+	text-align: center;
+}
+
+.floating-options {
+	margin-top: 10px;
+	animation: fadeIn 0.3s ease-in-out;
+}
+
+
+@keyframes fadeIn {
+	from { opacity: 0; transform: translateY(10px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.btn-flotante {
+	background-color: rgb(71, 14, 73);
+	border: none;
+	cursor: pointer;
+    font-size: 16px;
+	padding: 10px 20px;
+}
+
+.btn-flotante:hover {
+	background-color: rgb(72, 4, 79);
+}
+
+
+
 /* Top bar */
 .top-bar {
     background: linear-gradient(to right, rgba(38, 8, 29, 0.85), rgba(70, 14, 78, 0.85), rgba(30, 4, 31, 0.85));
@@ -108,16 +142,6 @@ body {
     padding: 40px;
     gap: 30px;
 }
-
-h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #ede8e6;
-    text-align: center;
-    margin-bottom: 30px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-}
-
 
 /* Sidebar */
 .sidebar {
