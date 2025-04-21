@@ -28,6 +28,7 @@ from django.contrib import messages
 from django.shortcuts import render
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
+from .models import TransaccionPago
 
 
 def inicio(request):
@@ -174,7 +175,9 @@ def carro_compras(request):
 
     if request.method == "POST":
         if not cliente:
-            messages.warning(request, "Debes iniciar sesión o registrarte para completar la compra.")
+            messages.warning(
+                request, "Debes iniciar sesión o registrarte para completar la compra."
+            )
             return redirect("inicio_sesion")
 
         # Eliminar producto individual
@@ -201,10 +204,13 @@ def carro_compras(request):
             metodo_pago = form_pago.cleaned_data["metodo_pago"]
             direccion_envio = form_direccion.cleaned_data["direccion"]
 
+            codigo_giftcard = None
             if metodo_pago == "GiftCard":
                 codigo_giftcard = request.POST.get("codigo_giftcard", "").strip()
-                if not codigo_giftcard:
-                    messages.error(request, "Debes ingresar un código de GiftCard válido.")
+                if not codigo_giftcard or len(codigo_giftcard) < 6:
+                    messages.error(
+                        request, "Debes ingresar un código de GiftCard válido."
+                    )
                     return redirect("carro_compras")
 
             compra = Compra.objects.create(
@@ -226,14 +232,33 @@ def carro_compras(request):
 
             total += 3990
 
+            # Crear transacción de pago vinculada a la compra
+            TransaccionPago.objects.create(
+                compra=compra,
+                metodo_pago=metodo_pago.lower(),
+                estado="completado",
+                monto=total,
+                codigo_autorizacion=(
+                    codigo_giftcard if metodo_pago == "GiftCard" else None
+                ),
+            )
+
+            # Mensajes según método de pago
             if metodo_pago == "Transferencia":
-                messages.success(request, "Te hemos enviado a tu correo registrado los datos de transferencia...")
+                messages.success(
+                    request,
+                    "Te hemos enviado a tu correo registrado los datos de transferencia...",
+                )
             elif metodo_pago == "GiftCard":
-                messages.success(request, "Se ha validado tu GiftCard. Compra registrada correctamente.")
+                messages.success(
+                    request,
+                    "Se ha validado tu GiftCard. Compra registrada correctamente.",
+                )
             elif metodo_pago == "Debito/Credito":
                 messages.info(request, "Redirigiéndote a Webpay...")
                 messages.success(request, "¡Felicidades! Compra realizada con éxito.")
 
+            # Enviar correo de confirmación
             send_mail(
                 "Confirmación de compra - E11ven Store",
                 f"Tu número de compra es {numero_compra}. Total: ${total}. Dirección de envío: {direccion_envio}",
@@ -242,6 +267,7 @@ def carro_compras(request):
                 fail_silently=True,
             )
 
+            # Limpiar carro
             request.session["carro"] = []
             messages.success(request, f"Compra {numero_compra} confirmada ✅")
             return redirect("login_cliente")
@@ -262,7 +288,6 @@ def carro_compras(request):
             "cliente_logeado": cliente is not None,
         },
     )
-
 
 
 # AGREGAR AL CARRO
