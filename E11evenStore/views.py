@@ -349,7 +349,7 @@ def login_admin(request):
     )
 
 
-# ACTUALIZACION DATOS CLIENTES
+# DATOS CLIENTES
 @cliente_login_required
 def login_cliente(request):
     email = request.session.get("email_cliente")
