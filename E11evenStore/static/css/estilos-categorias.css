@@ -230,9 +230,9 @@ footer {
 .carrito-icono {
 	position: fixed;
 	top: 200px; 
-	right: 40px;
+	right: 50px;
 	font-size: 1.2rem;
-	background-color: rgba(255, 255, 255, 0.6);
+	background-color: rgba(255, 255, 255, 0.4);
 	padding: 10px 10px;
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0,0,0,0.2);
@@ -243,7 +243,7 @@ footer {
   
   .carrito-icono:hover {
 	transform: scale(1.1);
-	background-color: #e9ecef;
+	background-color: rgba(255, 255, 255, 0.4);
   }
   
   .carrito-icono a {

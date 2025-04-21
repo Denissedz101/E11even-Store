@@ -54,7 +54,11 @@
 					<ul>
 						<li><a href="{% url 'inicio' %}">🏠 Inicio</a></li>
 						<li><a href="{% url 'menu_categorias' %}">≣ Categorías</a></li>
-						<li><a href="{% url 'carro_compras' %}">🛒 Carrito</a></li>
+						<li>
+							<a href="{% url 'carro_compras' %}">
+								🛒 Carrito{% if contador_carro > 0 %} ({{ contador_carro }}){% endif %}
+							</a>
+						</li>
 						<li><a href="{% url 'contacto' %}">✉ Contacto</a></li>
 						<li><a href="{% url 'inicio_sesion' %}">🔐 Iniciar sesión</a></li>
 						<li><a href="{% url 'formulario_registro' %}" class="login-btn">Registrate</a></li>
