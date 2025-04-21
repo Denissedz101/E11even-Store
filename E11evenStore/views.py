@@ -149,13 +149,33 @@ def formulario_registro(request):
 
 
 # CARRO COMPRAS
-@cliente_login_required
 def carro_compras(request):
     carro = request.session.get("carro", [])
     email_cliente = request.session.get("email_cliente")
     cliente = Cliente.objects.filter(email=email_cliente).first()
 
+    # Mostrar productos del carro
+    productos_carro = []
+    total = 3990  # Costo fijo de envío
+
+    for item in carro:
+        producto = Producto.objects.get(id=item["producto_id"])
+        cantidad = item["cantidad"]
+        subtotal = producto.precio * cantidad
+        total += subtotal
+        productos_carro.append(
+            {
+                "producto": producto,
+                "cantidad": cantidad,
+                "precio": producto.precio,
+                "subtotal": subtotal,
+            }
+        )
+
     if request.method == "POST":
+        if not cliente:
+            messages.warning(request, "Debes iniciar sesión o registrarte para completar la compra.")
+            return redirect("inicio_sesion")
 
         # Eliminar producto individual
         if "eliminar_producto" in request.POST:
@@ -178,24 +198,15 @@ def carro_compras(request):
                 return redirect("carro_compras")
 
             numero_compra = f"E11-{random.randint(100000, 999999)}"
-
-            if not cliente:
-                messages.error(request, "Cliente no válido.")
-                return redirect("inicio")
-
             metodo_pago = form_pago.cleaned_data["metodo_pago"]
             direccion_envio = form_direccion.cleaned_data["direccion"]
 
-            # Verificación específica de GiftCard
             if metodo_pago == "GiftCard":
                 codigo_giftcard = request.POST.get("codigo_giftcard", "").strip()
                 if not codigo_giftcard:
-                    messages.error(
-                        request, "Debes ingresar un código de GiftCard válido."
-                    )
+                    messages.error(request, "Debes ingresar un código de GiftCard válido.")
                     return redirect("carro_compras")
 
-            # Crear la compra
             compra = Compra.objects.create(
                 cliente=cliente,
                 numero_compra=numero_compra,
@@ -213,33 +224,19 @@ def carro_compras(request):
                 )
                 total += producto.precio * cantidad
 
-            total += 3990  # Costo de envío
+            total += 3990
 
-            # Simulación de método de pago
             if metodo_pago == "Transferencia":
-                messages.success(
-                    request,
-                    "Te hemos enviado a tu correo registrado los datos de transferencia. "
-                    "Tienes 15 minutos para realizarla, de lo contrario los productos se liberarán.",
-                )
+                messages.success(request, "Te hemos enviado a tu correo registrado los datos de transferencia...")
             elif metodo_pago == "GiftCard":
-                messages.success(
-                    request,
-                    "Se ha validado tu GiftCard. Tu compra se ha registrado correctamente.",
-                )
+                messages.success(request, "Se ha validado tu GiftCard. Compra registrada correctamente.")
             elif metodo_pago == "Debito/Credito":
-                messages.info(request, "Estamos redirigiéndote a Webpay...")
-                messages.success(
-                    request,
-                    "¡Felicidades! Tu compra se ha realizado con éxito. "
-                    "En unos minutos recibirás en tu correo los datos de la compra.",
-                )
+                messages.info(request, "Redirigiéndote a Webpay...")
+                messages.success(request, "¡Felicidades! Compra realizada con éxito.")
 
-            # Enviar correo de confirmación
             send_mail(
                 "Confirmación de compra - E11ven Store",
-                f"Tu número de compra es {numero_compra}. Total: ${total}. "
-                f"Dirección de envío: {direccion_envio}",
+                f"Tu número de compra es {numero_compra}. Total: ${total}. Dirección de envío: {direccion_envio}",
                 "E11venStore@gmail.com",
                 [cliente.email],
                 fail_silently=True,
@@ -250,26 +247,8 @@ def carro_compras(request):
             return redirect("login_cliente")
 
     else:
-        form_direccion = DireccionEnvioForm()
-        form_pago = MetodoPagoForm()
-
-    # Mostrar productos del carro
-    productos_carro = []
-    total = 3990  # Costo fijo de envío
-
-    for item in carro:
-        producto = Producto.objects.get(id=item["producto_id"])
-        cantidad = item["cantidad"]
-        subtotal = producto.precio * cantidad
-        total += subtotal
-        productos_carro.append(
-            {
-                "producto": producto,
-                "cantidad": cantidad,
-                "precio": producto.precio,
-                "subtotal": subtotal,
-            }
-        )
+        form_direccion = DireccionEnvioForm() if cliente else None
+        form_pago = MetodoPagoForm() if cliente else None
 
     return render(
         request,
@@ -283,6 +262,7 @@ def carro_compras(request):
             "cliente_logeado": cliente is not None,
         },
     )
+
 
 
 # AGREGAR AL CARRO

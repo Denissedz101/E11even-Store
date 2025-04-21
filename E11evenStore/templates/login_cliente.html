@@ -63,8 +63,23 @@
 			
 			<!-- Botón flotante de inicio de sesion -->
 			{% include 'componentes/boton_flotante.html' %}
-
-			<div class="cliente-container">
+			
+			<div class="cliente-container d-flex">
+				
+				<!-- Menú lateral -->
+				<nav class="menu-lateral me-4">
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							<a href="#" class="nav-link" onclick="mostrarSeccion('datos')">👤 Datos personales</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link" onclick="mostrarSeccion('cambiar')">🔒 Cambiar contraseña</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link" onclick="mostrarSeccion('compras')">🛒 Mis compras</a>
+						</li>
+					</ul>
+				</nav>
 				
 				<main class="contenido">
 					
@@ -134,7 +149,7 @@
 			<!-- ==== Script ===== -->
 			
 			<script src="{% static 'js/main.js' %}"></script>
-		
+			
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 			
 			<script>

@@ -75,11 +75,13 @@
 					
 					{% if productos_carro %}
                     {% if not cliente_logeado %}
-					<div class="alert alert-warning text-center mt-3">
-						Para completar tu compra, debes <a href="{% url 'inicio_sesion' %}">iniciar sesión</a> o
-						<a href="{% url 'formulario_registro' %}">registrarte</a>.
+					<div class="text-center mt-3">
+						<a href="{% url 'inicio_sesion' %}" class="btn btn-warning me-2">🔐 Iniciar Sesión</a>
+						<a href="{% url 'formulario_registro' %}" class="btn btn-secondary">📝 Registrarse</a>
+						<p class="mt-2 text-muted">Debes iniciar sesión o registrarte para completar tu compra.</p>
 					</div>
-                    {% endif %}
+					{% endif %}
+					
 					
                     <table class="table table-hover mt-3">
                         <thead>
@@ -111,7 +113,7 @@
 					</table>
 					
                     <h4>Total con Envío: ${{ total }}</h4>
-					
+				{% if cliente_logeado %}
                     <form method="POST" class="mt-4">
                         {% csrf_token %}
                         <h5>Dirección de Envío</h5>
@@ -128,7 +130,7 @@
 						
                         <button type="submit" class="btn btn-success">Confirmar Compra</button>
 					</form>
-					
+				{% endif %}
                     <form method="POST" class="mt-2">
                         {% csrf_token %}
                         <input type="hidden" name="vaciar_carro">
