@@ -4,16 +4,21 @@ Tienda de venta de videojuegos.
 
 ☛ Instalación
 
-	🛠 Clona el repositorio:
+🛠 Clona el repositorio:
 
 		📌 git clone https://github.com/Denissedz101/E11even-Store.git
 		📌 cd e11even-store
 
-	🛠 Crea un entorno virtual e instálalo:
+🛠 Crea un entorno virtual e instálalo:
 
 		📌 python -m venv env
-
 		📌 # En Windows activalo -->  env\Scripts\activate
+		
+🛠 luego instala:
+	
+		📌 pip install oracledb 
+		📌 pip install django
+		📌 pip install djangorestframework django-widget-tweaks
 
 👥 Datos conexion a la Base de datos
 
@@ -27,20 +32,16 @@ Tienda de venta de videojuegos.
 	➡️ La base de datos se conecto a traves de Oracle sql developer.
 	➡️ Recuerda modificar este acceso desde settings.py --> DATABASES
 
-⚙️ instala db y haz la migración > Desde la terminal vscode:
+🛠 haz la migración > Desde la terminal vscode:
 
-	📌 pip install oracledb 
-	
-	📌 python manage.py makemigrations
-	
-	📌 python manage.py migrate
+		📌 python manage.py makemigrations
+		📌 python manage.py migrate
 
 🔎 Ejecutamos el servidor local:
 
-	📌 python manage.py runserver
+		📌 python manage.py runserver 8001
+		📌 Abre tu navegador en http://127.0.0.1:8001/
 
-	📌 Abre tu navegador en http://127.0.0.1:8000/
-
-
+🗂 El archivo .sql "Insertar_datos_tablas" contiene los datos para poblar las tablas creadas directamente desde Oracle SQL (u otro), además se elimino la columna "ID" ya que ésta es generada automáticamente.
 
 
