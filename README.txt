@@ -42,6 +42,6 @@ Tienda de venta de videojuegos.
 		📌 python manage.py runserver 8001
 		📌 Abre tu navegador en http://127.0.0.1:8001/
 
-🗂 El archivo .sql "Insertar_datos_tablas" contiene los datos para poblar las tablas creadas directamente desde Oracle SQL (u otro), además se elimino la columna "ID" ya que ésta es generada automáticamente.
+
 
 
