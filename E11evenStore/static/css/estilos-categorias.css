@@ -206,24 +206,19 @@ html, body {
 footer {
 	background: rgba(0, 0, 0, 0.7);
 	color: #ffffff;
-	padding: 10px 0;
-	text-align: center;
+	padding: 10px 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	bottom: 0;
 	width: 100%;
-	margin-top: auto;
+	z-index: 10;
 }
 
 .footer-text {
 	font-size: 0.9em;
 	margin: 0;
 	color: #ffffff;
-}
-
-/* ===== DERECHOS RESERVADOS ===== */
-
-.footer-text {
-    font-size: 0.9em; 
-    margin: 0;
-    color: #ffffff;
 }
 
 /* Estilos del carrito */

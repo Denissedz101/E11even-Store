@@ -192,7 +192,7 @@
 				{
 					id: "rut",
 					validar: val => /^[0-9]{7,8}-[0-9Kk]$/.test(val),
-					error: "El RUT debe ingresarse sin puntos y con guión (ej. 12345678-9)."
+					error: "Debe tener el formato 12345678-9, sin puntos y con guión."
 				},
 				{
 					id: "email",
@@ -202,7 +202,7 @@
 				{
 					id: "clave",
 					validar: val => /(?=.*\d)(?=.*[A-Z]).{6,18}/.test(val),
-					error: "Debe tener al menos una mayúscula, un número y entre 6 y 18 caracteres."
+					error: "Debe tener una mayúscula, un número y entre 6 y 18 caracteres."
 				},
 				{
 					id: "repetirClave",
@@ -249,25 +249,46 @@
 					verificarCamposCompletos();
 				}
 				
-				// Eventos para validar cada campo
+				// Eventos de validación
 				campos.forEach(campo => {
 					const input = document.getElementById(campo.id);
+					const errorMsg = document.getElementById("error" + campo.id.charAt(0).toUpperCase() + campo.id.slice(1));
+					
 					input.addEventListener("input", () => {
 						const valor = input.value.trim();
 						
 						if (campo.validar(valor)) {
 							input.classList.remove("is-invalid");
 							input.classList.add("is-valid");
-							if (campo.id === "repetirClave") validarClaveRepetida();
+							errorMsg.textContent = "";
 							} else {
 							input.classList.remove("is-valid");
 							input.classList.add("is-invalid");
+							errorMsg.textContent = campo.error;
 						}
 						
 						if (campo.id === "clave" || campo.id === "repetirClave") {
 							validarClaveRepetida();
 						}
+						
 						verificarCamposCompletos();
+					});
+					
+					// Mostrar el mensaje al hacer click si hay error
+					input.addEventListener("focus", () => {
+						const valor = input.value.trim();
+						if (!campo.validar(valor)) {
+							errorMsg.textContent = campo.error;
+							errorMsg.classList.add("text-danger");
+						}
+					});
+					
+					// Ocultar el mensaje al salir del input si está válido
+					input.addEventListener("blur", () => {
+						const valor = input.value.trim();
+						if (campo.validar(valor)) {
+							errorMsg.textContent = "";
+						}
 					});
 				});
 				
@@ -286,12 +307,13 @@
 					});
 					
 					if (formularioValido) {
-						this.submit(); // Enviar el formulario si todo es válido
+						this.submit();
 						} else {
 						alert("Por favor, revise los campos marcados antes de continuar.");
 					}
 				});
 			});
+			
 			
 			// Función para alternar visibilidad de contraseñas
 			function togglePassword(idCampo, idIcono) {

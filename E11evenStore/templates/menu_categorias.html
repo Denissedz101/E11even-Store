@@ -46,33 +46,30 @@
 			</div>
 		</div>
 		
-		<div class="main-content">
+		<div class="header-container">
+			<div class="logo">
+				<img src="{% static 'img/logo11Store.png' %}" alt="Logo de la tienda">
+			</div>
 			
-            <div class="header-container">
-                <div class="logo">
-                    <img src="{% static 'img/logo11Store.png' %}" alt="Logo de la tienda">
-				</div>
-				
-                <div class="nav-menu">
-					<ul>
-						<li><a href="{% url 'inicio' %}">🏠 Inicio</a></li>
-						<li><a href="{% url 'menu_categorias' %}">≣ Categorías</a></li>
-						<li>
-							<a href="{% url 'carro_compras' %}">
-								🛒 Carrito{% if contador_carro > 0 %} ({{ contador_carro }}){% endif %}
-							</a>
-						</li>
-						<li><a href="{% url 'contacto' %}">✉ Contacto</a></li>
-						<li><a href="{% url 'inicio_sesion' %}">🔐 Iniciar sesión</a></li>
-						<li><a href="{% url 'formulario_registro' %}" class="login-btn">Registrate</a></li>
-					</ul>
-				</div>
-				
+			<div class="nav-menu">
+				<ul>
+					<li><a href="{% url 'inicio' %}">🏠 Inicio</a></li>
+					<li><a href="{% url 'menu_categorias' %}">≣ Categorías</a></li>
+					<li>
+						<a href="{% url 'carro_compras' %}">
+							🛒 Carrito{% if contador_carro > 0 %} ({{ contador_carro }}){% endif %}
+						</a>
+					</li>
+					<li><a href="{% url 'contacto' %}">✉ Contacto</a></li>
+					<li><a href="{% url 'inicio_sesion' %}">🔐 Iniciar sesión</a></li>
+					<li><a href="{% url 'formulario_registro' %}" class="login-btn">Registrate</a></li>
+				</ul>
 			</div>
 			<!-- Botón flotante de inicio de sesion -->
 			{% include 'componentes/boton_flotante.html' %}
-			
-			
+		</div>
+
+		<div class="main-content flex-grow-1">
 			<!-- Contenedor de Categorías -->
 			<div class="categories-container">
 				<!-- Categoría Terror -->
@@ -124,12 +121,12 @@
 				</div>
 				<!-- Añadir más categorías según sea necesario -->
 			</div>
+		</div>	
 			
 			<!-- Footer Común -->
 			<footer>
 				<p class="footer-text">© 2025 Store E11even - Todos los derechos reservados</p>
 			</footer>
-			
 			<!-- **** Script **** -->
 			
 			<!-- Bootstrap -->
