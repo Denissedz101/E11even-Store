@@ -1,0 +1,17 @@
+{% if request.session.admin_email %}
+<div class="dropdown d-inline-block admin-dropdown">
+    <a href="#" id="adminDropdown" class="d-inline-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://img.icons8.com/3d-fluency/94/administrator.png"
+             width="50"
+			 height="50"
+             alt="Admin Icon"
+             title="Panel Admin"
+             class="rounded-circle">
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
+        <li><a class="dropdown-item" href="{% url 'login_admin' %}">Mi cuenta</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="{% url 'cerrar_sesion' %}">Cerrar sesión</a></li>
+    </ul>
+</div>
+{% endif %}

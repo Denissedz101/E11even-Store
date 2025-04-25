@@ -21,6 +21,19 @@ class Cliente(models.Model):
 
     def __str__(self):
         return f"Cliente: {self.nombre} {self.apellidos}"
+        
+    def save(self, *args, **kwargs):
+        if self.nombre:
+            self.nombre = self.nombre.upper()
+        if self.apellidos:
+            self.apellidos = self.apellidos.upper()
+        if self.usuario:
+            self.usuario = self.usuario.upper()
+        if self.email:
+            self.email = self.email.lower()
+        if self.direccion:
+            self.direccion = self.direccion.upper()
+        super().save(*args, **kwargs)
 
 
 # REGISTRO ADMINISTRADORES
@@ -39,6 +52,19 @@ class Administrativo(models.Model):
 
     def __str__(self):
         return f"Administrativo: {self.nombre} {self.apellidos}"
+
+    def save(self, *args, **kwargs):
+        if self.nombre:
+            self.nombre = self.nombre.upper()
+        if self.apellidos:
+            self.apellidos = self.apellidos.upper()
+        if self.usuario:
+            self.usuario = self.usuario.upper()
+        if self.email:
+            self.email = self.email.lower()
+        if self.direccion:
+            self.direccion = self.direccion.upper()
+        super().save(*args, **kwargs)
 
 
 # PRODUCTOS
@@ -60,6 +86,11 @@ class Producto(models.Model):
 
     def __str__(self):
         return f"{self.nombre} (ID: {self.id})"
+
+def save(self, *args, **kwargs):
+        if self.nombre:
+            self.nombre = self.nombre.upper()
+        super().save(*args, **kwargs)
 
 
 class Compra(models.Model):
