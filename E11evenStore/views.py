@@ -94,7 +94,7 @@ def inicio_sesion(request):
             if es_admin == "1":
                 try:
                     admin = Administrativo.objects.get(email=email, clave=clave)
-                    request.session["admin_email"] = admin.email  # Guardar sesión correctamente
+                    request.session["admin_email"] = admin.email  
                     messages.success(request, "¡Bienvenido Administrador!")
                     return redirect("login_admin")
                 except Administrativo.DoesNotExist:
@@ -104,7 +104,6 @@ def inicio_sesion(request):
                 # inicio sesion como cliente
                 try:
                     cliente = Cliente.objects.get(email=email, clave=clave)
-                    # Guardar datos del cliente en la sesión como diccionario
                     request.session["cliente"] = {
                         "nombre": cliente.nombre,
                         "email": cliente.email,
