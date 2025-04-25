@@ -43,20 +43,8 @@ def formulario_registro(request):
     form = RegistroForm()
 
 
-def carro_compras(request):
-    return render(request, "carro_compras.html")
-
-
 def menu_categorias(request):
     return render(request, "menu_categorias.html")
-
-
-def login_cliente(request):
-    return render(request, "login_cliente.html")
-
-
-def login_admin(request):
-    return render(request, "login_admin.html")
 
     # categorias menu #
 
@@ -319,20 +307,37 @@ def agregar_al_carro(request, producto_id):
 # PANEL ADMINISTRACION
 @admin_login_required
 def login_admin(request):
-    # Variables para cada pestaña
     productos = Producto.objects.all().order_by("nombre", "categoria")
     compras_recientes = Compra.objects.all().order_by("-fecha")[:10]
     historial = []
     cliente = None
+    categoria = ""
+    tab_activa = "carrito"  # por defecto mostrar tab recientes
 
-    if request.method == "POST" and "nombre" in request.POST:
+    # Determinar tab activa según acción
+    if request.method == "POST" and "buscar_cliente" in request.POST:
+        rut = request.POST.get("rut")
+        try:
+            cliente = Cliente.objects.get(rut=rut)
+            historial = Compra.objects.filter(cliente=cliente).order_by("-fecha")
+            tab_activa = "buscar_compras"
+        except Cliente.DoesNotExist:
+            messages.error(request, "Cliente no encontrado")
+            tab_activa = "buscar_compras"
+
+    elif request.method == "POST" and "buscar_categoria" in request.POST:
+        categoria = request.POST.get("categoria")
+        if categoria:
+            productos = Producto.objects.filter(categoria=categoria).order_by("nombre")
+        tab_activa = "inventario"
+
+    elif request.method == "POST" and "nombre" in request.POST:
         nombre = request.POST.get("nombre")
         descripcion = request.POST.get("descripcion")
         precio = int(request.POST.get("precio"))
         categoria = request.POST.get("categoria")
         stock = int(request.POST.get("stock"))
         imagen = request.POST.get("imagen")
-
         producto_existente = Producto.objects.filter(
             nombre=nombre, categoria=categoria
         ).first()
@@ -353,14 +358,7 @@ def login_admin(request):
                 imagen=imagen,
             )
             messages.success(request, "Producto agregado correctamente.")
-
-    elif request.method == "POST" and "rut" in request.POST:
-        rut = request.POST.get("rut")
-        try:
-            cliente = Cliente.objects.get(rut=rut)
-            historial = Compra.objects.filter(cliente=cliente).order_by("-fecha")
-        except Cliente.DoesNotExist:
-            messages.error(request, "Cliente no encontrado")
+        tab_activa = "productos"
 
     return render(
         request,
@@ -370,6 +368,8 @@ def login_admin(request):
             "compras_recientes": compras_recientes,
             "compras": historial,
             "cliente": cliente,
+            "categoria_seleccionada": categoria,
+            "tab_activa": tab_activa,
         },
     )
 
