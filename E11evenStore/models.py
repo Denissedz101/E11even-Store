@@ -5,16 +5,14 @@ from django.db import models
 
 # REGISTRO CLIENTE
 class Cliente(models.Model):
-    rut = models.CharField(primary_key=True, max_length=12, verbose_name="RUT")
-    nombre = models.CharField(max_length=200, verbose_name="Nombres")
-    apellidos = models.CharField(max_length=200, verbose_name="Apellidos")
-    usuario = models.CharField(max_length=150, verbose_name="Nombre Usuario")
-    email = models.EmailField(unique=True, verbose_name="Correo electrónico")
-    clave = models.CharField(max_length=128, verbose_name="Contraseña")
-    fechaNacimiento = models.DateField(verbose_name="Fecha de nacimiento")
-    direccion = models.CharField(
-        max_length=255, blank=True, null=True, verbose_name="Dirección"
-    )
+    rut = models.CharField(primary_key=True, max_length=12)
+    nombre = models.CharField(max_length=200)
+    apellidos = models.CharField(max_length=200)
+    usuario = models.CharField(max_length=150)
+    email = models.EmailField(unique=True)
+    clave = models.CharField(max_length=128)
+    fechaNacimiento = models.DateField(db_column="FECHANACIMIENTO")
+    direccion = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         db_table = "E11EVENSTORE_CLIENTES"

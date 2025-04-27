@@ -448,5 +448,5 @@ def cerrar_sesion(request):
 # VISTA DE PAGO POR WEBPAY SIMULADA
 @login_required
 def redirigir_webpay(request):
-    # Simulación: redirigir a una URL de prueba de WebPay
+    # Simular redirigir a una URL de prueba de WebPay
     return redirect("https://webpay3g.transbank.cl/webpay-server/initTransaction")
