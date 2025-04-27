@@ -26,11 +26,18 @@ class LoginForm(forms.Form):
 
 # Formulario registro clientes
 class RegistroForm(forms.ModelForm):
-    repetirClave = forms.CharField(widget=forms.PasswordInput())
+    repetirClave = forms.CharField(
+        label='Repetir clave',
+        widget=forms.PasswordInput()
+    )
+    fechaNacimiento = forms.DateField(
+        label='Fecha de nacimiento',  
+        widget=forms.DateInput(attrs={'type': 'date'})
+    )
 
     class Meta:
         model = Cliente
-        fields = ['usuario', 'nombre', 'apellidos', 'rut', 'email', 'clave', 'repetirClave','fechaNacimiento', 'direccion']
+        fields = ['usuario', 'nombre', 'apellidos', 'rut', 'email', 'clave', 'repetirClave', 'fechaNacimiento', 'direccion']
         widgets = {
             'clave': forms.PasswordInput(),
             'fechaNacimiento': forms.DateInput(attrs={'type': 'date'}),
@@ -49,6 +56,8 @@ class RegistroForm(forms.ModelForm):
         if clave != repetir_clave:
             raise forms.ValidationError("Las contraseñas no coinciden.")
         return cleaned_data
+
+
 
   #EDICION DATOS CLIENTE  
 class EditarClienteForm(forms.ModelForm):
