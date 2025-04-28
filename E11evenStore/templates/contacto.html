@@ -75,7 +75,7 @@
 				<div id="form-container" class="mx-auto mt-4"
 				style="max-width: 700px; background-color: rgba(217, 167, 240, 0.65); padding: 20px; width: 50vw; border-radius: 15px;">
 					
-					<h2>Contactanos</h2>
+					<h2>Contáctanos</h2>
 					<form onsubmit="confirmarEnvio(event)">
 						<label for="nombre">Nombre:</label>
 						<input type="text" id="nombre" name="nombre" required>
@@ -86,24 +86,23 @@
 						<label for="mensaje">Mensaje:</label>
 						<textarea id="mensaje" name="mensaje" rows="5" required></textarea>
 						
-						<a href="{% url 'inicio' %}">
-							<button type="button">Enviar</button>
-						</a>
+						<button type="submit">Enviar</button> 
 					</form>
 				</div>
 			</div>
 			
-			<!-- ======================================== Script ====================================== -->
+			<!-- ========= Scripts ========== -->
 			
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 			<script src="{% static 'js/main.js' %}"></script>
 			<script>
 				function confirmarEnvio(event) {
-					event.preventDefault();
-					alert("Mensaje enviado"); // mensaje de confirmación
-					window.location.href = "{% url 'inicio' %}"; // Redirige a la página de inicio
+					event.preventDefault(); // Previene envío normal del formulario
+					alert("Hemos recibido tu mensaje, será contestado a la brevedad"); // Mensaje de confirmación
+					window.location.href = "{% url 'inicio' %}"; // Redirige a inicio
 				}
 			</script>
+			
 			
 			<!-- Footer -->
 			<footer>
