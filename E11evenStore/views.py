@@ -29,6 +29,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
 from .models import TransaccionPago
+from django.core.mail import send_mail
 
 
 def inicio(request):
@@ -466,3 +467,25 @@ def cerrar_sesion(request):
 def redirigir_webpay(request):
     # Simulación: redirigir a una URL de prueba de WebPay
     return redirect("https://webpay3g.transbank.cl/webpay-server/initTransaction")
+
+
+# ENVIO DE MENSAJE A CORREO CONTACTO
+def contacto(request):
+    if request.method == "POST":
+        nombre = request.POST.get("nombre")
+        email = request.POST.get("email")
+        mensaje = request.POST.get("mensaje")
+
+        cuerpo_mensaje = f"Nombre: {nombre}\nCorreo: {email}\nMensaje:\n{mensaje}"
+
+        send_mail(
+            subject="Nuevo mensaje de contacto",
+            message=cuerpo_mensaje,
+            from_email=email,
+            recipient_list=["Contacto.E11evenStore@gmail.com"],
+        )
+
+        messages.success(request, "Tu mensaje ha sido enviado exitosamente.")
+        return redirect("inicio")
+
+    return render(request, "contacto.html")

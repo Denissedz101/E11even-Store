@@ -71,25 +71,26 @@
 			<!-- icono admin -->
 			{% include 'componentes/icono_admin.html' %}
 			
-			<div class="container">
+			<<div class="container">
 				<div id="form-container" class="mx-auto mt-4"
 				style="max-width: 700px; background-color: rgba(217, 167, 240, 0.65); padding: 20px; width: 50vw; border-radius: 15px;">
 					
 					<h2>Contáctanos</h2>
 					<form onsubmit="confirmarEnvio(event)">
 						<label for="nombre">Nombre:</label>
-						<input type="text" id="nombre" name="nombre" required>
+						<input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre" required>
 						
 						<label for="email">Correo Electrónico:</label>
-						<input type="email" id="email" name="email" required>
+						<input type="email" id="email" name="email" placeholder="Ingresa tu correo ejemplo@correo.com" required>
 						
 						<label for="mensaje">Mensaje:</label>
-						<textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+						<textarea id="mensaje" name="mensaje" rows="5" placeholder="Escribe tu mensaje aquí..." required></textarea>
 						
-						<button type="submit">Enviar</button> 
+						<button type="submit" class="btn btn-primary mt-3">Enviar</button>
 					</form>
 				</div>
 			</div>
+			
 			
 			<!-- ========= Scripts ========== -->
 			
