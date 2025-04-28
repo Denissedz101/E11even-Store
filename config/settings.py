@@ -125,13 +125,3 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-# Registrar email para contacto
-
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "Contacto.E11evenStore@gmail.com"
-EMAIL_HOST_PASSWORD = "etgh clwa duht eqdf"
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

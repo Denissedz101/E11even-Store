@@ -32,7 +32,6 @@ urlpatterns = [
         name="agregar_al_carro",
     ),
     path("cerrar-sesion/", views.cerrar_sesion, name="cerrar_sesion"),
-    path("contacto/", views.contacto, name="contacto"),
 ]
 
 if settings.DEBUG:
