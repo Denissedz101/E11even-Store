@@ -41,6 +41,14 @@ def contacto(request):
 
 def formulario_registro(request):
     form = RegistroForm()
+    
+
+def login_cliente(request):
+    return render(request, "login_cliente.html")
+
+
+def login_admin(request):
+    return render(request, "login_admin.html")
 
 
 def menu_categorias(request):
@@ -88,22 +96,25 @@ def inicio_sesion(request):
         if form.is_valid():
             email = form.cleaned_data["email"]
             clave = form.cleaned_data["clave"]
-            es_admin = request.POST.get("es_admin")  # Esto nos indica si es admin o cliente
+            es_admin = request.POST.get(
+                "es_admin"
+            )  # Esto nos indica si es admin o cliente
 
-            # inicio sesion como administrador
             if es_admin == "1":
                 try:
                     admin = Administrativo.objects.get(email=email, clave=clave)
-                    request.session["admin_email"] = admin.email  
+                    request.session["email_admin"] = admin.email
                     messages.success(request, "¡Bienvenido Administrador!")
                     return redirect("login_admin")
                 except Administrativo.DoesNotExist:
-                    form.add_error(None, "Acceso denegado. Administrador no registrado.")
-
+                    form.add_error(
+                        None, "Acceso denegado. Administrador no registrado."
+                    )
             else:
                 # inicio sesion como cliente
                 try:
                     cliente = Cliente.objects.get(email=email, clave=clave)
+                    # Guardar datos del cliente en la sesión como diccionario
                     request.session["cliente"] = {
                         "nombre": cliente.nombre,
                         "email": cliente.email,
@@ -115,7 +126,6 @@ def inicio_sesion(request):
                     form.add_error(None, "Correo o contraseña incorrectos.")
 
     return render(request, "inicio_sesion.html", {"form": form})
-
 
 
 # REGISTRO FORMULARIO CLIENTES

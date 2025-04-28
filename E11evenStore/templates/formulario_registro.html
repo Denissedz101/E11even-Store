@@ -70,6 +70,8 @@
 			</div>
 			<!-- Botón flotante de inicio de sesion -->
 			{% include 'componentes/boton_flotante.html' %}
+			<!-- icono admin -->
+			{% include 'componentes/icono_admin.html' %}
 			
 			<!-- Registro -->
 			<div class="container">
@@ -92,75 +94,76 @@
 					<form method="POST" action="{% url 'formulario_registro' %}" id="registroForm" novalidate>
 						
 						{% csrf_token %}
-						
-						<div class="mb-3">
-							{{ form.usuario.label_tag }}
-							{{ form.usuario|add_attr:"id:usuario,placeholder:Ingrese su usuario,class:form-control" }}
-							<small class="text-danger" id="errorUsuario"></small>
-						</div>
-						
-						<div class="mb-3">
-							{{ form.nombre.label_tag }}
-							{{ form.nombre|add_attr:"id:nombre,placeholder:Ingrese su nombre,class:form-control" }}
-							<small class="text-danger" id="errorNombre"></small>
-						</div>
-						
-						<div class="mb-3">
-							{{ form.apellidos.label_tag }}
-							{{ form.apellidos|add_attr:"id:apellidos,placeholder:Ingrese sus apellidos,class:form-control" }}
-							<small class="text-danger" id="errorApellidos"></small>
-						</div>
-						
-						<div class="mb-3">
-							{{ form.rut.label_tag }}
-							{{ form.rut|add_attr:"id:rut,placeholder:12345678-9,class:form-control" }}
-							<small class="text-danger" id="errorRut"></small>
-						</div>
-						
-						<div class="mb-3">
-							{{ form.email.label_tag }}
-							{{ form.email|add_attr:"id:email,placeholder:correo@email.com,class:form-control" }}
-							<small class="text-danger" id="errorEmail"></small>
-						</div>
-						
-						<div class="mb-3">
-							{{ form.clave.label_tag }}
-							<div class="input-group">
-								{{ form.clave|add_attr:"id:clave, placeholder:Debe tener al menos una mayúscula un número y mínimo 6 caracteres, class:form-control" }}
-								<button type="button" class="btn btn-outline-secondary" onclick="togglePassword('clave', 'iconoClave')">
-									<i class="bi bi-eye" id="iconoClave"></i>
-								</button>
+						<div class="row g-3">	
+							<div class="col-md-6">
+								{{ form.usuario.label_tag }}
+								{{ form.usuario|add_attr:"id:usuario,placeholder:Ingrese su usuario,class:form-control" }}
+								<small class="text-danger" id="errorUsuario"></small>
 							</div>
-							<small class="text-danger" id="errorClave"></small>
-						</div>
-						
-						<div class="mb-3">
-							{{ form.repetirClave.label_tag }}
-							<div class="input-group">
-								{{ form.repetirClave|add_attr:"id:repetirClave,placeholder:Repita su contraseña,class:form-control" }}
-								<button type="button" class="btn btn-outline-secondary" onclick="togglePassword('repetirClave', 'iconoRepetir')">
-									<i class="bi bi-eye" id="iconoRepetir"></i>
-								</button>
+							
+							<div class="col-md-6">
+								{{ form.nombre.label_tag }}
+								{{ form.nombre|add_attr:"id:nombre,placeholder:Ingrese su nombre,class:form-control" }}
+								<small class="text-danger" id="errorNombre"></small>
 							</div>
-							<small class="text-danger" id="errorRepetirClave"></small>
-						</div>
-						
-						
-						<div class="mb-3">
-							{{ form.fechaNacimiento.label_tag }}
-							{{ form.fechaNacimiento|add_attr:"id:fechaNacimiento,class:form-control" }}
-							<small class="text-danger" id="errorFechaNacimiento"></small>
-						</div>
-						
-						<div class="mb-3">
-							{{ form.direccion.label_tag }}
-							{{ form.direccion|add_attr:"id:direccion,placeholder:Ingresa tu dirección (Opcional),class:form-control" }}
-						</div>
-						
-						<!-- Botones -->
-						<div class="mb-3">
-							<button type="submit" class="btn btn-primary"id="btnRegistrar">Registrarse</button>
-							<button type="reset" class="btn btn-secondary">Limpiar</button>
+							
+							<div class="col-md-6">
+								{{ form.apellidos.label_tag }}
+								{{ form.apellidos|add_attr:"id:apellidos,placeholder:Ingrese sus apellidos,class:form-control" }}
+								<small class="text-danger" id="errorApellidos"></small>
+							</div>
+							
+							<div class="col-md-6">
+								{{ form.rut.label_tag }}
+								{{ form.rut|add_attr:"id:rut,placeholder:12345678-9,class:form-control" }}
+								<small class="text-danger" id="errorRut"></small>
+							</div>
+							
+							<div class="col-md-6">
+								{{ form.email.label_tag }}
+								{{ form.email|add_attr:"id:email,placeholder:correo@email.com,class:form-control" }}
+								<small class="text-danger" id="errorEmail"></small>
+							</div>
+							
+							<div class="col-md-6">
+								{{ form.clave.label_tag }}
+								<div class="input-group">
+									{{ form.clave|add_attr:"id:clave, placeholder:Debe tener al menos una mayúscula un número y mínimo 6 caracteres, class:form-control" }}
+									<button type="button" class="btn btn-outline-secondary" onclick="togglePassword('clave', 'iconoClave')">
+										<i class="bi bi-eye" id="iconoClave"></i>
+									</button>
+								</div>
+								<small class="text-danger" id="errorClave"></small>
+							</div>
+							
+							<div class="col-md-6">
+								{{ form.repetirClave.label_tag }}
+								<div class="input-group">
+									{{ form.repetirClave|add_attr:"id:repetirClave,placeholder:Repita su contraseña,class:form-control" }}
+									<button type="button" class="btn btn-outline-secondary" onclick="togglePassword('repetirClave', 'iconoRepetir')">
+										<i class="bi bi-eye" id="iconoRepetir"></i>
+									</button>
+								</div>
+								<small class="text-danger" id="errorRepetirClave"></small>
+							</div>
+							
+							
+							<div class="col-md-6">
+								{{ form.fechaNacimiento.label_tag }}
+								{{ form.fechaNacimiento|add_attr:"id:fechaNacimiento,class:form-control" }}
+								<small class="text-danger" id="errorFechaNacimiento"></small>
+							</div>
+							
+							<div class="col-md-6">
+								{{ form.direccion.label_tag }}
+								{{ form.direccion|add_attr:"id:direccion,placeholder:Ingresa tu dirección (Opcional),class:form-control" }}
+							</div>
+							
+							<!-- Botones -->
+							<div class="col-12 text-center mt-3">
+								<button type="submit" class="btn btn-primary"id="btnRegistrar">Registrarse</button>
+								<button type="reset" class="btn btn-secondary">Limpiar</button>
+							</div>
 						</div>
 					</form>
 				</div>
