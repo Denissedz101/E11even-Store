@@ -58,7 +58,7 @@
 			
 			<div class="admin-container">
 				<h2 class="administrador">Panel de Administración</h2>
-				
+				<!--tabs contenidos -->
 				<ul class="nav nav-tabs justify-content-center mb-4">
 					<li class="nav-item">
 						<a class="nav-link {% if tab_activa == 'carrito' %}active{% endif %}" href="#carrito" data-bs-toggle="tab">Recientes</a>
@@ -148,7 +148,7 @@
 								<label class="form-label">URL de la imagen del producto</label>
 								<input type="text" class="form-control" name="imagen" placeholder="https://...">
 							</div>
-							<button type="submit" class="btn btn-success">Guardar Producto</button>
+							<button type="submit" name="agregar_producto" class="btn btn-success">Guardar Producto</button>
 						</form>
 					</div>
 					
@@ -197,7 +197,15 @@
 					<!-- Buscar Compras por RUT -->
 					<div class="tab-pane fade {% if tab_activa == 'buscar_compras' %}show active{% endif %}" id="buscar_compras">
 						<h2>Historial de Compras por RUT</h2>
-						<form method="post">
+						{% if messages %}
+						<div class="alert alert-danger">
+							{% for message in messages %}
+							<p>{{ message }}</p>
+							{% endfor %}
+						</div>
+						{% endif %}
+						
+						<form method="post" action="{% url 'login_admin' %}">
 							{% csrf_token %}
 							<input type="text" name="rut" placeholder="Buscar por RUT">
 							<button type="submit" name="buscar_cliente" class="btn btn-primary">Buscar</button>

@@ -41,7 +41,7 @@ def contacto(request):
 
 def formulario_registro(request):
     form = RegistroForm()
-    
+
 
 def login_cliente(request):
     return render(request, "login_cliente.html")
@@ -214,7 +214,7 @@ def carro_compras(request):
                 numero_compra=numero_compra,
                 direccion_envio=direccion_envio,
                 metodo_pago=metodo_pago,
-                estado="Pendiente",
+                estado="Aprobado",  # valor por defecto
             )
 
             total = 0
@@ -232,7 +232,7 @@ def carro_compras(request):
             TransaccionPago.objects.create(
                 compra=compra,
                 metodo_pago=metodo_pago.lower(),
-                estado="completado",
+                estado="Aprobado",
                 monto=total,
                 codigo_autorizacion=(
                     codigo_giftcard if metodo_pago == "GiftCard" else None
@@ -312,7 +312,7 @@ def agregar_al_carro(request, producto_id):
     return redirect(request.META.get("HTTP_REFERER", "menu_categorias"))
 
 
-# PANEL ADMINISTRACION
+# Panel administrador
 @admin_login_required
 def login_admin(request):
     productos = Producto.objects.all().order_by("nombre", "categoria")
@@ -320,66 +320,72 @@ def login_admin(request):
     historial = []
     cliente = None
     categoria = ""
-    tab_activa = "carrito"  # por defecto mostrar tab recientes
+    tab_activa = "carrito"
 
-    # Determinar tab activa según acción
-    if request.method == "POST" and "buscar_cliente" in request.POST:
-        rut = request.POST.get("rut")
-        try:
-            cliente = Cliente.objects.get(rut=rut)
-            historial = Compra.objects.filter(cliente=cliente).order_by("-fecha")
-            tab_activa = "buscar_compras"
-        except Cliente.DoesNotExist:
-            messages.error(request, "Cliente no encontrado")
-            tab_activa = "buscar_compras"
+    if request.method == "POST":
+        if "buscar_cliente" in request.POST:
+            rut = request.POST.get("rut")
+            print(">>> RUT ingresado:", rut)
+            if rut:
+                rut = limpiar_rut(rut)
+            try:
+                cliente = Cliente.objects.get(rut=rut)
+                print(">>> Cliente encontrado:", cliente)
+                historial = Compra.objects.filter(cliente=cliente).order_by("-fecha")
+                tab_activa = "buscar_compras"
+            except Cliente.DoesNotExist:
+                print(">>> Cliente NO encontrado")
+                messages.error(request, "Cliente no encontrado.")
+                tab_activa = "buscar_compras"
 
-    elif request.method == "POST" and "buscar_categoria" in request.POST:
-        categoria = request.POST.get("categoria")
-        if categoria:
-            productos = Producto.objects.filter(categoria=categoria).order_by("nombre")
-        tab_activa = "inventario"
+        elif "buscar_categoria" in request.POST:  # Botón buscar_categoria
+            categoria = request.POST.get("categoria")
+            if categoria:
+                productos = Producto.objects.filter(categoria=categoria).order_by(
+                    "nombre"
+                )
+            tab_activa = "inventario"
 
-    elif request.method == "POST" and "nombre" in request.POST:
-        nombre = request.POST.get("nombre")
-        descripcion = request.POST.get("descripcion")
-        precio = int(request.POST.get("precio"))
-        categoria = request.POST.get("categoria")
-        stock = int(request.POST.get("stock"))
-        imagen = request.POST.get("imagen")
-        producto_existente = Producto.objects.filter(
-            nombre=nombre, categoria=categoria
-        ).first()
-        if producto_existente:
-            producto_existente.stock += stock
-            producto_existente.precio = precio
-            if imagen:
-                producto_existente.imagen = imagen
-            producto_existente.save()
-            messages.success(request, "Stock actualizado para producto existente.")
         else:
-            Producto.objects.create(
-                nombre=nombre,
-                descripcion=descripcion,
-                precio=precio,
-                categoria=categoria,
-                stock=stock,
-                imagen=imagen,
-            )
-            messages.success(request, "Producto agregado correctamente.")
-        tab_activa = "productos"
+            # Aquí debería ser guardado un nuevo producto
+            nombre = request.POST.get("nombre")
+            descripcion = request.POST.get("descripcion")
+            precio = request.POST.get("precio")
+            categoria = request.POST.get("categoria")
+            stock = request.POST.get("stock")
+            imagen = request.FILES.get("imagen")  # Corrección para imagen subida
 
-    return render(
-        request,
-        "login_admin.html",
-        {
-            "productos": productos,
-            "compras_recientes": compras_recientes,
-            "compras": historial,
-            "cliente": cliente,
-            "categoria_seleccionada": categoria,
-            "tab_activa": tab_activa,
-        },
-    )
+            if nombre and descripcion and precio and categoria and stock:
+                Producto.objects.create(
+                    nombre=nombre,
+                    descripcion=descripcion,
+                    precio=precio,
+                    categoria=categoria,
+                    stock=stock,
+                    imagen=imagen,
+                )
+                messages.success(request, "Producto guardado exitosamente.")
+            else:
+                messages.error(
+                    request, "Todos los campos son requeridos para agregar un producto."
+                )
+            tab_activa = "productos"
+
+    context = {
+        "productos": productos,
+        "compras_recientes": compras_recientes,
+        "compras": historial,
+        "cliente": cliente,
+        "tab_activa": tab_activa,
+        "categoria_seleccionada": categoria,
+    }
+    return render(request, "login_admin.html", context)
+
+
+def limpiar_rut(rut):
+    if rut:
+        return rut.replace(".", "").strip()
+    return rut
 
 
 # DATOS CLIENTES
