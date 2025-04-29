@@ -60,6 +60,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "E11evenStore.context_processors.contador_carro",
                 "E11evenStore.context_processors.cliente_context",
+                "E11evenStore.context_processors.vista_externa",
             ],
         },
     },
@@ -125,3 +126,7 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+#vista externa
+RAWG_API_KEY = "b11964e6b4c44aa8ae7b588a700be3fc"
+NEWS_API_KEY = "a02c731964a944dcbdd2208ad0548d46"

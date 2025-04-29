@@ -30,25 +30,12 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
 from .models import TransaccionPago
 
-
 def inicio(request):
     return render(request, "index.html")
 
 
 def contacto(request):
     return render(request, "contacto.html")
-
-
-def formulario_registro(request):
-    form = RegistroForm()
-
-
-def login_cliente(request):
-    return render(request, "login_cliente.html")
-
-
-def login_admin(request):
-    return render(request, "login_admin.html")
 
 
 def menu_categorias(request):
@@ -452,8 +439,7 @@ def login_cliente(request):
             "pass_form": pass_form,
         },
     )
-
-
+    
 # cierre de sesion
 def cerrar_sesion(request):
     request.session.flush()
@@ -466,3 +452,5 @@ def cerrar_sesion(request):
 def redirigir_webpay(request):
     # Simulación: redirigir a una URL de prueba de WebPay
     return redirect("https://webpay3g.transbank.cl/webpay-server/initTransaction")
+
+

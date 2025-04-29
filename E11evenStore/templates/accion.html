@@ -127,7 +127,7 @@
 					.then(response => response.json())
 					.then(data => {
 						document.getElementById("contador-carrito").textContent = data.total;
-					})
+						})
 					.catch(error => {
 						console.error("Error al obtener el contador:", error);
 					});
@@ -161,10 +161,6 @@
 		</div>
 	</body>
 	
-	<!-- Footer -->
-	<footer>
-		<!-- Texto de derechos reservados -->
-		<p class="footer-text">&copy; 2025 Store E11even - Todos los derechos reservados</p>
-	</footer>	
+	{% include 'componentes/vista_externa.html' %}
 	
 </html>
