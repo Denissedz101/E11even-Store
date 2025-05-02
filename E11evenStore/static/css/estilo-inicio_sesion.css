@@ -10,7 +10,7 @@ html, body {
 	background-position: center;
 	background-repeat: repeat;
 	backdrop-filter: blur(5px);
-	display: display;
+	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
 	margin: 0;
@@ -128,34 +128,81 @@ html, body {
 
 /* =======================   fin estilo general  =======================*/
 
-/* ------- pag. inicio_sesion -------- */
+/* titulo contenedor*/
+h2 {
+    margin-bottom: 20px;
+    color: #0f0f0f;
+    font-size: 1.8rem;
+    text-align: center;
+}
 
-/* container iniciar sesion */
+
+/* contenedor iniciar sesion */
+
+.outer-wrapper {
+    display: flex;
+    justify-content: center;   
+    align-items: center;      
+    min-height: 50vh;
+	margin-top: 2%;
+
+}
 
 .login-container {
-	background: rgba(255, 255, 255, 0.2); 
-	padding: 30px;
-	border-radius: 10px;
-	backdrop-filter: blur(10px); /* Efecto de desenfoque */
-	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-	text-align: center;
-	width: 350px;
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 500px; 
+	align-items: center;     
+
 }
 
-.login-container h2 {
-	color: rgb(244, 227, 227);
-	margin-bottom: 20px;
-}
+    #form-container {
+      background-color: rgba(217, 167, 240, 0.65);
+      padding: 20px;
+      width: 100%;
+      max-width: 700px;
+      border-radius: 15px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
 
 .form-control {
 	background: rgba(255, 255, 255, 0.5);
-	border: none;
+	border: 1px solid rgba(8, 8, 8, 0.8);
 	color: black;
+	align-items: center;
+	justify-content: center;     
 }
+
+	label {
+      margin-top: 10px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      width: 100%;
+      box-sizing: border-box;
+	  align-items: center;  
+	  margin-left: 10%;  
+	  justify-content: center;
+    }
 
 .btn-primary {
 	background-color: #ea6f2c;
 	border: none;
+	border: 1px solid rgba(8, 8, 8, 0.8);
+	margin-left: 20%;  
 }
 
 .btn-primary:hover {
@@ -166,9 +213,30 @@ html, body {
 	background-color: #f0981c;
 }
 
-.contenido {
-    margin-bottom: 60px; 
-}
+.linkrecuperar {
+	color: #007bff;          
+	text-decoration: none;   
+	font-weight: bold;       
+	font-size: 14px;         
+	transition: 0.3s; 
+	align-items: center; 
+	justify-content: center; 
+  }
+  
+  .linkrecuperar:hover {
+	color: #0056b3;         
+	text-decoration: underline; 
+  }
+  
+
+  .form-check {
+	display: inline-flex;
+	align-items: center; 
+  }
+  
+  .form-check-input {
+	margin-right: 0px; 
+  }
 
 /* ================== informacion final general =========================== */
 
