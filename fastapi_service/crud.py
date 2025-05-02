@@ -1,3 +1,4 @@
+from urllib.response import addbase
 from sqlalchemy.orm import Session
 from . import models, schemas
 
@@ -21,11 +22,18 @@ def crear_producto(db: Session, producto: schemas.ProductoCreate):
 def obtener_productos(db: Session):
     return db.query(models.Producto).all()
 
-def get_compras(db: Session):
+def crear_compra(db: Session, compra: schemas.CompraCreate):
+    db_compra = models.Compra(**compra.dict())
+    db.add(db_producto)
+    db.commit()
+    db.refresh(db_compra)
+    return db_compra
+
+def obtener_compras(db: Session):
     return db.query(models.Compra).all()
 
-def get_compras_by_rut(db: Session, rut: str):
+def obtener_compras_by_rut(db: Session, rut: str):
     return db.query(models.Compra).filter(models.Compra.cliente_id == rut).all()
 
-def get_detalles_by_compra(db: Session, compra_id: int):
+def obtener_detalles_by_compra(db: Session, compra_id: int):
     return db.query(models.DetalleCompra).filter(models.DetalleCompra.compra_id == compra_id).all()

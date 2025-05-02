@@ -41,6 +41,14 @@ class DetalleCompraBase(BaseModel):
     class Config:
         orm_mode = True
 
+class DetalleCompraCreate(BaseModel):
+    pass
+
+class DetalleCompraOut(BaseModel):
+    id: int
+    class Config:
+        orm_mode = True
+
 class CompraBase(BaseModel):
     id: int
     numero_compra: str
@@ -49,5 +57,13 @@ class CompraBase(BaseModel):
     fecha: datetime
     estado: str
     detalles: List[DetalleCompraBase] = []
+    class Config:
+        orm_mode = True
+
+class CompraCreate(BaseModel):
+    pass
+
+class CompraOut(BaseModel):
+    id: int
     class Config:
         orm_mode = True
