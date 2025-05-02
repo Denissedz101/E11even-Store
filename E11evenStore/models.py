@@ -8,7 +8,9 @@ class Cliente(models.Model):
     rut = models.CharField(primary_key=True, max_length=12, verbose_name="RUT")
     nombre = models.CharField(max_length=200, verbose_name="Nombres")
     apellidos = models.CharField(max_length=200, verbose_name="Apellidos")
-    usuario = models.CharField(max_length=150, unique=True, verbose_name="Nombre Usuario", blank=True)
+    usuario = models.CharField(
+        max_length=150, unique=True, verbose_name="Nombre Usuario", blank=True
+    )
     email = models.EmailField(unique=True, verbose_name="Correo electrónico")
     clave = models.CharField(max_length=128, verbose_name="Contraseña")
     fechaNacimiento = models.DateField(verbose_name="Fecha de nacimiento")
@@ -21,7 +23,7 @@ class Cliente(models.Model):
 
     def __str__(self):
         return f"Cliente: {self.nombre} {self.apellidos}"
-        
+
     def save(self, *args, **kwargs):
         if self.nombre:
             self.nombre = self.nombre.upper()
@@ -41,7 +43,6 @@ class Administrativo(models.Model):
     rut = models.CharField(unique=True, max_length=12)
     nombre = models.CharField(max_length=200)
     apellidos = models.CharField(max_length=200)
-    usuario = models.CharField(max_length=150)
     email = models.EmailField(unique=True)
     clave = models.CharField(max_length=128)
     fechaNacimiento = models.DateField()
@@ -58,8 +59,6 @@ class Administrativo(models.Model):
             self.nombre = self.nombre.upper()
         if self.apellidos:
             self.apellidos = self.apellidos.upper()
-        if self.usuario:
-            self.usuario = self.usuario.upper()
         if self.email:
             self.email = self.email.lower()
         if self.direccion:
@@ -87,10 +86,11 @@ class Producto(models.Model):
     def __str__(self):
         return f"{self.nombre} (ID: {self.id})"
 
+
 def save(self, *args, **kwargs):
-        if self.nombre:
-            self.nombre = self.nombre.upper()
-        super().save(*args, **kwargs)
+    if self.nombre:
+        self.nombre = self.nombre.upper()
+    super().save(*args, **kwargs)
 
 
 class Compra(models.Model):

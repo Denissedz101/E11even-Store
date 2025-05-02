@@ -124,7 +124,7 @@ def formulario_registro(request):
             cliente = form.save(commit=False)
             cliente.save()
             messages.success(
-                request, f"Registro exitoso. Tu nombre de usuario es: {cliente.usuario}"
+                request, f" ✅ Registro exitoso. Ahora puedes ingresar sesión 🔑 "
             )
             return redirect("inicio_sesion")
         else:
@@ -344,7 +344,7 @@ def login_admin(request):
             precio = request.POST.get("precio")
             categoria = request.POST.get("categoria")
             stock = request.POST.get("stock")
-            imagen = request.FILES.get("imagen")  # Corrección para imagen subida
+            imagen = request.FILES.get("imagen")  
 
             if nombre and descripcion and precio and categoria and stock:
                 Producto.objects.create(

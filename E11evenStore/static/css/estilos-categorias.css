@@ -401,3 +401,21 @@ html, body {
 .btn-flotante:hover {
 	background-color: rgb(72, 4, 79);
 }
+
+/* boton ir a cuenta */
+
+.boton-ir-cuenta {
+    background-color: #4201c5;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.boton-ir-cuenta:hover {
+    background-color: #d36c04;
+    color: #ffffff;
+}

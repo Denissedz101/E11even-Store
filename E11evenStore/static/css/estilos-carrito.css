@@ -12,7 +12,6 @@ html, body {
 	backdrop-filter: blur(5px);
 	display: flex;
 	flex-direction: column;
-	overflow-x: hidden;
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
@@ -23,7 +22,7 @@ html, body {
 .top-bar {
 	background: linear-gradient(to right, rgba(38, 8, 29, 0.85), rgba(70, 14, 78, 0.85), rgba(30, 4, 31, 0.85));
 	color: white;
-	width: 95%;
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -69,7 +68,7 @@ html, body {
 /* header */
 
 .header-container {
-	width: 95%;
+	width: 100%;
 	background: linear-gradient(to right, rgba(30, 4, 31, 0.70), rgba(38, 6, 42, 0.70), rgba(47, 7, 35, 0.70));
 	color: white;
 	display: flex;
@@ -407,4 +406,22 @@ button:hover {
 
 .btn-flotante:hover {
 	background-color: rgb(72, 4, 79);
+}
+
+/*boton ir a cuenta */
+
+.boton-ir-cuenta {
+    background-color: #4201c5;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.boton-ir-cuenta:hover {
+    background-color: #d36c04;
+    color: #ffffff;
 }
