@@ -1,51 +1,53 @@
 from pydantic import BaseModel
 from typing import Optional, List
-from datetime import datetime, date
+from datetime import date, datetime
 
-# --- CLIENTE
-class ClienteOut(BaseModel):
+class ClienteBase(BaseModel):
     rut: str
     nombre: str
     apellidos: str
     usuario: str
     email: str
+    clave: str
     fechaNacimiento: date
     direccion: Optional[str] = None
 
-    class Config:
-        from_attributes = True
+class ClienteCreate(ClienteBase):
+    pass
 
-# --- PRODUCTO
-class ProductoOut(BaseModel):
-    id: int
+class ClienteOut(ClienteBase):
+    class Config:
+        orm_mode = True
+
+class ProductoBase(BaseModel):
     nombre: str
     descripcion: Optional[str] = None
     precio: int
     categoria: str
-    imagen: str
+    imagen: Optional[str] = None
     stock: int
 
-    class Config:
-        from_attributes = True
+class ProductoCreate(ProductoBase):
+    pass
 
-# --- DETALLE COMPRA
-class DetalleCompraOut(BaseModel):
+class ProductoOut(ProductoBase):
+    id: int
+    class Config:
+        orm_mode = True
+
+class DetalleCompraBase(BaseModel):
     producto_id: int
     cantidad: int
-
     class Config:
-        from_attributes = True
+        orm_mode = True
 
-# --- COMPRA
-class CompraOut(BaseModel):
+class CompraBase(BaseModel):
     id: int
-    cliente_id: str 
     numero_compra: str
     direccion_envio: str
     metodo_pago: str
     fecha: datetime
     estado: str
-    detalles: List[DetalleCompraOut] = []
-
+    detalles: List[DetalleCompraBase] = []
     class Config:
-        from_attributes = True
+        orm_mode = True
