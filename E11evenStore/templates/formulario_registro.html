@@ -8,7 +8,7 @@
 <html lang="es">
 	<head>
 		<meta charset="UTF-8">
-		<title>Registro - E11even Store</title>
+		<title>🎮 Registrate en 11STORE 🎮</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 		<link rel="stylesheet" href="{% static 'css/estilos-registro.css' %}">
@@ -20,8 +20,6 @@
 		<!-- Top Bar -->
 		<div class="top-bar">
 			<div class="contact-info">
-				<i class="bi bi-envelope me-2"></i>
-				<span>Contacto_E11ven@gmail.com</span>
 				
 				<a href="https://www.google.com/maps/place/Galer%C3%ADa+Drugstore/@-33.4229125,-70.6107562,17z/data=!4m15!1m8!3m7!1s0x9662cf100a0fc417:0xf78d982a000a52a6!2sAv.+Los+Leones+1432,+7510608+Providencia,+Santiago,+Regi%C3%B3n+Metropolitana!3b1!8m2!3d-33.432377!4d-70.601921!16s%2Fg%2F11hdz6tf4z!3m5!1s0x9662cf661383b143:0xa54e2a603f76fcc6!8m2!3d-33.4222946!4d-70.6113129!16s%2Fg%2F1tc_xtdt?entry=ttu&g_ep=EgoyMDI1MDQxNi4xIKXMDSoASAFQAw%3D%3D"
 				target="_blank"
@@ -95,11 +93,6 @@
 						
 						{% csrf_token %}
 						<div class="row g-3">	
-							<div class="col-md-6">
-								{{ form.usuario.label_tag }}
-								{{ form.usuario|add_attr:"id:usuario,placeholder:Ingrese su usuario,class:form-control" }}
-								<small class="text-danger" id="errorUsuario"></small>
-							</div>
 							
 							<div class="col-md-6">
 								{{ form.nombre.label_tag }}
@@ -159,6 +152,13 @@
 								{{ form.direccion|add_attr:"id:direccion,placeholder:Ingresa tu dirección (Opcional),class:form-control" }}
 							</div>
 							
+							{% if form.non_field_errors %}
+							<div class="alert alert-danger">
+								{{ form.non_field_errors }}
+							</div>
+							{% endif %}
+							
+							
 							<!-- Botones -->
 							<div class="col-12 text-center mt-3">
 								<button type="submit" class="btn btn-primary"id="btnRegistrar">Registrarse</button>
@@ -168,8 +168,47 @@
 					</form>
 				</div>
 			</div>
+			
+			<!-- Información externa -->
+			<div class="pie-info">
+				<h2>🎮 Juegos Populares (RAWG)</h2>
+				<ul>
+					{% if juegos %}
+					{% for juego in juegos|slice:":6" %}
+					<li>
+						<a href="https://rawg.io/games/{{ juego.slug }}" target="_blank" style="text-decoration: none; color: inherit;">
+							<strong>{{ juego.name }}</strong> (Rating: {{ juego.rating }})<br>
+							<img src="{{ juego.background_image }}" width="300"><br>
+						</a>
+						Fecha de lanzamiento: {{ juego.released }}
+					</li>
+					<hr>
+					{% endfor %}
+					{% else %}
+					<p>No se pudieron cargar los juegos populares en este momento.</p>
+					{% endif %}
+				</ul>
+				
+				<h2>📰 Noticias Recientes sobre Videojuegos</h2>
+				<ul class="noticias-juegos">
+					{% if noticias %}
+					{% for noticia in noticias|slice:":4" %}
+					<li>
+						<a href="{{ noticia.url }}" target="_blank" class="noticia-link">{{ noticia.title }}</a><br>
+						<img src="{{ noticia.urlToImage }}" alt="{{ noticia.title }}" width="200"><br>
+						<small>Fuente: {{ noticia.source.name }} | {{ noticia.publishedAt }}</small>
+					</li>
+					<hr>
+					{% endfor %}
+					{% else %}
+					<p>No se pudieron cargar las noticias en este momento.</p>
+					{% endif %}
+				</ul>
+			</div>
 		</div>
-		<!-- Bootstrap -->
+		<!-- script -->
+		<script src="{% static 'js/boton_flotante.js' %}"></script>
+		
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 		
 		
@@ -177,11 +216,6 @@
 		<script>
 			window.addEventListener('DOMContentLoaded', function () {
 				const campos = [
-				{
-					id: "usuario",
-					validar: val => val.trim() !== "",
-					error: "Este campo no puede estar vacío."
-				},
 				{
 					id: "nombre",
 					validar: val => val.trim() !== "",
@@ -333,11 +367,9 @@
 				}
 			}
 		</script>
-		
-		<!-- FOOTER -->
-		<footer>
-			<p class="footer-text">© 2025 E11even Store. Todos los derechos reservados.</p>
+		<!-- Footer fijo -->
+		<footer class="footer">
+			<p>&copy; 2025 E11EVEN STORE. Todos los derechos reservados.</p>
 		</footer>
-		
 	</body>
 </html>

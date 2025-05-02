@@ -8,7 +8,7 @@ class Cliente(models.Model):
     rut = models.CharField(primary_key=True, max_length=12, verbose_name="RUT")
     nombre = models.CharField(max_length=200, verbose_name="Nombres")
     apellidos = models.CharField(max_length=200, verbose_name="Apellidos")
-    usuario = models.CharField(max_length=150, verbose_name="Nombre Usuario")
+    usuario = models.CharField(max_length=150, unique=True, verbose_name="Nombre Usuario", blank=True)
     email = models.EmailField(unique=True, verbose_name="Correo electrónico")
     clave = models.CharField(max_length=128, verbose_name="Contraseña")
     fechaNacimiento = models.DateField(verbose_name="Fecha de nacimiento")

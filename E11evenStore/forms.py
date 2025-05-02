@@ -49,6 +49,18 @@ class RegistroForm(forms.ModelForm):
         if clave != repetir_clave:
             raise forms.ValidationError("Las contraseñas no coinciden.")
         return cleaned_data
+        
+        # Generar usuario único tipo CLTE_1234
+        while True:
+            codigo = f"CLTE_{random.randint(1000, 9999)}"
+            if not Cliente.objects.filter(usuario=codigo).exists():
+                instance.usuario = codigo
+                break
+
+        if commit:
+            instance.save()
+        return instance
+
 
   #EDICION DATOS CLIENTE  
 class EditarClienteForm(forms.ModelForm):

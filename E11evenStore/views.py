@@ -30,6 +30,7 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
 from .models import TransaccionPago
 
+
 def inicio(request):
     return render(request, "index.html")
 
@@ -122,9 +123,12 @@ def formulario_registro(request):
         if form.is_valid():
             cliente = form.save(commit=False)
             cliente.save()
-            messages.success(request, "Registro exitoso. Ya puedes iniciar sesión.")
+            messages.success(
+                request, f"Registro exitoso. Tu nombre de usuario es: {cliente.usuario}"
+            )
             return redirect("inicio_sesion")
         else:
+            print("Errores del formulario:", form.errors.as_data())  #
             messages.error(request, "Corrige los errores en el formulario.")
     else:
         form = RegistroForm()
@@ -439,7 +443,8 @@ def login_cliente(request):
             "pass_form": pass_form,
         },
     )
-    
+
+
 # cierre de sesion
 def cerrar_sesion(request):
     request.session.flush()
@@ -452,5 +457,3 @@ def cerrar_sesion(request):
 def redirigir_webpay(request):
     # Simulación: redirigir a una URL de prueba de WebPay
     return redirect("https://webpay3g.transbank.cl/webpay-server/initTransaction")
-
-

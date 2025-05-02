@@ -1,9 +1,4 @@
-/* ===== ESTILOS GENERALES ===== */
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-}
+/* =====================   Estilo general =======================*/
 
 html, body {
 	width: 100%;
@@ -17,7 +12,10 @@ html, body {
 	backdrop-filter: blur(5px);
 	display: flex;
 	flex-direction: column;
+	overflow-x: hidden;
+	box-sizing: border-box;
 	margin: 0;
+	padding: 0;
 }
 
 /* ===== TOP BAR ===== */
@@ -25,11 +23,11 @@ html, body {
 .top-bar {
 	background: linear-gradient(to right, rgba(38, 8, 29, 0.85), rgba(70, 14, 78, 0.85), rgba(30, 4, 31, 0.85));
 	color: white;
-	width: 100%;
+	width: 95%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 20px 50px;
+	padding: 15px 50px;
 	flex-wrap: wrap;
 }
 
@@ -49,10 +47,29 @@ html, body {
 	color: #555;
 }
 
-/* ===== HEADER ===== */
+/* Google maps */
+.contact-info a.direccion-link {
+	text-decoration: none;
+	color: inherit;
+	transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.contact-info a.direccion-link:hover {
+	color: #0d6efd; 
+	text-decoration: underline;
+}
+
+.contact-info i.bi-geo-alt {
+	transition: color 0.3s ease;
+}
+
+.contact-info a.direccion-link:hover i.bi-geo-alt {
+	color: #0d6efd;
+}
+/* header */
 
 .header-container {
-	width: 100%;
+	width: 95%;
 	background: linear-gradient(to right, rgba(30, 4, 31, 0.70), rgba(38, 6, 42, 0.70), rgba(47, 7, 35, 0.70));
 	color: white;
 	display: flex;
@@ -66,7 +83,7 @@ html, body {
 	height: 100px;
 }
 
-/* ===== NAVIGATION MENU ===== */
+/* menu navegacion */
 
 .nav-menu {
 	display: flex;
@@ -110,51 +127,11 @@ html, body {
 	color: #000000;
 }
 
-/* ===== CATEGORÍAS ===== */
+/*===============   fin estilo general  =======================*/
 
-.categories-container {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-	gap: 20px;
-	max-width: 1000px;
-	margin: 30px auto;
-	padding: 20px;
-}
-
-.category {
-	position: relative;
-	background-color: rgba(0, 0, 0, 0.6);
-	border-radius: 10px;
-	overflow: hidden;
-	text-align: center;
-	transition: transform 0.3s ease;
-}
-
-.category img {
-	width: 100%;
-	height: 150px;
-	object-fit: cover;
-}
-
-.category p {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	font-size: 1.5em;
-	color: white;
-	font-weight: bold;
-	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-}
-
-.category:hover {
-	transform: scale(1.05);
-}
-
-/* ===== CARRUSEL ===== */
-
+/* carrusel imagenes  pag. index --------------------------------- */
 .carousel-container {
-	width: 100vw; 
+	width: 100%;
 	margin: 60px auto;
 	overflow: hidden;
 	position: relative;
@@ -163,22 +140,14 @@ html, body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	max-width: 900px; /* límite máximo */
-    padding: 0 20px;
+	max-width: 900px;
+	padding: 0 20px;
 }
 
 .carousel {
 	display: flex;
 	transition: transform 1s ease;
 	width: 100%;
-}
-
-.carousel img {
-	width: 100%;
-	height: 300px;
-	object-fit: cover;
-	border-radius: 10px;
-	flex-shrink: 0;
 }
 
 .carousel img {
@@ -206,178 +175,167 @@ html, body {
 .prev { left: 10px; }
 .next { right: 10px; }
 
-
-/* ===== GAME LIST ===== */
-.game-list {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 20px;
-	max-width: 1000px;
-	margin: 30px auto;
+/* pag. menu categorias ----------------------------------- */
+.categories-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
 }
 
-.game-item {
-	background-color: rgba(0, 0, 0, 0.7);
-	border-radius: 10px;
+.category {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 200px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.category a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.category img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(60%);
+  transition: filter 0.3s;
+}
+
+.category:hover img {
+  filter: brightness(80%);
+}
+
+.category p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5em;
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  margin: 0;
+}
+
+.category:hover {
+  transform: scale(1.05);
+}
+
+
+
+/* ================== informacion pie general =========================== */
+.pie-info {
+	background-color: rgba(38, 8, 29, 0.6);
 	padding: 20px;
-	transition: transform 0.3s ease;
-	width: 100%;
-	max-width: 350px;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+	border-top: 2px solid #ccc;
+	font-family: Arial, sans-serif;
 }
 
-.game-item:hover {
-	transform: scale(1.05);
+.pie-info h2 {
+	color: #e6613c;
+	margin-bottom: 10px;
 }
 
-.game-item img {
-	width: 100%;
-	height: 200px;
-	object-fit: cover;
-	border-radius: 10px;
-}
-
-.game-item h3 {
-	font-size: 1.3rem;
-	color: #fff;
-	margin: 10px 0;
-}
-
-.game-item p {
-	font-size: 1.1rem;
-	color: #f0a500;
-}
-
-.details-btn, .add-to-cart {
-	background-color: #f6450d;
-	color: white;
-	padding: 10px 20px;
-	border: none;
-	border-radius: 20px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-	width: 100%;
-	margin-top: 10px;
-}
-
-.details-btn:hover, .add-to-cart:hover {
-	background-color: #e63400;
-}
-
-.descripcion {
-	display: none;
-	color: #fff;
-	margin-top: 10px;
-	font-size: 0.95rem;
-	text-align: left;
-	padding: 0 10px;
-}
-
-/* ===== BOTÓN VOLVER ===== */
-.back-btn {
-	background: rgba(0, 0, 0, 0.7);
-	color: #ffffff;
-	padding: 10px 0;
+.pie-info ul {
+	list-style: none;
+	color:#8479aa;
+	padding: 0;
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100vw; /* ancho de la ventana */
-	z-index: 10;
+	flex-wrap: wrap; 
+	justify-content: space-around; 
 }
 
-/* ===== ADMIN ===== */
-.admin-container {
-	background: rgba(255, 255, 255, 0.75); /* Fondo blanco con transparencia */
-	padding: 30px;
-	border-radius: 10px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-	max-width: 700px;
-	width: 100%;
-	margin: auto;
-  }
-  
-  .administrador {
-	color: #333;
-	font-size: 28px;
-	font-weight: bold;
-	text-align: center;
-	text-transform: uppercase;
-	letter-spacing: 2px;
-	margin-bottom: 20px;
-	padding: 10px;
-	background: linear-gradient(to right, #3a0853, #240732);
-	color: white;
+.pie-info li {
+	margin-bottom: 15px;
+	width: 30%; 
+	box-sizing: border-box;
+	margin-right: 10px;
+}
+
+.pie-info img {
 	border-radius: 8px;
-	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* ===== TABS ===== */
-  .nav-tabs {
-	justify-content: center;
-  }
-  
-  .nav-tabs .nav-link {
-	font-weight: bold;
-  }
-  
-  .nav-tabs .nav-link.active {
-	background-color: #007bff;
+	margin-top: 5px;
+	width: 100%; 
+}
+
+.noticias-juegos h2 {
+	color: #333;
+	margin-bottom: 10px;
+}
+
+.noticias-juegos ul {
+  list-style: none;
+  color:#bca9d7;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* espacio entre tarjetas */
+  justify-content: center;
+}
+
+.noticias-juegos li {
+  width: 250px; 
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  color: rgb(180, 103, 171);
+  text-align: center;
+}
+
+.noticias-juegos img {
+	border-radius: 8px;
+	margin-top: 5px;
+	width: 200px;
+}
+
+/* footer*/
+.footer{
+	background-color: rgba(13, 13, 13, 0.85);
+	text-align: center;
+	font-size: 0.9rem;
+	margin-top: 30px;
 	color: white;
-  }
-  
-  /* ===== CIERRE DE SESIÓN ===== */
-  .btn-link {
-	font-weight: bold;
-	color: #dc3545;
-	text-decoration: none;
-	transition: 0.3s;
-  }
-  
-  .btn-link:hover {
-	text-decoration: underline;
-	color: #a71d2a;
-  }
+}
 
-  /* ===== FOOTER ===== */
-footer {
-	background: rgba(0, 0, 0, 0.7);
-	color: #ffffff;
-	padding: 10px 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+/* btn flotante inicio sesion admin/usuario --------------------------- */
+
+.floating-btn {
 	position: fixed;
-	bottom: 0;
-	width: 100%;
-	z-index: 10;
+	bottom: 25px;
+	right: 25px;
+	z-index: 999;
+	text-align: center;
 }
 
-.footer-text {
-	font-size: 0.9em;
-	margin: 0;
-	color: #ffffff;
+.floating-options {
+	margin-top: 10px;
+	animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Google maps */
-.contact-info a.direccion-link {
-	text-decoration: none;
-	color: inherit;
-	transition: color 0.3s ease, text-decoration 0.3s ease;
+
+@keyframes fadeIn {
+	from { opacity: 0; transform: translateY(10px); }
+	to { opacity: 1; transform: translateY(0); }
 }
 
-.contact-info a.direccion-link:hover {
-	color: #0d6efd; 
-	text-decoration: underline;
+.btn-flotante {
+	background-color: rgb(71, 14, 73);
+	border: none;
+	cursor: pointer;
+    font-size: 16px;
+	padding: 10px 20px;
 }
 
-.contact-info i.bi-geo-alt {
-	transition: color 0.3s ease;
-}
-
-.contact-info a.direccion-link:hover i.bi-geo-alt {
-	color: #0d6efd;
+.btn-flotante:hover {
+	background-color: rgb(72, 4, 79);
 }
