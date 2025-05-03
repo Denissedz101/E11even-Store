@@ -3,10 +3,18 @@ from sqlalchemy.orm import Session
 from . import models, schemas, crud
 from .database import SessionLocal, engine
 from typing import List
+from fastapi.middleware.cors import CORSMiddleware
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:8001", "http://localhost:8001"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # dependencias db
 def get_db():
