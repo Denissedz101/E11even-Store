@@ -235,8 +235,8 @@
 				},
 				{
 					id: "clave",
-					validar: val => /(?=.*\d)(?=.*[A-Z]).{6,18}/.test(val),
-					error: "Debe tener una mayúscula, un número y entre 6 y 18 caracteres."
+					validar: val => /(?=.*\d)(?=.*[A-Z]).{6,}/.test(val),
+					error: "Debe tener una mayúscula, un número y mínimo 6 caracteres."
 				},
 				{
 					id: "repetirClave",
