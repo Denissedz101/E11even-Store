@@ -5,9 +5,12 @@ from .database import SessionLocal, engine
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 
+
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+app.title ="E11even Store"
 
 app.add_middleware(
     CORSMiddleware,
@@ -47,9 +50,9 @@ def crear_producto(producto: schemas.ProductoCreate, db: Session = Depends(get_d
 def listar_productos(db: Session = Depends(get_db)):
     return crud.obtener_productos(db)
 
-@app.get("/productos/{id}", response_model=schemas.ProductoBase)
-def obtener_producto(id: int, db: Session = Depends(get_db)):
-    producto = crud.get_producto(db, id)
+@app.get("/productos/{categoria}", response_model=schemas.ProductoBase)
+def obtener_producto(categoria: str, db: Session = Depends(get_db)):
+    producto = crud.get_producto(db, categoria)
     if not producto:
         raise HTTPException(status_code=404, detail="Producto no encontrado")
     return producto
