@@ -1,6 +1,7 @@
 """
 # ---------- SETTINGS.PY ------------------
 """
+
 from pathlib import Path
 import os
 
@@ -23,6 +24,7 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -84,8 +86,9 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [{
-    'NAME': 'E11evenStore.validators.ValidarContrasena',
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "E11evenStore.validators.ValidarContrasena",
     }
 ]
 
@@ -116,7 +119,6 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-#vista externa
+# vista externa
 RAWG_API_KEY = "b11964e6b4c44aa8ae7b588a700be3fc"
 NEWS_API_KEY = "a02c731964a944dcbdd2208ad0548d46"
-

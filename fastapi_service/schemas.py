@@ -67,3 +67,16 @@ class CompraOut(BaseModel):
     id: int
     class Config:
         orm_mode = True
+
+# usuario tokens vista protegida
+class UsuarioBase(BaseModel):
+    email: str  # email usado como usuario 
+
+class UsuarioCreate(UsuarioBase):
+    password: str
+
+class UsuarioOut(UsuarioBase):
+    id: int
+
+    class Config:
+        orm_mode = True

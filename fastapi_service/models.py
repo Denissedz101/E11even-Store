@@ -3,6 +3,14 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 from .database import Base
 
+#para usar tokens
+class Usuario(Base):
+    __tablename__ = "E11EVENSTORE_ADMINISTRATIVOS"
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String(254), unique=True, index=True)  
+    clave = Column(String(128))
+
+
 class Cliente(Base):
     __tablename__ = "E11EVENSTORE_CLIENTES"
     rut = Column(String(12), primary_key=True, index=True)
