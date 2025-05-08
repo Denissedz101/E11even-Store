@@ -92,7 +92,9 @@ def inicio_sesion(request):
                 try:
                     admin = Administrativo.objects.get(email=email, clave=clave)
                     request.session["email_admin"] = admin.email
-                    messages.success(request, "¡Bienvenido Administrador!")
+                    messages.success(
+                        request, f"¡Bienvenido {admin.nombre.capitalize()}!"
+                    )
                     return redirect("login_admin")
                 except Administrativo.DoesNotExist:
                     form.add_error(
@@ -108,7 +110,9 @@ def inicio_sesion(request):
                         "email": cliente.email,
                     }
                     request.session["email_cliente"] = cliente.email
-                    messages.success(request, "¡Bienvenido Cliente!")
+                    messages.success(
+                        request, f"¡Bienvenido {cliente.nombre.capitalize()}!"
+                    )
                     return redirect("login_cliente")
                 except Cliente.DoesNotExist:
                     form.add_error(None, "Correo o contraseña incorrectos.")
@@ -192,6 +196,7 @@ def carro_compras(request):
             direccion_envio = form_direccion.cleaned_data["direccion"]
 
             codigo_giftcard = None
+
             if metodo_pago == "GiftCard":
                 codigo_giftcard = request.POST.get("codigo_giftcard", "").strip()
                 if not codigo_giftcard or len(codigo_giftcard) < 6:
@@ -209,55 +214,69 @@ def carro_compras(request):
             )
 
             total = 0
+
             for item in carro:
                 producto = get_object_or_404(Producto, id=item["producto_id"])
                 cantidad = item["cantidad"]
-                DetalleCompra.objects.create(
-                    compra=compra, producto=producto, cantidad=cantidad
+
+            # Validar stock antes de continuar
+            if producto.stock < cantidad:
+                messages.error(
+                    request, f"No hay suficiente stock para {producto.nombre}."
                 )
-                total += producto.precio * cantidad
+                return redirect("carro_compras")
 
-            total += 3990
-
-            # Crear transacción de pago vinculada a la compra
-            TransaccionPago.objects.create(
-                compra=compra,
-                metodo_pago=metodo_pago.lower(),
-                estado="Aprobado",
-                monto=total,
-                codigo_autorizacion=(
-                    codigo_giftcard if metodo_pago == "GiftCard" else None
-                ),
+            # Crear detalle y descontar stock
+            DetalleCompra.objects.create(
+                compra=compra, producto=producto, cantidad=cantidad
             )
 
-            # Mensajes según método de pago
-            if metodo_pago == "Transferencia":
-                messages.success(
-                    request,
-                    "Te hemos enviado a tu correo registrado los datos de transferencia...",
-                )
-            elif metodo_pago == "GiftCard":
-                messages.success(
-                    request,
-                    "Se ha validado tu GiftCard. Compra registrada correctamente.",
-                )
-            elif metodo_pago == "Debito/Credito":
-                messages.info(request, "Redirigiéndote a Webpay...")
-                messages.success(request, "¡Felicidades! Compra realizada con éxito.")
+            producto.stock -= cantidad
+            producto.save()
 
-            # Enviar correo de confirmación
-            send_mail(
-                "Confirmación de compra - E11ven Store",
-                f"Tu número de compra es {numero_compra}. Total: ${total}. Dirección de envío: {direccion_envio}",
-                "E11venStore@gmail.com",
-                [cliente.email],
-                fail_silently=True,
+            total += producto.precio * cantidad
+
+        total += 3990
+
+        # Crear transacción de pago vinculada a la compra
+        TransaccionPago.objects.create(
+            compra=compra,
+            metodo_pago=metodo_pago.lower(),
+            estado="Aprobado",
+            monto=total,
+            codigo_autorizacion=(
+                codigo_giftcard if metodo_pago == "GiftCard" else None
+            ),
+        )
+
+        # Mensajes según método de pago
+        if metodo_pago == "Transferencia":
+            messages.success(
+                request,
+                "Te hemos enviado a tu correo registrado los datos de transferencia...",
             )
+        elif metodo_pago == "GiftCard":
+            messages.success(
+                request,
+                "Se ha validado tu GiftCard. Compra registrada correctamente.",
+            )
+        elif metodo_pago == "Debito/Credito":
+            messages.info(request, "Redirigiéndote a Webpay...")
+            messages.success(request, "¡Felicidades! Compra realizada con éxito.")
 
-            # Limpiar carro
-            request.session["carro"] = []
-            messages.success(request, f"Compra {numero_compra} confirmada ✅")
-            return redirect("login_cliente")
+        # Enviar correo de confirmación
+        send_mail(
+            "Confirmación de compra - E11ven Store",
+            f"Tu número de compra es {numero_compra}. Total: ${total}. Dirección de envío: {direccion_envio}",
+            "E11venStore@gmail.com",
+            [cliente.email],
+            fail_silently=True,
+        )
+
+        # Limpiar carro
+        request.session["carro"] = []
+        messages.success(request, f"Compra {numero_compra} confirmada ✅")
+        return redirect("login_cliente")
 
     else:
         form_direccion = DireccionEnvioForm() if cliente else None
@@ -344,7 +363,7 @@ def login_admin(request):
             precio = request.POST.get("precio")
             categoria = request.POST.get("categoria")
             stock = request.POST.get("stock")
-            imagen = request.FILES.get("imagen")  
+            imagen = request.FILES.get("imagen")
 
             if nombre and descripcion and precio and categoria and stock:
                 Producto.objects.create(

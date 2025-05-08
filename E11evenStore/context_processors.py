@@ -2,6 +2,7 @@ from .models import Producto
 from .models import Cliente
 import requests
 from django.conf import settings
+from django.core.cache import cache
 
 
 def contador_carro(request):
@@ -27,40 +28,42 @@ def cliente_context(request):
             pass
     return {"cliente": cliente}
 
-
-# vista externa API¥S
+# web service externo APIS
 def vista_externa(request):
-    # Obtener los juegos desde la API de RAWG
-    api_key_rawg = settings.RAWG_API_KEY
-    juegos = []
+    # Intenta obtener datos en cach√©
+    juegos = cache.get("juegos_populares")
+    noticias = cache.get("noticias_videojuegos")
 
-    try:
-        response = requests.get(
-            "https://api.rawg.io/api/games",  #endpoints
-            params={"key": api_key_rawg, "ordering": "-rating", "page_size": 6},
-        )
-        if response.status_code == 200:
-            juegos = response.json().get("results", [])
-    except Exception as e:
-        print("Error cargando juegos:", e)
+    # Si no est√°n en cach√©, realiza las peticiones
+    if not juegos:
+        try:
+            response = requests.get(
+                "https://api.rawg.io/api/games",
+                params={"key": settings.RAWG_API_KEY, "ordering": "-rating", "page_size": 6},
+            )
+            if response.status_code == 200:
+                juegos = response.json().get("results", [])
+                cache.set("juegos_populares", juegos, timeout=3600)  # 1 hora
+        except Exception as e:
+            print("Error cargando juegos:", e)
+            juegos = []
 
-    # Obtener noticias desde NewsAPI
-    api_key_news = settings.NEWS_API_KEY
-    noticias = []
-
-    try:
-        response = requests.get(
-            "https://newsapi.org/v2/everything",  #endpoints
-            params={
-                "q": "videojuegos", 
-                "apiKey": api_key_news,
-                "language": "es",  # Noticias en espaÒol
-                "pageSize": 6, # cantidad en vista
-            }
-        )
-        if response.status_code == 200:
-            noticias = response.json().get("articles", [])
-    except Exception as e:
-        print("Error cargando noticias:", e)
+    if not noticias:
+        try:
+            response = requests.get(
+                "https://newsapi.org/v2/everything",
+                params={
+                    "q": "videojuegos",
+                    "apiKey": settings.NEWS_API_KEY,
+                    "language": "es",
+                    "pageSize": 6,
+                },
+            )
+            if response.status_code == 200:
+                noticias = response.json().get("articles", [])
+                cache.set("noticias_videojuegos", noticias, timeout=1800)  # 30 minutos
+        except Exception as e:
+            print("Error cargando noticias:", e)
+            noticias = []
 
     return {"juegos": juegos, "noticias": noticias}

@@ -40,7 +40,7 @@ class Compra(Base):
 class DetalleCompra(Base):
     __tablename__ = "E11EVENSTORE_DETALLECOMPRA"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    compra_id = Column(Integer, ForeignKey('E11EVENSTORE_COMPRA.id'))
+    compra_num_compra = Column(Integer, ForeignKey('E11EVENSTORE_COMPRA.numero_compra'))
     producto_id = Column(Integer, ForeignKey('E11EVENSTORE_PRODUCTO.id'))
     cantidad = Column(Integer)
     compra = relationship("Compra", back_populates="detalles")

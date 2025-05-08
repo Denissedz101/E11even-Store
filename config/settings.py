@@ -120,3 +120,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 RAWG_API_KEY = "b11964e6b4c44aa8ae7b588a700be3fc"
 NEWS_API_KEY = "a02c731964a944dcbdd2208ad0548d46"
 
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-snowflake",
+    }
+}

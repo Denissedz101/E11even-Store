@@ -111,6 +111,16 @@ class Compra(models.Model):
         default="pendiente",
         verbose_name="Estado de compra",
     )
+    vendedor = models.ForeignKey(
+        Administrativo,
+        to_field="rut",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="ventas",
+        verbose_name="Vendedor responsable"
+    )
+
 
     def __str__(self):
         return f"Compra #{self.numero_compra} - {self.cliente}"
@@ -122,12 +132,26 @@ class DetalleCompra(models.Model):
     )
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField()
+    vendedor = models.ForeignKey(
+        Administrativo,
+        to_field="rut",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Vendedor"
+    )
 
     def subtotal(self):
         return self.cantidad * self.producto.precio
 
     def __str__(self):
         return f"{self.cantidad} x {self.producto.nombre} (Compra {self.compra.numero_compra})"
+        
+    def save(self, *args, **kwargs):
+        if self.compra and self.compra.vendedor:
+            self.vendedor = self.compra.vendedor
+        super().save(*args, **kwargs)
+
 
 
 # Transacciones de pago
