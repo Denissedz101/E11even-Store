@@ -19,8 +19,9 @@ def crear_producto(db: Session, producto: schemas.ProductoCreate):
     db.refresh(db_producto)
     return db_producto
 
-def obtener_productos(db: Session):
-    return db.query(models.Producto).all()
+def obtener_productos_por_categoria(db: Session, categoria: str):
+    return db.query(models.Producto).filter(models.Producto.categoria == categoria).all()
+
 
 def crear_compra(db: Session, compra: schemas.CompraCreate):
     db_compra = models.Compra(**compra.dict())

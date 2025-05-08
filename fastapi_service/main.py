@@ -37,7 +37,7 @@ def listar_clientes(db: Session = Depends(get_db)):
     
 @app.get("/clientes/{rut}", response_model=schemas.ClienteBase)
 def obtener_cliente(rut: str, db: Session = Depends(get_db)):
-    cliente = crud.get_cliente(db, rut)
+    cliente = db.query(models.Cliente).filter(models.Cliente.rut == rut).first()
     if not cliente:
         raise HTTPException(status_code=404, detail="Cliente no encontrado")
     return cliente
@@ -50,21 +50,23 @@ def crear_producto(producto: schemas.ProductoCreate, db: Session = Depends(get_d
 def listar_productos(db: Session = Depends(get_db)):
     return crud.obtener_productos(db)
 
-@app.get("/productos/{categoria}", response_model=schemas.ProductoBase)
-def obtener_producto(categoria: str, db: Session = Depends(get_db)):
-    producto = crud.get_producto(db, categoria)
-    if not producto:
-        raise HTTPException(status_code=404, detail="Producto no encontrado")
-    return producto
+@app.get("/productos/{categoria}", response_model=List[schemas.ProductoOut])
+def obtener_productos_categoria(categoria: str, db: Session = Depends(get_db)):
+    productos = crud.obtener_productos_por_categoria(db, categoria)
+    if not productos:
+        raise HTTPException(status_code=404, detail="No se encontraron productos en esta categoría")
+    return productos
 
 @app.get("/compras", response_model=List[schemas.CompraBase])
 def listar_compras(db: Session = Depends(get_db)):
-    return crud.get_compras(db)
+    return crud.obtener_compras(db)
 
 @app.get("/compras/{rut}", response_model=List[schemas.CompraBase])
 def listar_compras_cliente(rut: str, db: Session = Depends(get_db)):
-    return crud.get_compras_by_rut(db, rut)
+    return crud.obtener_compras_by_rut(db, rut)
 
 @app.get("/detalles/{compra_id}", response_model=List[schemas.DetalleCompraBase])
 def obtener_detalles(compra_id: int, db: Session = Depends(get_db)):
-    return crud.get_detalles_by_compra(db, compra_id)
+    return crud.obtener_detalles_by_compra(db, compra_id)
+
+
